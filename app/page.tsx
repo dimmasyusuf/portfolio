@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 export default function Home() {
   return (
     <>
-      <header className="px-6 py-4">
+      <header className="p-4 shadow-sm">
         <Navbar />
       </header>
       <main className="flex justify-center items-center w-full h-screen">
