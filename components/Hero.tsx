@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
       <div className="order-2 md:order-1 flex items-center justify-center">
         <div className="flex flex-col gap-4 sm:gap-6">
           <h2 className="text-4xl sm:text-5xl font-extrabold text-center md:text-start">
