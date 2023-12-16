@@ -8,25 +8,31 @@ import {
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { ExternalLinkIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
+import { Projects } from '@/types';
 
-export default function ProjectItem() {
+export default function ProjectItem({
+  name,
+  description,
+  year,
+  demo,
+  code,
+}: Projects) {
   return (
     <Card className="shadow-sm">
       <CardHeader>
-        <CardTitle className="text-lg">Talktiv</CardTitle>
-        <CardDescription className="text-md">
-          A social media platform for developers.
-        </CardDescription>
+        <p className="text-sm">{year}</p>
+        <CardTitle className="text-lg">{name}</CardTitle>
+        <CardDescription className="text-md">{description}</CardDescription>
       </CardHeader>
       <CardFooter className="flex gap-2 items-center">
         <Button asChild>
-          <Link href="">
+          <Link href={demo}>
             <ExternalLinkIcon className="mr-2 h-4 w-4" /> Demo
           </Link>
         </Button>
         <Button asChild>
           <Link
-            href=""
+            href={code}
             className="flex items-center"
           >
             <GitHubLogoIcon className="mr-2 h-4 w-4" /> Code
