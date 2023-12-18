@@ -16,8 +16,7 @@ interface Projects {
 interface Skills {
   id: number;
   name: string;
-  category: string;
-  level: string;
+  href?: string;
 }
 
 export type { Routes, Projects, Skills };

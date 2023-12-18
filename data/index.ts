@@ -1,4 +1,4 @@
-import { Projects, Routes, Skills } from '@/types';
+import { Skills, Projects, Routes } from '@/types';
 
 const data = (() => {
   const routes: Routes[] = [
@@ -9,13 +9,13 @@ const data = (() => {
     },
     {
       id: 2,
-      name: 'Skills',
-      path: '/skills',
+      name: 'Projects',
+      path: '/projects',
     },
     {
       id: 3,
-      name: 'Projects',
-      path: '/projects',
+      name: 'Skills',
+      path: '/skills',
     },
     {
       id: 4,
@@ -83,193 +83,127 @@ const data = (() => {
     },
   ];
 
-  const skills: Skills[] = [
+  const frontend: Skills[] = [
     {
       id: 1,
       name: 'HTML',
-      category: 'Frontend',
-      level: 'Advanced',
+      href: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
     },
     {
       id: 2,
       name: 'CSS',
-      category: 'Frontend',
-      level: 'Advanced',
+      href: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
     },
     {
       id: 3,
       name: 'JavaScript',
-      category: 'Frontend',
-      level: 'Advanced',
+      href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
     },
     {
       id: 4,
       name: 'TypeScript',
-      category: 'Frontend',
-      level: 'Intermediate',
+      href: 'https://www.typescriptlang.org/',
     },
     {
       id: 5,
-      name: 'Tailwind CSS',
-      category: 'Frontend',
-      level: 'Advanced',
+      name: 'React',
+      href: 'https://react.dev/',
     },
     {
       id: 6,
-      name: 'Chakra UI',
-      category: 'Frontend',
-      level: 'Advanced',
+      name: 'Next.js',
+      href: 'https://nextjs.org/',
     },
     {
       id: 7,
-      name: 'Shadcn UI',
-      category: 'Frontend',
-      level: 'Advanced',
+      name: 'Tailwind CSS',
+      href: 'https://tailwindcss.com/',
     },
     {
       id: 8,
-      name: 'React.js',
-      category: 'Frontend',
-      level: 'Advanced',
+      name: 'Chakra UI',
+      href: 'https://chakra-ui.com/',
     },
     {
       id: 9,
-      name: 'Next.js',
-      category: 'Frontend',
-      level: 'Advanced',
+      name: 'Shadcn UI',
+      href: 'https://ui.shadcn.com/',
     },
     {
       id: 10,
-      name: 'Node.js',
-      category: 'Backend',
-      level: 'Intermediate',
+      name: 'Redux',
+      href: 'https://redux.js.org/',
     },
     {
       id: 11,
-      name: 'Express.js',
-      category: 'Backend',
-      level: 'Intermediate',
+      name: 'React Query',
+      href: 'https://react-query.tanstack.com/',
     },
     {
       id: 12,
-      name: 'Firebase',
-      category: 'Backend',
-      level: 'Intermediate',
+      name: 'Storybook',
+      href: 'https://storybook.js.org/',
     },
     {
       id: 13,
-      name: 'Supabase',
-      category: 'Backend',
-      level: 'Intermediate',
+      name: 'Jest',
+      href: 'https://jestjs.io/',
     },
     {
       id: 14,
-      name: 'MySQL',
-      category: 'Database',
-      level: 'Intermediate',
-    },
-    {
-      id: 15,
-      name: 'MongoDB',
-      category: 'Database',
-      level: 'Intermediate',
-    },
-    {
-      id: 16,
-      name: 'Sequelize',
-      category: 'Database',
-      level: 'Intermediate',
-    },
-    {
-      id: 17,
-      name: 'Prisma',
-      category: 'Database',
-      level: 'Intermediate',
-    },
-    {
-      id: 18,
-      name: 'Redux',
-      category: 'State Management',
-      level: 'Intermediate',
-    },
-    {
-      id: 19,
-      name: 'React Query',
-      category: 'State Management',
-      level: 'Intermediate',
-    },
-    {
-      id: 20,
-      name: 'Framer Motion',
-      category: 'Animation',
-      level: 'Beginner',
-    },
-    {
-      id: 21,
-      name: 'Vitest',
-      category: 'Testing',
-      level: 'Beginner',
-    },
-    {
-      id: 22,
-      name: 'Jest',
-      category: 'Testing',
-      level: 'Beginner',
-    },
-    {
-      id: 23,
       name: 'Cypress',
-      category: 'Testing',
-      level: 'Beginner',
+      href: 'https://www.cypress.io/',
+    },
+  ];
+
+  const backend: Skills[] = [
+    {
+      id: 1,
+      name: 'Node.js',
+      href: 'https://nodejs.org/en/',
     },
     {
-      id: 24,
-      name: 'React Testing Library',
-      category: 'Testing',
-      level: 'Beginner',
+      id: 2,
+      name: 'Express',
+      href: 'https://expressjs.com/',
     },
     {
-      id: 25,
-      name: 'Storybook',
-      category: 'Testing',
-      level: 'Beginner',
+      id: 3,
+      name: 'MongoDB',
+      href: 'https://www.mongodb.com/',
     },
     {
-      id: 26,
-      name: 'Git',
-      category: 'Version Control',
-      level: 'Intermediate',
+      id: 4,
+      name: 'Prisma',
+      href: 'https://www.prisma.io/',
     },
     {
-      id: 27,
-      name: 'GitHub',
-      category: 'Version Control',
-      level: 'Intermediate',
+      id: 5,
+      name: 'MySQL',
+      href: 'https://www.mysql.com/',
     },
     {
-      id: 28,
-      name: 'Jira',
-      category: 'Project Management',
-      level: 'Intermediate',
+      id: 6,
+      name: 'Sequelize',
+      href: 'https://sequelize.org/',
     },
     {
-      id: 29,
-      name: 'Trello',
-      category: 'Project Management',
-      level: 'Intermediate',
+      id: 7,
+      name: 'Firebase',
+      href: 'https://firebase.google.com/',
     },
     {
-      id: 30,
-      name: 'Figma',
-      category: 'Design',
-      level: 'Intermediate',
+      id: 8,
+      name: 'Supabase',
+      href: 'https://supabase.io/',
     },
   ];
 
   return {
     routes,
     projects,
-    skills,
+    frontend,
+    backend,
   };
 })();
 
