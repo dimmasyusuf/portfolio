@@ -1,9 +1,12 @@
+import { Songs } from '@/types';
 import querystring from 'querystring';
 
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
+// ENV VARIABLES
+const client_id = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+const client_secret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
+const refresh_token = process.env.NEXT_PUBLIC_SPOTIFY_REFRESH_TOKEN;
 
+// ENDPOINTS
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
 const CURRENTLY_PLAYING_ENDPOINT =
   'https://api.spotify.com/v1/me/player/currently-playing';
@@ -44,10 +47,10 @@ export const getCurrentlyPlaying = async () => {
       },
     });
 
-    if (response.status >= 400) {
+    if (response.status > 400) {
       throw new Error('Unable to fetch currently playing');
     } else if (response.status === 204) {
-      throw new Error('Currently not playing anything');
+      throw new Error('Currently not playing');
     }
 
     const song = await response.json();
@@ -62,14 +65,14 @@ export const getCurrentlyPlaying = async () => {
     const artistUrl = song.item.artists[0].external_urls.spotify;
 
     return {
+      title,
       albumImageUrl,
       artistName,
+      artistUrl,
       songUrl,
-      title,
       timePlayed,
       timeTotal,
-      artistUrl,
-    };
+    } as Songs;
   } catch (error) {
     console.error(error);
     throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
