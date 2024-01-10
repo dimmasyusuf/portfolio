@@ -10,7 +10,7 @@ import {
 import { Button } from './ui/button';
 import { CodeIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import data from '@/data';
+import data from '@/lib/data';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {

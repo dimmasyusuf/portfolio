@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from './ui/button';
 import ProjectItem from './ProjectItem';
-import data from '@/data';
+import data from '@/lib/data';
 
 export default function Projects() {
   const featuredProjects = data.projects.slice(0, 6);

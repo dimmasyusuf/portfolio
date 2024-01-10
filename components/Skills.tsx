@@ -1,6 +1,6 @@
 import { CookieIcon, RocketIcon } from '@radix-ui/react-icons';
 import { Button } from './ui/button';
-import data from '@/data';
+import data from '@/lib/data';
 
 export default function Skills() {
   const frontends = data.frontend;
