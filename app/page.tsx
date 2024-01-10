@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import ProjectList from '@/components/ProjectList';
-import SocialMedia from '@/components/SocialMedia';
+import FooterList from '@/components/SocialMedia';
 import Copyright from '@/components/Copyright';
 import Skills from '@/components/Skills';
 
@@ -17,7 +17,7 @@ export default function Home() {
         <Skills />
       </main>
       <footer className="flex flex-col gap-4 p-4">
-        <SocialMedia />
+        <FooterList />
         <Copyright />
       </footer>
     </>
