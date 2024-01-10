@@ -64,6 +64,7 @@ export default function Navbar() {
       <Link
         href="/"
         className="hidden sm:flex"
+        aria-label="Home"
       >
         <CodeIcon className="w-9 h-9" />
       </Link>
