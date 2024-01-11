@@ -9,7 +9,7 @@ import {
 
 export default function SocialMedia() {
   return (
-    <div className="flex gap-4 justify-center md:justify-end items-center">
+    <div className="flex gap-4 justify-center items-center">
       <Button
         variant="ghost"
         size="icon"
