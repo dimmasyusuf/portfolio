@@ -12,7 +12,7 @@ export default function Home() {
       <header className="p-4 mb-4">
         <Navbar />
       </header>
-      <main className="flex flex-col gap-10 p-4 w-full">
+      <main className="flex flex-col w- p-4 w-full">
         <Hero />
         <ProjectList />
         <Skills />
