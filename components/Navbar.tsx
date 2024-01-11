@@ -40,7 +40,7 @@ export default function Navbar() {
                       className={`${
                         pathName === route.path &&
                         'font-bold text-black dark:text-white'
-                      } "w-full text-muted-foreground"`}
+                      } text-muted-foreground w-full`}
                       asChild
                     >
                       <Link href={route.path}>{route.name}</Link>
@@ -53,6 +53,7 @@ export default function Navbar() {
           <SheetFooter>
             <Button
               size="lg"
+              className="w-full"
               asChild
             >
               <Link href="https://www.linkedin.com/in/dimmasyusuf/">
@@ -71,7 +72,7 @@ export default function Navbar() {
                 className={`${
                   pathName === route.path &&
                   'font-bold text-black dark:text-white'
-                } "text-muted-foreground"`}
+                } text-muted-foreground`}
                 asChild
               >
                 <Link href={route.path}>{route.name}</Link>
