@@ -1,20 +1,23 @@
+'use client';
+
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetFooter,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from './ui/sheet';
 import { Button } from './ui/button';
-import { CodeIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import data from '@/lib/data';
 import ThemeToggle from './ThemeToggle';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const routes = data.routes;
+  const pathName = usePathname();
 
   return (
     <nav className="flex justify-between items-center">
@@ -34,15 +37,13 @@ export default function Navbar() {
                     <Button
                       variant="ghost"
                       size="lg"
-                      className="w-full"
+                      className={`${
+                        pathName === route.path &&
+                        'font-bold text-black dark:text-white'
+                      } "w-full text-muted-foreground"`}
                       asChild
                     >
-                      <Link
-                        href={route.path}
-                        className="text-black dark:text-white"
-                      >
-                        {route.name}
-                      </Link>
+                      <Link href={route.path}>{route.name}</Link>
                     </Button>
                   </li>
                 ))}
@@ -67,6 +68,10 @@ export default function Navbar() {
             <li key={index}>
               <Button
                 variant="ghost"
+                className={`${
+                  pathName === route.path &&
+                  'font-bold text-black dark:text-white'
+                } "text-muted-foreground"`}
                 asChild
               >
                 <Link href={route.path}>{route.name}</Link>
