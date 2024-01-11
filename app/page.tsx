@@ -9,7 +9,7 @@ import Spotify from '@/components/Spotify';
 export default function Home() {
   return (
     <>
-      <header className="p-4 mb-4">
+      <header className="bg-background sticky sm:static top-0 w-full shadow-sm sm:shadow-none p-4 mb-4 ">
         <Navbar />
       </header>
       <main className="flex flex-col w- p-4 w-full">

@@ -82,7 +82,6 @@
   height: 256px;
   width: 256px;
   transition: all 1s ease-in-out;
-  z-index: 5;
 }
 
 @keyframes morph {
