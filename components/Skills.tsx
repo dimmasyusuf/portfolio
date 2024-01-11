@@ -10,7 +10,7 @@ export default function Skills() {
     <div className="flex flex-col gap-4">
       <h3 className="text-2xl font-bold">Skills</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex flex-col p-6 gap-4 border rounded-xl shadow bg-card text-card-foreground">
+        <div className="flex flex-col p-6 gap-4 border rounded-xl bg-card text-card-foreground">
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-xl">Frontend</h4>
             <CookieIcon className="w-5 h-5" />
@@ -19,6 +19,7 @@ export default function Skills() {
             {frontends.map((frontend) => (
               <Button
                 key={frontend.id}
+                size="sm"
                 asChild
               >
                 <a
@@ -31,7 +32,7 @@ export default function Skills() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col p-6 gap-4 border rounded-xl shadow bg-card text-card-foreground">
+        <div className="flex flex-col p-6 gap-4 border rounded-xl bg-card text-card-foreground">
           <div className="flex items-center justify-between">
             <h4 className="font-semibold text-xl">Backend</h4>
             <RocketIcon className="w-5 h-5" />
@@ -40,6 +41,7 @@ export default function Skills() {
             {backends.map((backend) => (
               <Button
                 key={backend.id}
+                size="sm"
                 asChild
               >
                 <a
