@@ -61,14 +61,7 @@ export default function Navbar() {
           </SheetFooter>
         </SheetContent>
       </Sheet>
-      <Link
-        href="/"
-        className="hidden sm:flex"
-        aria-label="Home"
-      >
-        <CodeIcon className="w-9 h-9" />
-      </Link>
-      <div className="sm:flex hidden gap-4 items-center">
+      <div className="sm:flex hidden items-center">
         <ul className="flex gap-2">
           {routes.map((route, index) => (
             <li key={index}>
@@ -81,11 +74,8 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <ThemeToggle />
       </div>
-      <div className="flex sm:hidden">
-        <ThemeToggle />
-      </div>
+      <ThemeToggle />
     </nav>
   );
 }

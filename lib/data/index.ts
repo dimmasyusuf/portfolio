@@ -4,23 +4,23 @@ const data = (() => {
   const routes: Routes[] = [
     {
       id: 1,
-      name: 'Home',
+      name: 'home',
       path: '/',
     },
     {
       id: 2,
-      name: 'Projects',
+      name: 'project',
       path: '/project',
     },
     {
       id: 3,
-      name: 'Blog',
-      path: '/blog',
+      name: 'work',
+      path: '/work',
     },
     {
       id: 4,
-      name: 'Contact',
-      path: '/contact',
+      name: 'guestbook',
+      path: '/guestbook',
     },
   ];
 
