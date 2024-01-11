@@ -73,6 +73,6 @@ export const getCurrentlyPlaying = async () => {
     } as Songs;
   } catch (error: any) {
     console.error('Unable to fetch currently playing', error);
-    throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
+    return error.message.toString();
   }
 };
