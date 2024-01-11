@@ -20,13 +20,11 @@ interface Skills {
 }
 
 interface Songs {
+  title: string;
   albumImageUrl: string;
   artistName: string;
-  songUrl: string;
-  title: string;
-  timePlayed: number;
-  timeTotal: number;
   artistUrl: string;
+  songUrl: string;
   isPlaying: boolean;
 }
 

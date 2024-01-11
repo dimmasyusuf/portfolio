@@ -47,10 +47,10 @@ export const getCurrentlyPlaying = async () => {
       },
     });
 
-    if (response.status > 400) {
+    if (response.status === 204) {
+      return null;
+    } else if (response.status > 400) {
       throw new Error('Unable to fetch currently playing');
-    } else if (response.status === 204) {
-      throw new Error('Currently not playing');
     }
 
     const song = await response.json();
@@ -60,9 +60,8 @@ export const getCurrentlyPlaying = async () => {
       .join(', ');
     const songUrl = song.item.external_urls.spotify;
     const title = song.item.name;
-    const timePlayed = song.progress_ms;
-    const timeTotal = song.item.duration_ms;
     const artistUrl = song.item.artists[0].external_urls.spotify;
+    const isPlaying = song.is_playing;
 
     return {
       title,
@@ -70,11 +69,10 @@ export const getCurrentlyPlaying = async () => {
       artistName,
       artistUrl,
       songUrl,
-      timePlayed,
-      timeTotal,
+      isPlaying,
     } as Songs;
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error('Unable to fetch currently playing', error);
     throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
   }
 };
