@@ -17,7 +17,10 @@ export default function SocialMedia() {
         aria-label="Follow me on GitHub"
         asChild
       >
-        <Link href="https://github.com/dimmasyusuf/">
+        <Link
+          href="https://github.com/dimmasyusuf/"
+          target="_blank"
+        >
           <GitHubLogoIcon className="h-6 w-6" />
         </Link>
       </Button>
@@ -28,7 +31,10 @@ export default function SocialMedia() {
         aria-label="Follow me on LinkedIn"
         asChild
       >
-        <Link href="https://www.linkedin.com/in/dimmasyusuf/">
+        <Link
+          href="https://www.linkedin.com/in/dimmasyusuf/"
+          target="_blank"
+        >
           <LinkedInLogoIcon className="h-6 w-6" />
         </Link>
       </Button>
@@ -39,7 +45,10 @@ export default function SocialMedia() {
         aria-label="Follow me on Instagram"
         asChild
       >
-        <Link href="https://www.instagram.com/dimmasyusuf/">
+        <Link
+          href="https://www.instagram.com/dimmasyusuf/"
+          target="_blank"
+        >
           <InstagramLogoIcon className="h-6 w-6" />
         </Link>
       </Button>
@@ -50,7 +59,10 @@ export default function SocialMedia() {
         aria-label="Follow me on Discord"
         asChild
       >
-        <Link href="https://discordapp.com/users/461403866299236352/">
+        <Link
+          href="https://discordapp.com/users/461403866299236352/"
+          target="_blank"
+        >
           <DiscordLogoIcon className="h-6 w-6" />
         </Link>
       </Button>
