@@ -69,16 +69,16 @@ export default function Spotify() {
           />
         )}
       </Link>
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-hidden">
         <Link
           href={songUrl}
-          className="font-bold text-sm mb-1"
+          className="font-bold text-sm mb-1 truncate"
         >
           {title}
         </Link>
         <Link
           href={artistUrl}
-          className="text-muted-foreground text-xs"
+          className="text-muted-foreground text-xs truncate"
         >
           {artist}
         </Link>
