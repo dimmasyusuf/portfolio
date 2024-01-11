@@ -18,19 +18,25 @@ export default function ProjectItem({
   code,
 }: Projects) {
   return (
-    <Card>
+    <Card className="shadow-none hover:shadow-sm">
       <CardHeader>
         <p className="text-sm">{year}</p>
         <CardTitle className="text-lg">{name}</CardTitle>
         <CardDescription className="text-md">{description}</CardDescription>
       </CardHeader>
       <CardFooter className="flex gap-2 items-center">
-        <Button asChild>
+        <Button
+          size="sm"
+          asChild
+        >
           <Link href={demo}>
             <ExternalLinkIcon className="mr-2 h-4 w-4" /> Demo
           </Link>
         </Button>
-        <Button asChild>
+        <Button
+          size="sm"
+          asChild
+        >
           <Link
             href={code}
             className="flex items-center"
