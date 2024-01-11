@@ -79,10 +79,9 @@
   background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
   animation: morph 8s ease-in-out infinite;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  height: 320px;
+  height: 256px;
+  width: 256px;
   transition: all 1s ease-in-out;
-  width: 320px;
-  z-index: 5;
 }
 
 @keyframes morph {

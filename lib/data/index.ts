@@ -14,43 +14,51 @@ const data = (() => {
     },
     {
       id: 3,
-      name: 'Skills',
-      path: '/skills',
+      name: 'Experience',
+      path: '/experience',
     },
     {
       id: 4,
-      name: 'Contact',
-      path: '/contact',
+      name: 'Guestbook',
+      path: '/guestbook',
     },
   ];
 
   const projects: Projects[] = [
     {
       id: 1,
+      name: 'Acara',
+      description: 'Event management app.',
+      year: '2023',
+      demo: 'https://acaramu.vercel.app/',
+      code: 'https://github.com/dimmasyusuf/acara',
+    },
+    {
+      id: 2,
       name: 'Talktiv',
       description: 'A social media app for developers.',
-      year: '2021',
+      year: '2023',
       demo: 'https://talktiv.vercel.app/',
       code: 'https://github.com/dimmasyusuf/talktiv',
     },
     {
-      id: 2,
+      id: 3,
       name: 'Dicatat',
       description: 'A note-taking app.',
-      year: '2022',
+      year: '2023',
       demo: 'https://dicatat.vercel.app/',
       code: 'https://github.com/dimmasyusuf/dicatat',
     },
     {
-      id: 3,
+      id: 4,
       name: 'Food House',
       description: 'Explore best restaurants near you.',
-      year: '2021',
+      year: '2022',
       demo: 'https://food-house.vercel.app/',
       code: 'https://github.com/dimmasyusuf/food-house',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Noteable',
       description: 'A note-taking app.',
       year: '2022',
@@ -58,7 +66,7 @@ const data = (() => {
       code: 'https://github.com/dimmasyusuf/noteable',
     },
     {
-      id: 5,
+      id: 6,
       name: 'repo-finder',
       description: 'A GitHub repository finder.',
       year: '2022',
@@ -66,7 +74,7 @@ const data = (() => {
       code: 'https://github.com/dimmasyusuf/repo-finder',
     },
     {
-      id: 6,
+      id: 7,
       name: 'Reading Room',
       description: 'Book tracking app.',
       year: '2022',
@@ -74,7 +82,7 @@ const data = (() => {
       code: 'https://github.com/dimmasyusuf/bookshelf-apps',
     },
     {
-      id: 7,
+      id: 8,
       name: 'NFTopia',
       description: 'A marketplace for NFTs.',
       year: '2022',

@@ -19,4 +19,13 @@ interface Skills {
   href?: string;
 }
 
-export type { Routes, Projects, Skills };
+interface Songs {
+  title: string;
+  albumImageUrl: string;
+  artistName: string;
+  artistUrl: string;
+  songUrl: string;
+  isPlaying: boolean;
+}
+
+export type { Routes, Projects, Skills, Songs };
