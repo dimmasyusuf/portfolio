@@ -48,7 +48,7 @@ export default function Spotify() {
   }
 
   return (
-    <div className="flex gap-4 p-6 rounded-md items-center">
+    <div className="flex gap-4 p-6 rounded-md items-center border sm:border-none">
       <Link
         href={songUrl}
         className="relative flex items-center justify-center aspect-square h-10 w-10"
