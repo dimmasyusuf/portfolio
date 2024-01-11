@@ -13,8 +13,8 @@ export default function Spotify() {
   let artist = '';
   let playerStatus = '';
   let albumImageUrl = '';
-  let songUrl = 'https://open.spotify.com/user/dimmasyusuf';
-  let artistUrl = 'https://open.spotify.com/user/dimmasyusuf';
+  let songUrl = 'https://open.spotify.com/user/sv0jkjpgnjwlpcfgk47dcscvz';
+  let artistUrl = 'https://open.spotify.com/user/sv0jkjpgnjwlpcfgk47dcscvz';
 
   useEffect(() => {
     const fetchCurrentlyPlaying = async () => {
