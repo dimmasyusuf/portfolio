@@ -1,15 +1,11 @@
-import Hero from '@/components/Hero';
 import ProjectList from '@/components/ProjectList';
-import Skills from '@/components/Skills';
 import Footer from '@/components/Footer';
 
-export default function Home() {
+export default function ProjectPage() {
   return (
     <>
       <main className="flex flex-col p-4 w-full">
-        <Hero />
         <ProjectList />
-        <Skills />
       </main>
       <Footer />
     </>

@@ -9,8 +9,8 @@ const data = (() => {
     },
     {
       id: 2,
-      name: 'Project',
-      path: '/project',
+      name: 'Projects',
+      path: '/projects',
     },
     {
       id: 3,
