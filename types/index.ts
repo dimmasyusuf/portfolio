@@ -34,11 +34,20 @@ interface Education {
   major: string;
   startDate: string;
   endDate: string;
-  location: string;
   description?: string;
   logo: string;
   grade?: string;
   activities?: string;
 }
 
-export type { Routes, Projects, Skills, Songs, Education };
+interface Experience {
+  id: number;
+  name: string;
+  job: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  logo: string;
+}
+
+export type { Routes, Projects, Skills, Songs, Education, Experience };
