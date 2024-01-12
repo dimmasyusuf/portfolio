@@ -117,6 +117,11 @@ export default function ProjectList() {
                   variant="ghost"
                   size="icon"
                   aria-label={`Page ${pageNumber}`}
+                  className={
+                    params.toString() === `page=${pageNumber}`
+                      ? 'font-bold bg-accent'
+                      : ''
+                  }
                 >
                   {pageNumber}
                 </Button>
