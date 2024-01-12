@@ -38,9 +38,10 @@ export default function Navbar() {
                       variant="ghost"
                       size="lg"
                       className={`${
-                        pathName === route.path &&
-                        'font-bold text-black dark:text-white'
-                      } text-muted-foreground w-full`}
+                        pathName === route.path
+                          ? 'font-bold text-primary'
+                          : 'text-muted-foreground'
+                      } w-full`}
                       asChild
                     >
                       <Link href={route.path}>{route.name}</Link>
@@ -70,9 +71,10 @@ export default function Navbar() {
               <Button
                 variant="ghost"
                 className={`${
-                  pathName === route.path &&
-                  'font-bold text-black dark:text-white'
-                } text-muted-foreground`}
+                  pathName === route.path
+                    ? 'font-bold'
+                    : 'text-muted-foreground'
+                }`}
                 asChild
               >
                 <Link href={route.path}>{route.name}</Link>
