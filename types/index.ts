@@ -28,4 +28,26 @@ interface Songs {
   isPlaying: boolean;
 }
 
-export type { Routes, Projects, Skills, Songs };
+interface Education {
+  id: number;
+  name: string;
+  major: string;
+  startDate: string;
+  endDate: string;
+  description?: string;
+  logo: string;
+  grade?: string;
+  activities?: string;
+}
+
+interface Experience {
+  id: number;
+  name: string;
+  job: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  logo: string;
+}
+
+export type { Routes, Projects, Skills, Songs, Education, Experience };

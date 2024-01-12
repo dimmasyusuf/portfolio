@@ -23,9 +23,11 @@ export default function Spotify() {
       if (data !== undefined) setCurrentlyPlaying(data);
     };
 
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       fetchCurrentlyPlaying();
     }, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   if (currentlyPlaying !== null && currentlyPlaying.title) {

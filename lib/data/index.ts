@@ -1,4 +1,4 @@
-import { Skills, Projects, Routes } from '@/types';
+import { Skills, Projects, Routes, Education, Experience } from '@/types';
 
 const data = (() => {
   const routes: Routes[] = [
@@ -14,8 +14,8 @@ const data = (() => {
     },
     {
       id: 3,
-      name: 'Experience',
-      path: '/experience',
+      name: 'About',
+      path: '/about',
     },
     {
       id: 4,
@@ -207,11 +207,56 @@ const data = (() => {
     },
   ];
 
+  const educations: Education[] = [
+    {
+      id: 1,
+      name: 'Trisakti Institute of Transportation and Logistics',
+      major: 'Aerospace Engineering',
+      startDate: '2019',
+      endDate: '2023',
+      logo: '/images/itl_trisakti_logo.jpeg',
+      grade: '3.77/4.00',
+      activities:
+        'Full Scholarship Awardee, Marketing Team Member, Daily Marketing Task Coordinator, TOEFL Training Person in Charge, ITTREC (English Club) Tutor, Aero Troops Competition Judge, Aerospace Engineering Student Association (HIMATERA) Web Author',
+    },
+  ];
+
+  const experiences: Experience[] = [
+    {
+      id: 1,
+      name: 'Purwadhika Digital Technology School',
+      job: 'Full Stack Developer Student',
+      startDate: 'Jul 2023',
+      endDate: 'Dec 2023',
+      description: `▪ Programming Fundamental & Data Structure and Algorithm<br>
+        ▪ Front End Web Development<br>
+        ▪ Back End Web Development<br>
+        ▪ Real Project Application & Project Management<br>
+        ▪ Final Project Bootcamp`,
+      logo: '/images/purwadhika_logo.jpeg',
+    },
+    {
+      id: 2,
+      name: 'Dicoding Indonesia',
+      job: 'Frontend Developer Student',
+      startDate: 'Aug 2022',
+      endDate: 'Jan 2023',
+      description: `▪ Implemented technical skills through hands-on projects and tasks.<br>
+          ▪ Focused on developing soft skills relevant to a career as a developer, including Time Scheduling, Critical/Design Thinking, Effective Communication, and Digital Branding.<br>
+          ▪ Engaged in group work to create a final project that showcased Front-End Web and React Development Skills.<br>
+          ▪ Utilized a project-based learning approach to enhance practical application of acquired knowledge.<br>
+          ▪ Emphasized the integration of technical and soft skills for a comprehensive preparation for a career as a developer.`,
+      logo: '/images/dicoding_logo.jpeg',
+    },
+  ];
+
   return {
     routes,
     projects,
     frontend,
     backend,
+    educations,
+    experiences,
   };
 })();
 
