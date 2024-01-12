@@ -1,4 +1,3 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EducationList from '@/components/EducationList';
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
@@ -23,19 +22,7 @@ export default function AboutPage() {
             </Link>
           </Button>
         </div>
-        <Tabs
-          defaultValue="education"
-          className="w-full"
-        >
-          <TabsList className="grid grid-cols-2 mb-6">
-            <TabsTrigger value="education">Education</TabsTrigger>
-            <TabsTrigger value="experience">Experience</TabsTrigger>
-          </TabsList>
-          <TabsContent value="education">
-            <EducationList />
-          </TabsContent>
-          <TabsContent value="experience">Experience</TabsContent>
-        </Tabs>
+        <EducationList />
       </div>
     </main>
   );
