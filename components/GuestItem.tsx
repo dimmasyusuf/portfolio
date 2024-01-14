@@ -1,7 +1,21 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import {
+  DotsVerticalIcon,
+  Pencil2Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 import { Separator } from './ui/separator';
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
 
 export default function GuestItem() {
   return (
@@ -27,13 +41,29 @@ export default function GuestItem() {
             </p>
           </div>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="w-7 h-7"
-        >
-          <DotsVerticalIcon className="w-4 h-4" />
-        </Button>
+
+        <Menubar>
+          <MenubarMenu>
+            <MenubarTrigger className="flex items-center justify-center hover:bg-accent h-7 px-0.5">
+              <DotsVerticalIcon className="w-4 h-4" />
+            </MenubarTrigger>
+            <MenubarContent align="end">
+              <MenubarItem>
+                Edit{' '}
+                <MenubarShortcut>
+                  <Pencil2Icon className="w-4 h-4" />
+                </MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>
+                Delete{' '}
+                <MenubarShortcut>
+                  <TrashIcon className="w-4 h-4" />
+                </MenubarShortcut>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
       </div>
       <Separator />
     </div>
