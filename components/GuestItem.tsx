@@ -24,7 +24,7 @@ export default function GuestItem() {
         <div className="flex gap-2 w-full">
           <div className="relative flex items-center justify-center w-10 h-10 aspect-square">
             <Image
-              src="/profile.webp"
+              src="/images/profile.webp"
               alt="profile"
               fill
               className="rounded-md"
@@ -44,7 +44,10 @@ export default function GuestItem() {
 
         <Menubar>
           <MenubarMenu>
-            <MenubarTrigger className="flex items-center justify-center hover:bg-accent h-7 px-0.5">
+            <MenubarTrigger
+              aria-label="Open Options"
+              className="flex items-center justify-center hover:bg-accent h-7 px-0.5"
+            >
               <DotsVerticalIcon className="w-4 h-4" />
             </MenubarTrigger>
             <MenubarContent align="end">

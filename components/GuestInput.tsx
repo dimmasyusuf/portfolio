@@ -56,6 +56,7 @@ export default function GuestInput() {
         <Button
           type="submit"
           size="icon"
+          aria-label="Send Message"
         >
           <PaperPlaneIcon className="w-4 h-4" />
         </Button>

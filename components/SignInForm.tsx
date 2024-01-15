@@ -83,7 +83,11 @@ export default function SignInForm() {
           className="relative flex items-center justify-center h-12 w-12 aspect-square rounded-md"
         >
           <Image
-            src={theme === 'dark' ? '/logo_dark.svg' : '/logo_light.svg'}
+            src={
+              theme === 'dark'
+                ? '/images/logo_dark.svg'
+                : '/images/logo_light.svg'
+            }
             alt="dimmasyusuf logo"
             width={48}
             height={48}
@@ -174,34 +178,34 @@ export default function SignInForm() {
                   <FormLabel className="text-primary text-sm">
                     Password
                   </FormLabel>
-                  <FormControl>
-                    <div className="relative flex w-full items-center">
+                  <div className="relative flex w-full items-center">
+                    <FormControl>
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         className="shadow-none"
                         {...field}
                       />
-                      {showPassword ? (
-                        <div className="absolute flex items-center justify-center right-0.5 py-1 pr-4 pl-2 bg-background rounded-e-md">
-                          <span
-                            className="flex items-center justify-center w-6 h-6 hover:bg-accent rounded-md"
-                            onClick={() => setShowPassword(false)}
-                          >
-                            <EyeNoneIcon className="text-muted-foreground hover:text-primary w-4 h-4" />
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="absolute flex items-center justify-center right-0.5 py-1 pr-4 pl-2 bg-background rounded-e-md">
-                          <span
-                            className="flex items-center justify-center w-6 h-6 hover:bg-accent rounded-md"
-                            onClick={() => setShowPassword(true)}
-                          >
-                            <EyeOpenIcon className="text-muted-foreground hover:text-primary w-4 h-4" />
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
+                    </FormControl>
+                    {showPassword ? (
+                      <div className="absolute flex items-center justify-center right-0.5 py-1 pr-4 pl-2 bg-background rounded-e-md">
+                        <span
+                          className="flex items-center justify-center w-6 h-6 hover:bg-accent rounded-md"
+                          onClick={() => setShowPassword(false)}
+                        >
+                          <EyeNoneIcon className="text-muted-foreground hover:text-primary w-4 h-4" />
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="absolute flex items-center justify-center right-0.5 py-1 pr-4 pl-2 bg-background rounded-e-md">
+                        <span
+                          className="flex items-center justify-center w-6 h-6 hover:bg-accent rounded-md"
+                          onClick={() => setShowPassword(true)}
+                        >
+                          <EyeOpenIcon className="text-muted-foreground hover:text-primary w-4 h-4" />
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

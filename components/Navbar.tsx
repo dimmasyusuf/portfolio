@@ -22,7 +22,10 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between items-center">
       <Sheet>
-        <SheetTrigger className="flex sm:hidden hover:bg-accent hover:text-accent-foreground h-9 w-9 items-center justify-center rounded-md">
+        <SheetTrigger
+          aria-label="Open Mobile Menu"
+          className="flex sm:hidden hover:bg-accent hover:text-accent-foreground h-9 w-9 items-center justify-center rounded-md"
+        >
           <HamburgerMenuIcon className="w-6 h-6" />
         </SheetTrigger>
         <SheetContent
