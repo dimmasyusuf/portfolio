@@ -3,20 +3,42 @@
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import GuestItem from './GuestItem';
-import { useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import GuestProfile from './GuestProfile';
 import GuestInput from './GuestInput';
+import { useEffect, useState } from 'react';
+import { User } from '@/types';
+import { getUserProfile } from '@/lib/actions/user.action';
+import { handleError } from '@/lib/utils';
 
 export default function GuestList() {
-  const { status } = useSession();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const session = await getSession();
+      const email = session?.user?.email;
+
+      if (email) {
+        try {
+          const sessionUser = await getUserProfile(email);
+          setUser(sessionUser);
+        } catch (error) {
+          handleError(error);
+        }
+      }
+    };
+
+    fetchUser();
+  });
 
   return (
     <section className="flex flex-col gap-6 w-full">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-2xl">Guestbook</h3>
-        {status === 'authenticated' ? (
-          <GuestProfile />
+        {user !== null ? (
+          <GuestProfile user={user} />
         ) : (
           <Button
             size="sm"

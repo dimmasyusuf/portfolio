@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Popover,
   PopoverContent,
@@ -8,38 +6,14 @@ import {
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { getSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 import { User } from '@/types';
-import { getUserProfile } from '@/lib/actions/user.action';
-import { handleError } from '@/lib/utils';
 
-export default function GuestProfile() {
-  const [user, setUser] = useState<User | null>(null);
+export default function GuestProfile({ user }: { user: User | null }) {
   const { theme } = useTheme();
   const avatar =
     theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const session = await getSession();
-      const email = session?.user?.email;
-
-      if (email) {
-        try {
-          const sessionUser = await getUserProfile(email);
-          setUser(sessionUser);
-        } catch (error) {
-          handleError(error);
-        }
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  console.log(user);
 
   return (
     <Popover>
