@@ -16,11 +16,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { PaperPlaneIcon } from '@radix-ui/react-icons';
+import { PaperPlaneIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
+import { useState } from 'react';
+import { handleError } from '@/lib/utils';
+import axios from 'axios';
 
 export default function GuestInput() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof guestInputSchema>>({
@@ -32,10 +36,22 @@ export default function GuestInput() {
 
   async function onSubmit(values: z.infer<typeof guestInputSchema>) {
     const session = await getSession();
-
     if (!session) router.push('/sign-in');
 
-    console.log(values);
+    try {
+      setIsSubmitting(true);
+
+      setTimeout(async () => {
+        await axios.post('/api/messages', {
+          text: values.message,
+        });
+
+        form.reset();
+        setIsSubmitting(false);
+      }, 1000);
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   async function handleInput() {
@@ -71,8 +87,13 @@ export default function GuestInput() {
           type="submit"
           size="icon"
           aria-label="Send Message"
+          disabled={isSubmitting}
         >
-          <PaperPlaneIcon className="w-4 h-4" />
+          {isSubmitting ? (
+            <ReloadIcon className="w-4 h-4 animate-spin" />
+          ) : (
+            <PaperPlaneIcon className="w-4 h-4" />
+          )}
         </Button>
       </form>
     </Form>
