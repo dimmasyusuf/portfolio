@@ -16,10 +16,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from './ui/textarea';
 import { PaperPlaneIcon } from '@radix-ui/react-icons';
+import { useRouter } from 'next/navigation';
+import { getSession } from 'next-auth/react';
 
 export default function GuestInput() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof guestInputSchema>>({
     resolver: zodResolver(guestInputSchema),
     defaultValues: {
@@ -27,8 +30,18 @@ export default function GuestInput() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof guestInputSchema>) {
+  async function onSubmit(values: z.infer<typeof guestInputSchema>) {
+    const session = await getSession();
+
+    if (!session) router.push('/sign-in');
+
     console.log(values);
+  }
+
+  async function handleInput() {
+    const session = await getSession();
+    if (!session) router.push('/sign-in');
+    console.log('session', session);
   }
 
   return (
@@ -46,6 +59,7 @@ export default function GuestInput() {
                 <Input
                   placeholder="Leave a message"
                   className="flex w-full shadow-none"
+                  onFocus={handleInput}
                   {...field}
                 />
               </FormControl>
