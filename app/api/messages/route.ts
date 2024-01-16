@@ -42,3 +42,31 @@ export async function POST(req: Request) {
     });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const messages = await prisma.message.findMany({
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json({
+      status: 200,
+      message: 'OK: Messages fetched successfully',
+      data: messages,
+    });
+  } catch (error: any) {
+    return NextResponse.json({
+      status: 500,
+      message: `Internal Server Error: ${error.message}`,
+    });
+  }
+}
