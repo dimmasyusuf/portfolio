@@ -108,7 +108,7 @@ export default function SignInForm() {
             className="flex p-5 shadow-none"
             onMouseOver={() => setGoogleHover(true)}
             onMouseLeave={() => setGoogleHover(false)}
-            onClick={() => signIn('google', { callbackUrl: '/' })}
+            onClick={() => signIn('google', { callbackUrl: '/guestbook' })}
           >
             <div className="flex items-center justify-center h-5 w-5 aspect-square">
               <FcGoogle className="w-full h-full" />
@@ -125,7 +125,7 @@ export default function SignInForm() {
             className="flex p-5 shadow-none"
             onMouseOver={() => setGithubHover(true)}
             onMouseLeave={() => setGithubHover(false)}
-            onClick={() => signIn('github', { callbackUrl: '/' })}
+            onClick={() => signIn('github', { callbackUrl: '/guestbook' })}
           >
             <div className="flex items-center justify-center h-5 w-5 aspect-square">
               <GitHubLogoIcon className="w-full h-full" />

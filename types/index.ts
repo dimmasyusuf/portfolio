@@ -50,4 +50,10 @@ interface Experience {
   logo: string;
 }
 
-export type { Routes, Projects, Skills, Songs, Education, Experience };
+interface User {
+  name: string;
+  email: string;
+  image: string;
+}
+
+export type { Routes, Projects, Skills, Songs, Education, Experience, User };
