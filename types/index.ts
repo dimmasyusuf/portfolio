@@ -56,4 +56,22 @@ interface User {
   image: string;
 }
 
-export type { Routes, Projects, Skills, Songs, Education, Experience, User };
+interface Message {
+  id: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  authorId: string;
+  author: { id: string; name: string; email: string; image: string };
+}
+
+export type {
+  Routes,
+  Projects,
+  Skills,
+  Songs,
+  Education,
+  Experience,
+  User,
+  Message,
+};

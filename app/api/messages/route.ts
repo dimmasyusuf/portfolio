@@ -22,17 +22,27 @@ export async function POST(req: Request) {
         where: { email },
       });
 
-      const message = await prisma.message.create({
+      const userMessage = await prisma.message.create({
         data: {
           text,
           authorId: author?.id!,
+        },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              image: true,
+            },
+          },
         },
       });
 
       return NextResponse.json({
         status: 201,
         message: 'Created: Message created successfully',
-        data: message,
+        userMessage,
       });
     }
   } catch (error: any) {
@@ -56,12 +66,15 @@ export async function GET(req: Request) {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return NextResponse.json({
       status: 200,
       message: 'OK: Messages fetched successfully',
-      data: messages,
+      messages,
     });
   } catch (error: any) {
     return NextResponse.json({

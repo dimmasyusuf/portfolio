@@ -1,29 +1,32 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { guestInputSchema } from '@/lib/validator';
+import { getSession } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
 import {
   Form,
-  FormControl,
-  FormDescription,
   FormField,
+  FormControl,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PaperPlaneIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
-import { getSession } from 'next-auth/react';
-import { useState } from 'react';
 import { handleError } from '@/lib/utils';
-import axios from 'axios';
+import { Message } from '@/types';
+import { guestInputSchema } from '@/lib/validator';
+import { createMessage } from '@/lib/actions/message.action';
 
-export default function GuestInput() {
+export default function GuestInput({
+  updateMessages,
+}: {
+  updateMessages: (newMessage: Message) => void;
+}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -42,9 +45,11 @@ export default function GuestInput() {
       setIsSubmitting(true);
 
       setTimeout(async () => {
-        await axios.post('/api/messages', {
-          text: values.message,
-        });
+        const message = await createMessage(values.message);
+
+        if (message) {
+          updateMessages(message);
+        }
 
         form.reset();
         setIsSubmitting(false);
@@ -57,7 +62,6 @@ export default function GuestInput() {
   async function handleInput() {
     const session = await getSession();
     if (!session) router.push('/sign-in');
-    console.log('session', session);
   }
 
   return (

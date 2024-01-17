@@ -1,37 +1,49 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { getSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import GuestItem from './GuestItem';
-import { getSession } from 'next-auth/react';
-import Link from 'next/link';
 import GuestProfile from './GuestProfile';
 import GuestInput from './GuestInput';
-import { useEffect, useState } from 'react';
-import { User } from '@/types';
+import { Message, User } from '@/types';
 import { getUserProfile } from '@/lib/actions/user.action';
+import { getAllMessages } from '@/lib/actions/message.action';
 import { handleError } from '@/lib/utils';
 
 export default function GuestList() {
   const [user, setUser] = useState<User | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  const updateMessages = (newMessage: Message) => {
+    setMessages((prevMessages) => [newMessage, ...prevMessages]);
+  };
+
+  const fetchUser = async () => {
+    const session = await getSession();
+    const email = session?.user?.email;
+
+    if (email) {
+      try {
+        const sessionUser = await getUserProfile(email);
+        setUser(sessionUser);
+      } catch (error) {
+        handleError(error);
+      }
+    }
+  };
+
+  const fetchMessages = async () => {
+    const messages = await getAllMessages();
+    setMessages(messages);
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const session = await getSession();
-      const email = session?.user?.email;
-
-      if (email) {
-        try {
-          const sessionUser = await getUserProfile(email);
-          setUser(sessionUser);
-        } catch (error) {
-          handleError(error);
-        }
-      }
-    };
-
     fetchUser();
-  });
+    fetchMessages();
+  }, []);
 
   return (
     <section className="flex flex-col gap-6 w-full">
@@ -51,9 +63,15 @@ export default function GuestList() {
       <ScrollArea className="w-full h-[565px] border p-4 rounded-md">
         <div className="flex flex-col min-h-[531px]">
           <div className="flex flex-col gap-4 min-h-[477px]">
-            <GuestItem />
+            {messages.map((message) => (
+              <GuestItem
+                key={message.id}
+                user={user}
+                {...message}
+              />
+            ))}
           </div>
-          <GuestInput />
+          <GuestInput updateMessages={updateMessages} />
         </div>
       </ScrollArea>
     </section>

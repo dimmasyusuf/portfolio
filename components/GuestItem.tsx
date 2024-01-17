@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import { Button } from './ui/button';
 import {
   DotsVerticalIcon,
   Pencil2Icon,
   TrashIcon,
 } from '@radix-ui/react-icons';
 import { Separator } from './ui/separator';
-
 import {
   Menubar,
   MenubarContent,
@@ -16,15 +14,31 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from '@/components/ui/menubar';
+import { Message, User } from '@/types';
+import { useTheme } from 'next-themes';
+import moment from 'moment';
 
-export default function GuestItem() {
+export default function GuestItem({
+  text,
+  createdAt,
+  author,
+  user,
+}: Message & { user: User | null }) {
+  const { theme } = useTheme();
+  const avatar =
+    theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
+  const formattedCreatedAt = moment(createdAt).fromNow();
+  const authorEmail = author?.email;
+  const sessionEmail = user?.email;
+  const isAuthor = authorEmail === sessionEmail;
+
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="flex justify-between gap-4">
         <div className="flex gap-2 w-full">
           <div className="relative flex items-center justify-center w-10 h-10 aspect-square">
             <Image
-              src="/images/profile.webp"
+              src={author?.image || avatar}
               alt="profile"
               width={40}
               height={40}
@@ -33,41 +47,42 @@ export default function GuestItem() {
           </div>
           <div className="flex flex-col gap-1 w-full">
             <div className="flex justify-between items-center gap-1">
-              <p className="font-bold text-sm">Dimas Yusuf</p>
-              <p className="text-xs text-muted-foreground">Yesterday</p>
+              <p className="font-bold text-sm">{author?.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {formattedCreatedAt}
+              </p>
             </div>
-            <p className="text-xs">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-              laudantium quis dolor optio facere tenetur
-            </p>
+            <p className="text-xs">{text}</p>
           </div>
         </div>
 
-        <Menubar>
-          <MenubarMenu>
-            <MenubarTrigger
-              aria-label="Open Options"
-              className="flex items-center justify-center hover:bg-accent h-7 px-0.5"
-            >
-              <DotsVerticalIcon className="w-4 h-4" />
-            </MenubarTrigger>
-            <MenubarContent align="end">
-              <MenubarItem>
-                Edit{' '}
-                <MenubarShortcut>
-                  <Pencil2Icon className="w-4 h-4" />
-                </MenubarShortcut>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>
-                Delete{' '}
-                <MenubarShortcut>
-                  <TrashIcon className="w-4 h-4" />
-                </MenubarShortcut>
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        </Menubar>
+        {isAuthor && (
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger
+                aria-label="Open Options"
+                className="flex items-center justify-center hover:bg-accent h-7 px-0.5"
+              >
+                <DotsVerticalIcon className="w-4 h-4" />
+              </MenubarTrigger>
+              <MenubarContent align="end">
+                <MenubarItem>
+                  Edit{' '}
+                  <MenubarShortcut>
+                    <Pencil2Icon className="w-4 h-4" />
+                  </MenubarShortcut>
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>
+                  Delete{' '}
+                  <MenubarShortcut>
+                    <TrashIcon className="w-4 h-4" />
+                  </MenubarShortcut>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+        )}
       </div>
       <Separator />
     </div>
