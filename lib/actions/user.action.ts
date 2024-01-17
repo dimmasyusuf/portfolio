@@ -1,10 +1,24 @@
-import axios from 'axios';
+'use server';
+
+import prisma from '@/lib/prismadb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { handleError } from '../utils';
 
-export const getUserProfile = async (email: string) => {
+export const getUserProfile = async () => {
+  const session = await getServerSession(authOptions);
+  const email = session?.user?.email;
+
   try {
-    const response = await axios.get(`/api/users/${email}`);
-    return response.data.user;
+    if (!email) throw new Error('Email is required');
+
+    if (email) {
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      return user;
+    }
   } catch (error) {
     handleError(error);
   }

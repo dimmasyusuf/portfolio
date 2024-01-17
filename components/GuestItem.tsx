@@ -17,13 +17,17 @@ import {
 import { Message, User } from '@/types';
 import { useTheme } from 'next-themes';
 import moment from 'moment';
+import { deleteMessage } from '@/lib/actions/message.action';
 
 export default function GuestItem({
-  text,
-  createdAt,
-  author,
+  message,
   user,
-}: Message & { user: User | null }) {
+}: {
+  message: Message;
+  user?: User | null;
+}) {
+  const { text, createdAt, author } = message;
+
   const { theme } = useTheme();
   const avatar =
     theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';

@@ -18,17 +18,21 @@ import { Input } from '@/components/ui/input';
 import { PaperPlaneIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { handleError } from '@/lib/utils';
-import { Message } from '@/types';
 import { guestInputSchema } from '@/lib/validator';
 import { createMessage } from '@/lib/actions/message.action';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export default function GuestInput({
-  updateMessages,
-}: {
-  updateMessages: (newMessage: Message) => void;
-}) {
+export default function GuestInput() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate: createMessageMutation } = useMutation({
+    mutationFn: createMessage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['messages'] });
+    },
+  });
 
   const form = useForm<z.infer<typeof guestInputSchema>>({
     resolver: zodResolver(guestInputSchema),
@@ -45,11 +49,7 @@ export default function GuestInput({
       setIsSubmitting(true);
 
       setTimeout(async () => {
-        const message = await createMessage(values.message);
-
-        if (message) {
-          updateMessages(message);
-        }
+        await createMessageMutation(values.message);
 
         form.reset();
         setIsSubmitting(false);

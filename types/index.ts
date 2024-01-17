@@ -51,18 +51,33 @@ interface Experience {
 }
 
 interface User {
-  name: string;
-  email: string;
-  image: string;
+  id: string;
+  name: string | null;
+  email: string | null;
+  emailVerified: Date | null;
+  image: string | null;
+  password: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface Message {
   id: string;
   text: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   authorId: string;
-  author: { id: string; name: string; email: string; image: string };
+  author: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+}
+
+interface DeleteMessageParams {
+  id: string;
+  path: string;
 }
 
 export type {
@@ -74,4 +89,5 @@ export type {
   Experience,
   User,
   Message,
+  DeleteMessageParams,
 };

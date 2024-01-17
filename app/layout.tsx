@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
 
 import { cn } from '@/lib/utils';
-import { NextAuthProvider } from '@/components/Providers';
+import { Providers } from '@/components/Providers';
 import { Toaster } from '@/components/ui/sonner';
 
 const fontSans = FontSans({
@@ -72,16 +71,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <NextAuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </NextAuthProvider>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
