@@ -36,9 +36,21 @@ export default function GuestList() {
           </Button>
         )}
       </div>
-      <ScrollArea className="w-full h-[565px] border p-4 rounded-md">
-        <div className="flex flex-col min-h-[531px]">
-          <div className="flex flex-col gap-4 min-h-[477px]">
+      <ScrollArea
+        className={`${
+          user ? 'h-[561px]' : 'h-[569px]'
+        } w-full border p-4 rounded-md`}
+      >
+        <div
+          className={`${
+            user ? 'min-h-[527px]' : 'min-h-[535px]'
+          } flex flex-col`}
+        >
+          <div
+            className={`${
+              user ? 'min-h-[473px]' : 'min-h-[481px]'
+            } flex flex-col gap-4`}
+          >
             {messages?.map((message) => (
               <GuestItem
                 key={message.id}
