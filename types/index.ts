@@ -75,11 +75,6 @@ interface Message {
   };
 }
 
-interface DeleteMessageParams {
-  id: string;
-  path: string;
-}
-
 export type {
   Routes,
   Projects,
@@ -89,5 +84,4 @@ export type {
   Experience,
   User,
   Message,
-  DeleteMessageParams,
 };

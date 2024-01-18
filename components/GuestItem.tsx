@@ -1,9 +1,7 @@
+'use client';
+
 import Image from 'next/image';
-import {
-  DotsVerticalIcon,
-  Pencil2Icon,
-  TrashIcon,
-} from '@radix-ui/react-icons';
+import { DotsVerticalIcon } from '@radix-ui/react-icons';
 import { Separator } from './ui/separator';
 import {
   Menubar,
@@ -11,13 +9,15 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from '@/components/ui/menubar';
+
 import { Message, User } from '@/types';
 import { useTheme } from 'next-themes';
 import moment from 'moment';
-import { deleteMessage } from '@/lib/actions/message.action';
+import GuestEditDialog from './GuestEditDialog';
+import GuestDeleteDialog from './GuestDeleteDialog';
+import { useState } from 'react';
 
 export default function GuestItem({
   message,
@@ -26,7 +26,8 @@ export default function GuestItem({
   message: Message;
   user?: User | null;
 }) {
-  const { text, createdAt, author } = message;
+  const { id, text, createdAt, author } = message;
+  const [isClose, setIsClose] = useState(false);
 
   const { theme } = useTheme();
   const avatar =
@@ -38,7 +39,7 @@ export default function GuestItem({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="flex justify-between gap-4">
+      <div className="flex justify-between gap-2">
         <div className="flex gap-2 w-full">
           <div className="relative flex items-center justify-center w-10 h-10 aspect-square">
             <Image
@@ -50,9 +51,9 @@ export default function GuestItem({
             />
           </div>
           <div className="flex flex-col gap-1 w-full">
-            <div className="flex justify-between items-center gap-1">
-              <p className="font-bold text-sm">{author?.name}</p>
-              <p className="text-xs text-muted-foreground">
+            <div className="flex justify-between items-center gap-2">
+              <p className="font-bold text-sm line-clamp-1">{author?.name}</p>
+              <p className="text-xs text-muted-foreground whitespace-nowrap">
                 {formattedCreatedAt}
               </p>
             </div>
@@ -61,27 +62,33 @@ export default function GuestItem({
         </div>
 
         {isAuthor && (
-          <Menubar>
+          <Menubar className="flex justify-center h-7 w-4 p-0">
             <MenubarMenu>
               <MenubarTrigger
                 aria-label="Open Options"
-                className="flex items-center justify-center hover:bg-accent h-7 px-0.5"
+                className="flex items-center justify-center hover:bg-accent h-7 w-4 p-0"
+                onClick={() => setIsClose(false)}
               >
                 <DotsVerticalIcon className="w-4 h-4" />
               </MenubarTrigger>
-              <MenubarContent align="end">
-                <MenubarItem>
-                  Edit{' '}
-                  <MenubarShortcut>
-                    <Pencil2Icon className="w-4 h-4" />
-                  </MenubarShortcut>
+              <MenubarContent
+                align="end"
+                className={`${isClose && 'hidden'} }`}
+              >
+                <MenubarItem
+                  onSelect={(e) => e.preventDefault()}
+                  onClick={() => setIsClose(true)}
+                  className="p-0"
+                >
+                  <GuestEditDialog message={message} />
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem>
-                  Delete{' '}
-                  <MenubarShortcut>
-                    <TrashIcon className="w-4 h-4" />
-                  </MenubarShortcut>
+                <MenubarItem
+                  onSelect={(e) => e.preventDefault()}
+                  onClick={() => setIsClose(true)}
+                  className="p-0"
+                >
+                  <GuestDeleteDialog id={id} />
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

@@ -27,7 +27,7 @@ export default function GuestInput() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutate: createMessageMutation } = useMutation({
+  const { mutateAsync: createMessageMutation } = useMutation({
     mutationFn: createMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['messages'] });
@@ -48,8 +48,10 @@ export default function GuestInput() {
     try {
       setIsSubmitting(true);
 
+      const text = values.message;
+
       setTimeout(async () => {
-        await createMessageMutation(values.message);
+        await createMessageMutation(text);
 
         form.reset();
         setIsSubmitting(false);

@@ -15,6 +15,9 @@ export const getUserProfile = async () => {
     if (email) {
       const user = await prisma.user.findUnique({
         where: { email },
+        include: {
+          messages: true,
+        },
       });
 
       return user;
