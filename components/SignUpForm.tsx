@@ -28,8 +28,9 @@ import { signUpFormSchema } from '@/lib/validator';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { signIn } from 'next-auth/react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createUser } from '@/lib/actions/user.action';
 
 export default function SignUpForm() {
   const [googleHover, setGoogleHover] = useState(false);
@@ -38,6 +39,14 @@ export default function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: createUserMutation } = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
 
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
@@ -51,13 +60,12 @@ export default function SignUpForm() {
   async function onSubmit(values: z.infer<typeof signUpFormSchema>) {
     try {
       setIsSubmitting(true);
+      const name = values.name;
+      const email = values.email;
+      const password = values.password;
 
       setTimeout(async () => {
-        await axios.post('/api/auth/sign-up', {
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        });
+        await createUserMutation({ name, email, password });
 
         form.reset();
         setIsSubmitting(false);

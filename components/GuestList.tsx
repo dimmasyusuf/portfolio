@@ -19,14 +19,13 @@ export default function GuestList() {
   const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
-    placeholderData: null,
   });
 
   return (
     <section className="flex flex-col gap-6 w-full">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-2xl">Guestbook</h3>
-        {user !== null ? (
+        {user ? (
           <GuestProfile user={user} />
         ) : (
           <Button

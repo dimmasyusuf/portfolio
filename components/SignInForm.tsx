@@ -30,6 +30,8 @@ import { useTheme } from 'next-themes';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getUserProfile } from '@/lib/actions/user.action';
 
 export default function SignInForm() {
   const [googleHover, setGoogleHover] = useState(false);
@@ -38,7 +40,14 @@ export default function SignInForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
-  const { status } = useSession();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: signInMutation } = useMutation({
+    mutationFn: getUserProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
 
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -53,19 +62,22 @@ export default function SignInForm() {
       setIsSubmitting(true);
 
       setTimeout(async () => {
-        await signIn('credentials', {
+        const response = await signIn('credentials', {
           email: values.email,
           password: values.password,
           redirect: false,
-          callbackUrl: '/',
+          callbackUrl: '/guestbook',
         });
+
+        await signInMutation();
+
         form.reset();
         setIsSubmitting(false);
 
-        if (status === 'authenticated') {
+        if (response?.error === null) {
           router.push('/guestbook');
         } else {
-          toast.error('Email or password is incorrect', {
+          toast.error(`${response?.error}`, {
             position: 'top-right',
           });
         }
