@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prismadb';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import authOptions from '@/app/api/auth/[...nextauth]/options';
 import { handleError } from '../utils';
 import bcrypt from 'bcrypt';
 
