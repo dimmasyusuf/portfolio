@@ -70,7 +70,7 @@ export default function GuestInput() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="sticky bg-background bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4"
+        className="sticky bg-background bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4 items-center"
       >
         <FormField
           control={form.control}
@@ -91,7 +91,6 @@ export default function GuestInput() {
         />
         <Button
           type="submit"
-          size="icon"
           aria-label="Send Message"
           disabled={isSubmitting}
         >
