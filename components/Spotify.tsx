@@ -64,7 +64,7 @@ export default function Spotify() {
           />
         ) : (
           <Image
-            src="/spotify_icon.svg"
+            src="/images/spotify_icon.svg"
             alt={title}
             fill
             className="rounded-md"

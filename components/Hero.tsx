@@ -30,7 +30,10 @@ export default function Hero() {
               className="h-10 w-10"
               asChild
             >
-              <Link href="https://github.com/dimmasyusuf/">
+              <Link
+                href="https://github.com/dimmasyusuf/"
+                aria-label="GitHub Profile"
+              >
                 <GitHubLogoIcon className="w-6 h-6" />
               </Link>
             </Button>
@@ -39,8 +42,8 @@ export default function Hero() {
       </div>
       <div className="flex justify-center order-1 sm:order-2">
         <Image
-          src="/profile.webp"
-          alt="dimmasyusuf Profile Image"
+          src="/images/profile.webp"
+          alt="Profile Image"
           width="256"
           height="256"
           className="shape border-black dark:border-white border-[3px]"

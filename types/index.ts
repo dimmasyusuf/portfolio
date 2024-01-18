@@ -50,4 +50,38 @@ interface Experience {
   logo: string;
 }
 
-export type { Routes, Projects, Skills, Songs, Education, Experience };
+interface User {
+  id: string;
+  name: string | null;
+  email: string | null;
+  emailVerified: Date | null;
+  image: string | null;
+  password: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Message {
+  id: string;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  authorId: string;
+  author: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+}
+
+export type {
+  Routes,
+  Projects,
+  Skills,
+  Songs,
+  Education,
+  Experience,
+  User,
+  Message,
+};

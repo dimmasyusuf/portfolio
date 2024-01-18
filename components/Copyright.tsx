@@ -20,7 +20,10 @@ export default function Copyright() {
       <p className="text-xs text-muted-foreground">
         &copy; {year}{' '}
         <HoverCard>
-          <HoverCardTrigger className="hover:text-primary hover:font-bold hover:underline cursor-pointer">
+          <HoverCardTrigger
+            href="https://www.linkedin.com/in/dimmasyusuf/"
+            className="hover:text-primary hover:font-bold hover:underline cursor-pointer"
+          >
             dimmasyusuf
           </HoverCardTrigger>
           <HoverCardContent>

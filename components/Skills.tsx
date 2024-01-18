@@ -3,18 +3,14 @@
 import { CookieIcon, RocketIcon } from '@radix-ui/react-icons';
 import { Button } from './ui/button';
 import data from '@/lib/data';
-import { usePathname } from 'next/navigation';
-import { Separator } from './ui/separator';
 
 export default function Skills() {
   const frontends = data.frontend;
   const backends = data.backend;
-  const pathName = usePathname();
 
   return (
-    <div className={`${pathName !== '/about' && 'gap-6'} flex flex-col`}>
+    <div className="flex flex-col gap-6">
       <h3 className="text-2xl font-bold">Skills</h3>
-      {pathName === '/about' && <Separator className="my-4" />}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col p-6 gap-4 border rounded-xl bg-card text-card-foreground">
           <div className="flex items-center justify-between">
