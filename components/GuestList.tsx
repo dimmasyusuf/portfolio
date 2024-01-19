@@ -11,7 +11,7 @@ import { getAllMessages } from '@/lib/actions/message.action';
 import { useQuery } from '@tanstack/react-query';
 
 export default function GuestList() {
-  const { data: messages } = useQuery({
+  const { data: messages, isLoading } = useQuery({
     queryKey: ['messages'],
     queryFn: () => getAllMessages(),
   });
@@ -55,6 +55,7 @@ export default function GuestList() {
               <GuestItem
                 key={message.id}
                 message={message}
+                isLoading={isLoading}
                 user={user}
               />
             ))}
