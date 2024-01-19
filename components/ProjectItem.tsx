@@ -10,15 +10,11 @@ import Link from 'next/link';
 import { ExternalLinkIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Projects } from '@/types';
 
-export default function ProjectItem({
-  name,
-  description,
-  year,
-  demo,
-  code,
-}: Projects) {
+export default function ProjectItem({ project }: { project: Projects }) {
+  const { name, description, year, demoUrl, repoUrl } = project;
+
   return (
-    <Card className="shadow-none hover:shadow-sm">
+    <Card className="shadow-none dark:bg-accent rounded-md h-fit">
       <CardHeader>
         <p className="text-sm">{year}</p>
         <CardTitle className="text-lg">{name}</CardTitle>
@@ -29,7 +25,7 @@ export default function ProjectItem({
           size="sm"
           asChild
         >
-          <Link href={demo}>
+          <Link href={demoUrl}>
             <ExternalLinkIcon className="mr-2 h-4 w-4" /> Demo
           </Link>
         </Button>
@@ -38,7 +34,7 @@ export default function ProjectItem({
           asChild
         >
           <Link
-            href={code}
+            href={repoUrl}
             className="flex items-center"
           >
             <GitHubLogoIcon className="mr-2 h-4 w-4" /> Code

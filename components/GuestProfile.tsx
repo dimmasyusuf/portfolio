@@ -29,7 +29,7 @@ export default function GuestProfile({ user }: { user?: User | null }) {
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 dark:shadow-background"
       >
         <div className="flex flex-col overflow-hidden">
           <p className="font-bold truncate">{user?.name || 'Guest'}</p>

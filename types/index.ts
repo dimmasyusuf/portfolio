@@ -8,15 +8,15 @@ interface Projects {
   id: number;
   name: string;
   description: string;
-  year: string;
-  demo: string;
-  code: string;
+  year: number;
+  demoUrl: string;
+  repoUrl: string;
 }
 
 interface Skills {
   id: number;
   name: string;
-  href?: string;
+  url?: string;
 }
 
 interface Songs {
@@ -28,26 +28,22 @@ interface Songs {
   isPlaying: boolean;
 }
 
-interface Education {
+interface Educations {
   id: number;
-  name: string;
+  university: string;
   major: string;
   startDate: string;
   endDate: string;
-  description?: string;
-  logo: string;
-  grade?: string;
-  activities?: string;
+  logoUrl: string;
 }
 
-interface Experience {
+interface Experiences {
   id: number;
-  name: string;
-  job: string;
+  title: string;
+  company: string;
   startDate: string;
   endDate: string;
-  description: string;
-  logo: string;
+  logoUrl: string;
 }
 
 interface User {
@@ -80,8 +76,8 @@ export type {
   Projects,
   Skills,
   Songs,
-  Education,
-  Experience,
+  Educations,
+  Experiences,
   User,
   Message,
 };

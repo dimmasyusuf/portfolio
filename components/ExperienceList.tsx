@@ -1,5 +1,4 @@
 import data from '@/lib/data';
-import { Experience } from '@/types';
 import ExperienceItem from './ExperienceItem';
 
 export default function ExperienceList() {
@@ -9,10 +8,10 @@ export default function ExperienceList() {
     <section className="flex flex-col gap-6">
       <h3 className="text-2xl font-bold">Experience</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {experiences.map((experience: Experience) => (
+        {experiences.map((experience) => (
           <ExperienceItem
             key={experience.id}
-            {...experience}
+            experience={experience}
           />
         ))}
       </div>

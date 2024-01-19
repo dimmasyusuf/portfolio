@@ -11,7 +11,7 @@ import { getAllMessages } from '@/lib/actions/message.action';
 import { useQuery } from '@tanstack/react-query';
 
 export default function GuestList() {
-  const { data: messages } = useQuery({
+  const { data: messages, isLoading } = useQuery({
     queryKey: ['messages'],
     queryFn: () => getAllMessages(),
   });
@@ -39,7 +39,7 @@ export default function GuestList() {
       <ScrollArea
         className={`${
           user ? 'h-[561px]' : 'h-[569px]'
-        } w-full border p-4 rounded-md`}
+        } w-full border p-4 rounded-md bg-card dark:bg-accent`}
       >
         <div
           className={`${
@@ -49,12 +49,13 @@ export default function GuestList() {
           <div
             className={`${
               user ? 'min-h-[473px]' : 'min-h-[481px]'
-            } flex flex-col gap-4`}
+            } flex flex-col gap-6`}
           >
             {messages?.map((message) => (
               <GuestItem
                 key={message.id}
                 message={message}
+                isLoading={isLoading}
                 user={user}
               />
             ))}

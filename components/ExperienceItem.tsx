@@ -1,29 +1,27 @@
-import { Experience } from '@/types';
-import parse from 'html-react-parser';
+import { Experiences } from '@/types';
 import Image from 'next/image';
 
 export default function ExperienceItem({
-  name,
-  job,
-  startDate,
-  endDate,
-  description,
-  logo,
-}: Experience) {
+  experience,
+}: {
+  experience: Experiences;
+}) {
+  const { title, company, startDate, endDate, logoUrl } = experience;
+
   return (
-    <div className="flex flex-col gap-2 w-full p-6 border rounded-xl">
+    <div className="flex flex-col gap-2 w-full p-6 border rounded-md bg-card dark:bg-accent">
       <div className="relative flex justify-center items-center aspect-square rounded-md w-10 h-10 mt-1">
         <Image
-          src={logo}
-          alt={name}
+          src={logoUrl}
+          alt={company}
           width={40}
           height={40}
           className="rounded-md"
         />
       </div>
       <div className="flex flex-col">
-        <h4 className="font-bold">{name}</h4>
-        <p className="text-sm">{job}</p>
+        <h4 className="font-bold">{company}</h4>
+        <p className="text-sm">{title}</p>
         <p className="text-sm text-muted-foreground">{`${startDate} - ${endDate}`}</p>
       </div>
     </div>

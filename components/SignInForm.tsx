@@ -69,17 +69,18 @@ export default function SignInForm() {
           callbackUrl: '/guestbook',
         });
 
-        await signInMutation();
-
-        form.reset();
-        setIsSubmitting(false);
-
         if (response?.error === null) {
+          await signInMutation();
+
+          form.reset();
+          setIsSubmitting(false);
           router.push('/guestbook');
         } else {
           toast.error(`${response?.error}`, {
             position: 'top-right',
           });
+          form.reset();
+          setIsSubmitting(false);
         }
       }, 1000);
     } catch (error) {
@@ -88,7 +89,7 @@ export default function SignInForm() {
   }
 
   return (
-    <section className="flex flex-col min-w-full sm:min-w-[400px] px-8 py-10 gap-8 rounded-none sm:rounded-xl">
+    <section className="flex flex-col min-w-full sm:min-w-[400px] px-8 py-10 gap-8 rounded-none sm:rounded-xl bg-background sm:border">
       <div className="flex w-full">
         <Link
           href="/guestbook"
