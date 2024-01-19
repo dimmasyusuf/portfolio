@@ -69,17 +69,18 @@ export default function SignInForm() {
           callbackUrl: '/guestbook',
         });
 
-        await signInMutation();
-
-        form.reset();
-        setIsSubmitting(false);
-
         if (response?.error === null) {
+          await signInMutation();
+
+          form.reset();
+          setIsSubmitting(false);
           router.push('/guestbook');
         } else {
           toast.error(`${response?.error}`, {
             position: 'top-right',
           });
+          form.reset();
+          setIsSubmitting(false);
         }
       }, 1000);
     } catch (error) {
