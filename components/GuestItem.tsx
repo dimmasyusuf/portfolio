@@ -66,7 +66,7 @@ export default function GuestItem({
             <MenubarMenu>
               <MenubarTrigger
                 aria-label="Open Options"
-                className="flex items-center justify-center hover:bg-accent h-7 w-4 p-0"
+                className="flex items-center justify-center bg-background hover:bg-accent dark:bg-accent dark:hover:bg-background h-7 w-4 p-0"
                 onClick={() => setIsClose(false)}
               >
                 <DotsVerticalIcon className="w-4 h-4" />
@@ -95,7 +95,7 @@ export default function GuestItem({
           </Menubar>
         )}
       </div>
-      <Separator />
+      {/* <Separator /> */}
     </div>
   );
 }

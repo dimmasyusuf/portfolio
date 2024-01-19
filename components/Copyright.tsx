@@ -26,13 +26,14 @@ export default function Copyright() {
           >
             dimmasyusuf
           </HoverCardTrigger>
-          <HoverCardContent>
+          <HoverCardContent className="dark:bg-accent">
             <div className="flex gap-2">
               <div className="relative flex items-center justify-center aspect-square h-10 w-10">
                 <Image
-                  src="/profile.webp"
+                  src="/images/profile.webp"
                   alt="dimmasyusuf"
-                  fill
+                  width={40}
+                  height={40}
                   className="rounded-md"
                 />
               </div>

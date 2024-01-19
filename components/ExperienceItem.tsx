@@ -1,5 +1,4 @@
 import { Experience } from '@/types';
-import parse from 'html-react-parser';
 import Image from 'next/image';
 
 export default function ExperienceItem({
@@ -7,11 +6,10 @@ export default function ExperienceItem({
   job,
   startDate,
   endDate,
-  description,
   logo,
 }: Experience) {
   return (
-    <div className="flex flex-col gap-2 w-full p-6 border rounded-xl">
+    <div className="flex flex-col gap-2 w-full p-6 border rounded-md bg-card dark:bg-accent">
       <div className="relative flex justify-center items-center aspect-square rounded-md w-10 h-10 mt-1">
         <Image
           src={logo}

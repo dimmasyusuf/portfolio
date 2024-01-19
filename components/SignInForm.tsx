@@ -88,7 +88,7 @@ export default function SignInForm() {
   }
 
   return (
-    <section className="flex flex-col min-w-full sm:min-w-[400px] px-8 py-10 gap-8 rounded-none sm:rounded-xl">
+    <section className="flex flex-col min-w-full sm:min-w-[400px] px-8 py-10 gap-8 rounded-none sm:rounded-xl bg-background sm:border">
       <div className="flex w-full">
         <Link
           href="/guestbook"

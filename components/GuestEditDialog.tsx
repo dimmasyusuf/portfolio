@@ -82,7 +82,10 @@ export default function GuestEditDialog({ message }: { message: Message }) {
           Edit <Pencil2Icon className="w-4 h-4 text-muted-foreground" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex flex-col sm:max-w-md">
+      <DialogContent
+        className="flex flex-col max-w-sm sm:max-w-md rounded-md"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <div className="flex gap-2">
           <div className="flex items-center justify-center w-10 h-10 aspect-square">
             <Image

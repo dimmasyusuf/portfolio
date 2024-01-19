@@ -18,7 +18,7 @@ export default function ProjectItem({
   code,
 }: Projects) {
   return (
-    <Card className="shadow-none hover:shadow-sm">
+    <Card className="shadow-none dark:bg-accent rounded-md h-fit">
       <CardHeader>
         <p className="text-sm">{year}</p>
         <CardTitle className="text-lg">{name}</CardTitle>

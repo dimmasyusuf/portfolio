@@ -50,7 +50,7 @@ export default function Spotify() {
   }
 
   return (
-    <div className="flex gap-4 px-6 py-4 rounded-md items-center border sm:border-none">
+    <div className="flex gap-4 px-6 py-4 rounded-md items-center border border-input sm:border-none bg-card sm:bg-transparent dark:bg-accent dark:sm:bg-transparent">
       <Link
         href={songUrl}
         className="relative flex items-center justify-center aspect-square h-10 w-10"
@@ -59,14 +59,16 @@ export default function Spotify() {
           <Image
             src={albumImageUrl}
             alt={title}
-            fill
+            width={40}
+            height={40}
             className="rounded-md"
           />
         ) : (
           <Image
             src="/images/spotify_icon.svg"
             alt={title}
-            fill
+            width={40}
+            height={40}
             className="rounded-md"
           />
         )}

@@ -13,7 +13,7 @@ export default function SocialMedia() {
       <Button
         variant="ghost"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 hover:bg-background dark:hover:bg-accent"
         aria-label="Follow me on GitHub"
         asChild
       >
@@ -27,7 +27,7 @@ export default function SocialMedia() {
       <Button
         variant="ghost"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 hover:bg-background dark:hover:bg-accent"
         aria-label="Follow me on LinkedIn"
         asChild
       >
@@ -41,7 +41,7 @@ export default function SocialMedia() {
       <Button
         variant="ghost"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 hover:bg-background dark:hover:bg-accent"
         aria-label="Follow me on Instagram"
         asChild
       >
@@ -55,7 +55,7 @@ export default function SocialMedia() {
       <Button
         variant="ghost"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 hover:bg-background dark:hover:bg-accent"
         aria-label="Follow me on Discord"
         asChild
       >

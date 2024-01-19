@@ -76,20 +76,22 @@ export default function ProjectList() {
           </Button>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {pathName === '/'
-          ? featuredProjects.map((project) => (
-              <ProjectItem
-                key={project.id}
-                {...project}
-              />
-            ))
-          : currentProjects.map((project) => (
-              <ProjectItem
-                key={project.id}
-                {...project}
-              />
-            ))}
+      <div className={`${pathName === '/projects' && 'min-h-[602px]'}`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit">
+          {pathName === '/'
+            ? featuredProjects.map((project) => (
+                <ProjectItem
+                  key={project.id}
+                  {...project}
+                />
+              ))
+            : currentProjects.map((project) => (
+                <ProjectItem
+                  key={project.id}
+                  {...project}
+                />
+              ))}
+        </div>
       </div>
       {pathName === '/projects' && (
         <nav
