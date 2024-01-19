@@ -82,13 +82,13 @@ export default function ProjectList() {
             ? featuredProjects.map((project) => (
                 <ProjectItem
                   key={project.id}
-                  {...project}
+                  project={project}
                 />
               ))
             : currentProjects.map((project) => (
                 <ProjectItem
                   key={project.id}
-                  {...project}
+                  project={project}
                 />
               ))}
         </div>

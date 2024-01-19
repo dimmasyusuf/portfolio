@@ -5,8 +5,8 @@ import { Button } from './ui/button';
 import data from '@/lib/data';
 
 export default function Skills() {
-  const frontends = data.frontend;
-  const backends = data.backend;
+  const frontends = data.frontends;
+  const backends = data.backends;
 
   return (
     <div className="flex flex-col gap-6">
@@ -25,7 +25,7 @@ export default function Skills() {
                 asChild
               >
                 <a
-                  href={frontend.href}
+                  href={frontend.url}
                   target="_blank"
                 >
                   {frontend.name}
@@ -47,7 +47,7 @@ export default function Skills() {
                 asChild
               >
                 <a
-                  href={backend.href}
+                  href={backend.url}
                   target="_blank"
                 >
                   {backend.name}
