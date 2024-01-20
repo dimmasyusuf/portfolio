@@ -53,7 +53,7 @@ export default function ProjectList() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
-        <h3 className="font-bold text-2xl">Projects</h3>
+        <h2 className="font-bold text-2xl">Projects</h2>
         {pathName === '/' ? (
           <Button
             size="sm"
@@ -69,7 +69,11 @@ export default function ProjectList() {
             size="sm"
             asChild
           >
-            <Link href="https://github.com/dimmasyusuf/">
+            <Link
+              href="https://github.com/dimmasyusuf/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               GitHub
               <ArrowRightIcon className="ml-2 h-4 w-4" />
             </Link>

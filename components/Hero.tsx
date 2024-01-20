@@ -8,11 +8,11 @@ export default function Hero() {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
       <div className="order-2 sm:order-1 flex items-center justify-center">
         <div className="flex flex-col">
-          <h2 className="text-4xl font-extrabold text-center sm:text-start mb-2">
+          <h1 className="text-4xl font-extrabold text-center sm:text-start mb-2">
             dimmasyusuf
-          </h2>
+          </h1>
           <p className=" text-center sm:text-start mb-6">
-            A Full Stack Developer from Indonesia.
+            A Software Engineer from Indonesia.
             <br /> Currently freelancing at UpWork.
           </p>
           <div className="flex gap-4 items-center justify-center sm:justify-start">
@@ -20,7 +20,11 @@ export default function Hero() {
               size="lg"
               asChild
             >
-              <Link href="https://www.linkedin.com/in/dimmasyusuf/">
+              <Link
+                href="https://www.linkedin.com/in/dimmasyusuf/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Hire Me
               </Link>
             </Button>
@@ -33,6 +37,8 @@ export default function Hero() {
               <Link
                 href="https://github.com/dimmasyusuf/"
                 aria-label="GitHub Profile"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <GitHubLogoIcon className="w-6 h-6" />
               </Link>

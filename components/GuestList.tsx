@@ -24,7 +24,7 @@ export default function GuestList() {
   return (
     <section className="flex flex-col gap-6 w-full">
       <div className="flex items-center justify-between">
-        <h3 className="font-bold text-2xl">Guestbook</h3>
+        <h2 className="font-bold text-2xl">Guestbook</h2>
         {user ? (
           <GuestProfile user={user} />
         ) : (

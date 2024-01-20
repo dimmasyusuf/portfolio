@@ -71,7 +71,7 @@ export default function GuestItem({
           </div>
           <div className="flex flex-col gap-1 w-full">
             <div className="flex justify-between items-center gap-2">
-              <p className="font-bold text-sm line-clamp-1">{author?.name}</p>
+              <h3 className="font-bold text-sm line-clamp-1">{author?.name}</h3>
               <p className="text-xs text-muted-foreground whitespace-nowrap">
                 {formattedCreatedAt}
               </p>

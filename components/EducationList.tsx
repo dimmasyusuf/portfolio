@@ -7,7 +7,7 @@ export default function Education() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h3 className="text-2xl font-bold">Education</h3>
+      <h2 className="text-2xl font-bold">Education</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {educations.map((education: Educations) => (
           <EducationItem

@@ -20,8 +20,8 @@ export default function ExperienceItem({
         />
       </div>
       <div className="flex flex-col">
-        <h4 className="font-bold">{company}</h4>
-        <p className="text-sm">{title}</p>
+        <h3 className="font-bold">{company}</h3>
+        <h4 className="text-sm">{title}</h4>
         <p className="text-sm text-muted-foreground">{`${startDate} - ${endDate}`}</p>
       </div>
     </div>

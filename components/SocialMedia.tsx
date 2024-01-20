@@ -20,6 +20,7 @@ export default function SocialMedia() {
         <Link
           href="https://github.com/dimmasyusuf/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <GitHubLogoIcon className="h-6 w-6" />
         </Link>
@@ -34,6 +35,7 @@ export default function SocialMedia() {
         <Link
           href="https://www.linkedin.com/in/dimmasyusuf/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <LinkedInLogoIcon className="h-6 w-6" />
         </Link>
@@ -48,6 +50,7 @@ export default function SocialMedia() {
         <Link
           href="https://www.instagram.com/dimmasyusuf/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <InstagramLogoIcon className="h-6 w-6" />
         </Link>
@@ -62,6 +65,7 @@ export default function SocialMedia() {
         <Link
           href="https://discordapp.com/users/461403866299236352/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <DiscordLogoIcon className="h-6 w-6" />
         </Link>

@@ -20,8 +20,8 @@ export default function EducationItem({
         />
       </div>
       <div className="flex flex-col">
-        <h4 className="font-bold">{university}</h4>
-        <p className="text-sm">{major}</p>
+        <h3 className="font-bold">{university}</h3>
+        <h4 className="text-sm">{major}</h4>
         <p className="text-sm text-muted-foreground">{`${startDate} - ${endDate}`}</p>
       </div>
     </div>

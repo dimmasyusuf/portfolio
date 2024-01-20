@@ -13,7 +13,9 @@ import { User } from '@/types';
 export default function GuestProfile({ user }: { user?: User | null }) {
   const { theme } = useTheme();
   const avatar =
-    theme === 'light' ? '/images/avatar_light.webp' : '/images/avatar_dark.webp';
+    theme === 'light'
+      ? '/images/avatar_light.webp'
+      : '/images/avatar_dark.webp';
 
   return (
     <Popover>
@@ -32,10 +34,10 @@ export default function GuestProfile({ user }: { user?: User | null }) {
         className="flex flex-col gap-4 dark:shadow-background"
       >
         <div className="flex flex-col overflow-hidden">
-          <p className="font-bold truncate">{user?.name || 'Guest'}</p>
-          <p className="text-sm text-muted-foreground truncate">
+          <h3 className="font-bold truncate">{user?.name || 'Guest'}</h3>
+          <h4 className="text-sm text-muted-foreground truncate">
             {user?.email || 'guest@mail.com'}
-          </p>
+          </h4>
         </div>
         <Button
           className="w-full"

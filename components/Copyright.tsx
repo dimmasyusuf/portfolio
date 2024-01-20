@@ -23,6 +23,8 @@ export default function Copyright() {
           <HoverCardTrigger
             href="https://www.linkedin.com/in/dimmasyusuf/"
             className="hover:text-primary hover:font-bold hover:underline cursor-pointer"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             dimmasyusuf
           </HoverCardTrigger>
@@ -49,6 +51,7 @@ export default function Copyright() {
                     href="https://github.com/dimmasyusuf/"
                     className="flex items-center justify-center"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <GitHubLogoIcon className="w-4 h-4" />
                   </Link>
@@ -56,6 +59,7 @@ export default function Copyright() {
                     href="https://www.linkedin.com/in/dimmasyusuf/"
                     className="flex items-center justify-center"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <LinkedInLogoIcon className="w-4 h-4" />
                   </Link>
@@ -63,6 +67,7 @@ export default function Copyright() {
                     href="https://www.instagram.com/dimmasyusuf/"
                     className="flex items-center justify-center"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <InstagramLogoIcon className="w-4 h-4" />
                   </Link>
@@ -70,6 +75,7 @@ export default function Copyright() {
                     href="https://discordapp.com/users/461403866299236352/"
                     className="flex items-center justify-center"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <DiscordLogoIcon className="w-4 h-4" />
                   </Link>
