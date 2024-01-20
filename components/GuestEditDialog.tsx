@@ -83,7 +83,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="flex flex-col max-w-sm sm:max-w-md rounded-md"
+        className="flex flex-col max-w-xs sm:max-w-md rounded-md"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <div className="flex gap-2">

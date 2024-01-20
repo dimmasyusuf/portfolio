@@ -33,7 +33,9 @@ export default function GuestItem({
 
   const { theme } = useTheme();
   const avatar =
-    theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
+    theme === 'light'
+      ? '/images/avatar_light.webp'
+      : '/images/avatar_dark.webp';
   const formattedCreatedAt = moment(createdAt).fromNow();
   const authorEmail = author?.email;
   const sessionEmail = user?.email;
@@ -69,7 +71,7 @@ export default function GuestItem({
           </div>
           <div className="flex flex-col gap-1 w-full">
             <div className="flex justify-between items-center gap-2">
-              <p className="font-bold text-sm line-clamp-1">{author?.name}</p>
+              <h3 className="font-bold text-sm line-clamp-1">{author?.name}</h3>
               <p className="text-xs text-muted-foreground whitespace-nowrap">
                 {formattedCreatedAt}
               </p>

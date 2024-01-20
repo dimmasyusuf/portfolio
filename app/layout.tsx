@@ -13,7 +13,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: 'Dimas Yusuf Qurohman',
-  description: 'A Full Stack Developer from Indonesia',
+  description: 'A Software Engineer based in Indonesia',
   generator: 'Next.js',
   manifest: '/manifest.json',
   keywords: ['Dimas Yusuf Qurohman', 'dimmasyusuf', 'dimmasyusuf portfolio'],
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://dimmasyusuf.me/'),
   openGraph: {
     title: 'Dimas Yusuf Qurohman',
-    description: 'A Full Stack Developer from Indonesia',
+    description: 'A Software Engineer based in Indonesia',
     url: 'https://dimmasyusuf.me',
     siteName: 'Dimas Yusuf Qurohman',
     images: [
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+    { media: '(prefers-color-scheme: light)', color: 'black' },
+    { media: '(prefers-color-scheme: dark)', color: 'white' },
   ],
   width: 'device-width',
   initialScale: 1,

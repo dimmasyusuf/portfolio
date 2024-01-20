@@ -54,6 +54,8 @@ export default function Spotify() {
       <Link
         href={songUrl}
         className="relative flex items-center justify-center aspect-square h-10 w-10"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         {playerStatus === 'PLAY' || playerStatus === 'PAUSE' ? (
           <Image
@@ -65,7 +67,7 @@ export default function Spotify() {
           />
         ) : (
           <Image
-            src="/images/spotify_icon.svg"
+            src="/images/icon_spotify.svg"
             alt={title}
             width={40}
             height={40}
@@ -77,12 +79,16 @@ export default function Spotify() {
         <Link
           href={songUrl}
           className="font-bold text-sm mb-1 truncate"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {title}
         </Link>
         <Link
           href={artistUrl}
           className="text-muted-foreground text-xs truncate"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {artist}
         </Link>

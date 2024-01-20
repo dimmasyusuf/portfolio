@@ -25,7 +25,11 @@ export default function ProjectItem({ project }: { project: Projects }) {
           size="sm"
           asChild
         >
-          <Link href={demoUrl}>
+          <Link
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <ExternalLinkIcon className="mr-2 h-4 w-4" /> Demo
           </Link>
         </Button>
@@ -36,6 +40,8 @@ export default function ProjectItem({ project }: { project: Projects }) {
           <Link
             href={repoUrl}
             className="flex items-center"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <GitHubLogoIcon className="mr-2 h-4 w-4" /> Code
           </Link>
