@@ -13,7 +13,7 @@ import { User } from '@/types';
 export default function GuestProfile({ user }: { user?: User | null }) {
   const { theme } = useTheme();
   const avatar =
-    theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
+    theme === 'light' ? '/images/avatar_light.webp' : '/images/avatar_dark.webp';
 
   return (
     <Popover>

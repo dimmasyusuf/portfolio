@@ -214,18 +214,26 @@ const data = (() => {
       major: 'Aerospace Engineering',
       startDate: '2019',
       endDate: '2023',
-      logoUrl: '/images/logo_itl_trisakti.jpeg',
+      logoUrl: '/images/logo_itl_trisakti.webp',
     },
   ];
 
   const experiences: Experiences[] = [
     {
       id: 1,
+      title: 'Full Stack Developer',
+      company: 'Upwork',
+      startDate: 'Jan 2024',
+      endDate: 'Present',
+      logoUrl: '/images/logo_upwork.webp',
+    },
+    {
+      id: 1,
       title: 'Full Stack Developer Student',
       company: 'Purwadhika Digital Technology School',
       startDate: 'Jul 2023',
       endDate: 'Dec 2023',
-      logoUrl: '/images/logo_purwadhika.jpeg',
+      logoUrl: '/images/logo_purwadhika.webp',
     },
     {
       id: 2,
@@ -233,7 +241,7 @@ const data = (() => {
       company: 'Dicoding Indonesia',
       startDate: 'Aug 2022',
       endDate: 'Jan 2023',
-      logoUrl: '/images/logo_dicoding.jpeg',
+      logoUrl: '/images/logo_dicoding.webp',
     },
   ];
 

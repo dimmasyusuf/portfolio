@@ -33,7 +33,9 @@ export default function GuestItem({
 
   const { theme } = useTheme();
   const avatar =
-    theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
+    theme === 'light'
+      ? '/images/avatar_light.webp'
+      : '/images/avatar_dark.webp';
   const formattedCreatedAt = moment(createdAt).fromNow();
   const authorEmail = author?.email;
   const sessionEmail = user?.email;

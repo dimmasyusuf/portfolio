@@ -65,7 +65,7 @@ export default function Spotify() {
           />
         ) : (
           <Image
-            src="/images/spotify_icon.svg"
+            src="/images/icon_spotify.svg"
             alt={title}
             width={40}
             height={40}
