@@ -42,9 +42,6 @@ export default function GuestInput() {
   });
 
   async function onSubmit(values: z.infer<typeof guestInputSchema>) {
-    const session = await getSession();
-    if (!session) router.push('/sign-in');
-
     try {
       setIsSubmitting(true);
 
@@ -70,7 +67,7 @@ export default function GuestInput() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="sticky bg-card dark:bg-accent bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4 items-center"
+        className="sticky bg-card dark:bg-accent bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4 items-start"
       >
         <FormField
           control={form.control}
