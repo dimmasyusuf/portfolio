@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['i.scdn.co', 'lh3.googleusercontent.com'],
+    domains: [
+      'i.scdn.co',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com',
+    ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,6 +15,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
         port: '',
       },
     ],
