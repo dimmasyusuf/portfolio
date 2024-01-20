@@ -13,7 +13,7 @@ export default function Hero() {
           </h1>
           <p className=" text-center sm:text-start mb-6">
             A Software Engineer from Indonesia.
-            <br /> Currently freelancing at UpWork.
+            <br /> Currently freelancing at Upwork.
           </p>
           <div className="flex gap-4 items-center justify-center sm:justify-start">
             <Button
