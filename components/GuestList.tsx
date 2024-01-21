@@ -9,8 +9,11 @@ import GuestInput from './GuestInput';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { getAllMessages } from '@/lib/actions/message.action';
 import { useQuery } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 
 export default function GuestList() {
+  const { status } = useSession();
+
   const { data: messages, isLoading } = useQuery({
     queryKey: ['messages'],
     queryFn: () => getAllMessages(),
@@ -19,6 +22,7 @@ export default function GuestList() {
   const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
+    enabled: status === 'authenticated',
   });
 
   return (
