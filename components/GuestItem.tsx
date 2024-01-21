@@ -17,15 +17,12 @@ import moment from 'moment';
 import GuestEditDialog from './GuestEditDialog';
 import GuestDeleteDialog from './GuestDeleteDialog';
 import { useState } from 'react';
-import { Skeleton } from './ui/skeleton';
 
 export default function GuestItem({
   message,
-  isLoading,
   user,
 }: {
   message: Message;
-  isLoading: boolean;
   user?: User | null;
 }) {
   const { id, text, createdAt, author } = message;
@@ -40,21 +37,6 @@ export default function GuestItem({
   const authorEmail = author?.email;
   const sessionEmail = user?.email;
   const isAuthor = authorEmail === sessionEmail;
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-between gap-2 w-full items-center">
-        <Skeleton className="w-10 h-10 aspect-square rounded-md" />
-        <div className="flex flex-col gap-1 w-full">
-          <div className="flex justify-between items-center gap-2">
-            <Skeleton className="w-4/12 h-4" />
-            <Skeleton className="w-16 h-4" />
-          </div>
-          <Skeleton className="w-6/12 h-4" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-4 w-full">
