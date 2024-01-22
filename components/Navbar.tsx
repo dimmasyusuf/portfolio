@@ -14,14 +14,19 @@ import Link from 'next/link';
 import data from '@/lib/data';
 import ThemeToggle from './ThemeToggle';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const routes = data.routes;
   const pathName = usePathname();
 
   return (
     <nav className="flex justify-between items-center">
-      <Sheet>
+      <Sheet
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
         <SheetTrigger
           aria-label="Open Mobile Menu"
           className="flex sm:hidden hover:bg-accent hover:text-accent-foreground h-9 w-9 items-center justify-center rounded-md"
@@ -45,6 +50,7 @@ export default function Navbar() {
                           ? 'font-bold text-primary'
                           : 'text-muted-foreground'
                       } w-full`}
+                      onClick={() => setIsOpen(false)}
                       asChild
                     >
                       <Link href={route.path}>{route.name}</Link>
@@ -60,7 +66,11 @@ export default function Navbar() {
               className="w-full"
               asChild
             >
-              <Link href="https://www.linkedin.com/in/dimmasyusuf/">
+              <Link
+                href="https://www.linkedin.com/in/dimmasyusuf/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Hire Me
               </Link>
             </Button>
