@@ -52,7 +52,7 @@ export default function Hero() {
           alt="Profile Image"
           width="256"
           height="256"
-          className="shape border-black dark:border-white border-[3px]"
+          className="shape border-black dark:border-primary border-[3px]"
           priority={true}
         />
       </div>
