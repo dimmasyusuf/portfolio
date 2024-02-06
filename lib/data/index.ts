@@ -19,6 +19,11 @@ const data = (() => {
     },
     {
       id: 4,
+      name: 'Donate',
+      path: '/donate',
+    },
+    {
+      id: 5,
       name: 'Guestbook',
       path: '/guestbook',
     },
