@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from './ui/textarea';
+import { DonateDialog } from './DonateDialog';
 
 export default function DonateForm() {
   const form = useForm<z.infer<typeof donateInputSchema>>({
@@ -28,6 +29,8 @@ export default function DonateForm() {
   function onSubmit(values: z.infer<typeof donateInputSchema>) {
     console.log(values);
   }
+
+  const openDialog = form.formState.isSubmitSuccessful;
 
   return (
     <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border">
@@ -71,13 +74,7 @@ export default function DonateForm() {
             )}
           />
 
-          <Button
-            type="submit"
-            size="sm"
-            className="w-full h-9"
-          >
-            Donate
-          </Button>
+          <DonateDialog openDialog={openDialog} />
         </form>
       </Form>
     </div>
