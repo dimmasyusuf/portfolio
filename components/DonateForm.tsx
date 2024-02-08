@@ -22,11 +22,24 @@ import {
   PlusIcon,
 } from '@radix-ui/react-icons';
 import { donateInputSchema } from '@/lib/validator';
+import { useQuery } from '@tanstack/react-query';
+import { getUserProfile } from '@/lib/actions/user.action';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import AuthDialog from './AuthDialog';
 
 export default function DonateForm() {
+  const { status } = useSession();
   const [step, setStep] = useState(1);
   const [totalUnit, setTotalUnit] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
+  const router = useRouter();
+
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserProfile(),
+    enabled: status === 'authenticated',
+  });
 
   const form = useForm<z.infer<typeof donateInputSchema>>({
     resolver: zodResolver(donateInputSchema),
@@ -221,15 +234,18 @@ export default function DonateForm() {
             Back
           </Button>
         )}
-        {step < 3 && (
-          <Button
-            size="sm"
-            onClick={() => setStep(step + 1)}
-            className="ml-auto"
-          >
-            Next <ArrowRightIcon className="ml-2 w-4 h-4" />
-          </Button>
-        )}
+        {step < 3 &&
+          (user ? (
+            <Button
+              size="sm"
+              onClick={() => setStep(step + 1)}
+              className="ml-auto"
+            >
+              Next <ArrowRightIcon className="ml-2 w-4 h-4" />
+            </Button>
+          ) : (
+            <AuthDialog />
+          ))}
         {step === 3 && (
           <Button
             size="sm"

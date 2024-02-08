@@ -11,6 +11,7 @@ import { getAllMessages } from '@/lib/actions/message.action';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { Skeleton } from './ui/skeleton';
+import AuthDialog from './AuthDialog';
 
 export default function GuestList() {
   const { status } = useSession();
@@ -33,18 +34,7 @@ export default function GuestList() {
         {userLoading ? (
           <Skeleton className="w-10 h-10 aspect-square rounded-md" />
         ) : (
-          <>
-            {user ? (
-              <GuestProfile user={user} />
-            ) : (
-              <Button
-                size="sm"
-                asChild
-              >
-                <Link href="/sign-in">Sign in</Link>
-              </Button>
-            )}
-          </>
+          <>{user ? <GuestProfile user={user} /> : <AuthDialog />}</>
         )}
       </div>
       <ScrollArea
