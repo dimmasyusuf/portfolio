@@ -57,7 +57,7 @@ export default function DonateForm() {
   };
 
   return (
-    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-full sm:h-[569px] justify-between">
+    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[586px] sm:h-[569px] justify-between">
       <div className="flex flex-col space-y-1.5 text-center sm:text-left">
         <h3 className="text-lg font-semibold leading-none tracking-tight">
           Donate
@@ -154,47 +154,59 @@ export default function DonateForm() {
       )}
 
       {step === 2 && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mb-auto"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Name (Optional)"
-                      className="shadow-none h-12 dark:border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="flex flex-col gap-4 h-full">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 mb-auto"
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Name"
+                        className="shadow-none dark:border-neutral-50"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Your message"
-                      className="shadow-none dark:border-neutral-50 h-24"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Support Message"
+                        className="shadow-none dark:border-neutral-50 h-52"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+
+          <div className="flex gap-2 justify-between items-center rounded-md p-4 border dark:border-neutral-50">
+            <span className="text-sm font-semibold">Total</span>
+            <span className="text-sm font-semibold">
+              Rp{' '}
+              {isNaN(totalUnit)
+                ? totalPrice.toLocaleString('id-ID')
+                : (totalUnit * totalPrice).toLocaleString('id-ID')}
+            </span>
+          </div>
+        </div>
       )}
 
       <div className="flex justify-between items-center w-full">
@@ -202,7 +214,7 @@ export default function DonateForm() {
           <Button
             size="sm"
             variant="outline"
-            className="dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+            className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
             onClick={() => setStep(step - 1)}
           >
             <ArrowLeftIcon className="mr-2 w-4 h-4" />
