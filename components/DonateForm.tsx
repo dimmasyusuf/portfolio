@@ -22,23 +22,32 @@ import {
   PlusIcon,
 } from '@radix-ui/react-icons';
 import { donateInputSchema } from '@/lib/validator';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import AuthDialog from './AuthDialog';
+import { createInvoice } from '@/lib/actions/xendit.action';
 
 export default function DonateForm() {
   const { status } = useSession();
   const [step, setStep] = useState(1);
   const [totalUnit, setTotalUnit] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
     enabled: status === 'authenticated',
+  });
+
+  const { mutateAsync: createInvoiceMutation } = useMutation({
+    mutationFn: createInvoice,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['donate'] });
+    },
   });
 
   const form = useForm<z.infer<typeof donateInputSchema>>({
@@ -67,6 +76,24 @@ export default function DonateForm() {
       setTotalUnit(1);
       setTotalPrice(5000);
     }
+  };
+
+  const handleDonate = async () => {
+    const externalId = 'donation-' + Date.now();
+    const amount = totalUnit * totalPrice;
+    const payerEmail = user?.email!;
+    const description = `Donation for ${totalUnit} coffee`;
+
+    const response = await createInvoiceMutation({
+      externalId,
+      amount,
+      payerEmail,
+      description,
+    });
+
+    const invoiceUrl = response.invoiceUrl;
+
+    router.push(invoiceUrl);
   };
 
   return (
@@ -167,50 +194,52 @@ export default function DonateForm() {
       )}
 
       {step === 2 && (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 mb-auto"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Name"
+                      className="shadow-none dark:border-neutral-50"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Support Message"
+                      className="shadow-none dark:border-neutral-50 h-52"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      )}
+
+      {step === 3 && (
         <div className="flex flex-col gap-4 h-full">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-4 mb-auto"
-            >
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Name"
-                        className="shadow-none dark:border-neutral-50"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Support Message"
-                        className="shadow-none dark:border-neutral-50 h-52"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </form>
-          </Form>
-
-          <div className="flex gap-2 justify-between items-center rounded-md p-4 border dark:border-neutral-50">
+          <div className="flex gap-2 justify-between items-center rounded-md px-4 py-2 border dark:border-neutral-50 mt-auto">
             <span className="text-sm font-semibold">Total</span>
             <span className="text-sm font-semibold">
               Rp{' '}
@@ -249,7 +278,7 @@ export default function DonateForm() {
         {step === 3 && (
           <Button
             size="sm"
-            onClick={() => setStep(1)}
+            onClick={handleDonate}
           >
             Donate <ArrowRightIcon className="ml-2 w-4 h-4" />
           </Button>
