@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -54,7 +54,7 @@ export default function SupportForm() {
   const { mutateAsync: createInvoiceMutation } = useMutation({
     mutationFn: createInvoice,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['donation'] });
+      queryClient.invalidateQueries({ queryKey: ['support'] });
     },
   });
 
@@ -66,18 +66,30 @@ export default function SupportForm() {
     },
   });
 
+  useEffect(() => {
+    if (form.formState.errors.name || form.formState.errors.message) {
+      setStep(2);
+    }
+  }, [form.formState.errors]);
+
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
     const amount = totalUnit * totalPrice;
 
-    const support = await createSupportMutation({
+    await createSupportMutation({
       name,
       message,
       totalUnit,
       amount,
     });
 
-    console.log('support', support);
+    form.reset();
+
+    setStep(4);
+
+    setTimeout(() => {
+      setStep(1);
+    }, 5000);
   }
 
   const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,12 +128,14 @@ export default function SupportForm() {
 
   return (
     <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[586px] sm:h-[569px] justify-between">
-      <div className="flex flex-col space-y-1.5 text-center sm:text-left">
-        <h3 className="text-lg font-semibold leading-none tracking-tight">
-          Support
-        </h3>
-        <p className="text-sm text-muted-foreground">Step {step} of 3</p>
-      </div>
+      {step <= 3 && (
+        <div className="flex flex-col space-y-1.5 text-center sm:text-left">
+          <h3 className="text-lg font-semibold leading-none tracking-tight">
+            Support
+          </h3>
+          <p className="text-sm text-muted-foreground">Step {step} of 3</p>
+        </div>
+      )}
 
       {step === 1 && (
         <div className="flex flex-col items-center justify-center gap-8">
@@ -269,6 +283,17 @@ export default function SupportForm() {
         </div>
       )}
 
+      {step === 4 && (
+        <div className="flex flex-col my-auto">
+          <span className="text-9xl w-full">🎉</span>
+          <span className="font-semibold mt-16">THANK YOU</span>
+          <p className="text-sm text-muted-foreground">
+            Your support will help me to keep coding and sharing knowledge with
+            the community 👋🏻
+          </p>
+        </div>
+      )}
+
       <div className="flex justify-between items-center w-full">
         {step > 1 && (
           <Button
@@ -300,7 +325,7 @@ export default function SupportForm() {
             size="sm"
             onClick={form.handleSubmit(onSubmit)}
           >
-            Donate <ArrowRightIcon className="ml-2 w-4 h-4" />
+            Support <ArrowRightIcon className="ml-2 w-4 h-4" />
           </Button>
         )}
       </div>
