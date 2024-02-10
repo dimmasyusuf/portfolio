@@ -28,6 +28,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import AuthDialog from './AuthDialog';
 import { createInvoice } from '@/lib/actions/xendit.action';
+import { createSupport } from '@/lib/actions/support.action';
 
 export default function SupportForm() {
   const { status } = useSession();
@@ -41,6 +42,13 @@ export default function SupportForm() {
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
     enabled: status === 'authenticated',
+  });
+
+  const { mutateAsync: createSupportMutation } = useMutation({
+    mutationFn: createSupport,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['support'] });
+    },
   });
 
   const { mutateAsync: createInvoiceMutation } = useMutation({
@@ -58,8 +66,18 @@ export default function SupportForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof supportInputSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof supportInputSchema>) {
+    const { name, message } = values;
+    const amount = totalUnit * totalPrice;
+
+    const support = await createSupportMutation({
+      name,
+      message,
+      totalUnit,
+      amount,
+    });
+
+    console.log('support', support);
   }
 
   const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
