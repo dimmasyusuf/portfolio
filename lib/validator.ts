@@ -47,7 +47,7 @@ export const guestInputSchema = z.object({
     }),
 });
 
-export const donateInputSchema = z.object({
+export const supportInputSchema = z.object({
   name: z
     .string()
     .min(4, {

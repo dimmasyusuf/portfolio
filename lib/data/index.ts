@@ -19,13 +19,13 @@ const data = (() => {
     },
     {
       id: 4,
-      name: 'Donate',
-      path: '/donate',
+      name: 'Guestbook',
+      path: '/guestbook',
     },
     {
       id: 5,
-      name: 'Guestbook',
-      path: '/guestbook',
+      name: 'Support',
+      path: '/support',
     },
   ];
 

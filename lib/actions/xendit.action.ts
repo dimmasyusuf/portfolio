@@ -1,6 +1,9 @@
 'use server';
 
-import { Xendit, Invoice as InvoiceClient } from 'xendit-node';
+import {
+  Xendit,
+  Invoice as InvoiceClient,
+} from 'xendit-node';
 import { CreateInvoiceRequest } from 'xendit-node/invoice/models';
 
 const xenditClient = new Xendit({

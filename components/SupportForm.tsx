@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { set, z } from 'zod';
+import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -21,7 +21,7 @@ import {
   MinusIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import { donateInputSchema } from '@/lib/validator';
+import { supportInputSchema } from '@/lib/validator';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
@@ -29,7 +29,7 @@ import { useRouter } from 'next/navigation';
 import AuthDialog from './AuthDialog';
 import { createInvoice } from '@/lib/actions/xendit.action';
 
-export default function DonateForm() {
+export default function SupportForm() {
   const { status } = useSession();
   const [step, setStep] = useState(1);
   const [totalUnit, setTotalUnit] = useState(1);
@@ -46,19 +46,19 @@ export default function DonateForm() {
   const { mutateAsync: createInvoiceMutation } = useMutation({
     mutationFn: createInvoice,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['donate'] });
+      queryClient.invalidateQueries({ queryKey: ['donation'] });
     },
   });
 
-  const form = useForm<z.infer<typeof donateInputSchema>>({
-    resolver: zodResolver(donateInputSchema),
+  const form = useForm<z.infer<typeof supportInputSchema>>({
+    resolver: zodResolver(supportInputSchema),
     defaultValues: {
       name: '',
       message: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof donateInputSchema>) {
+  function onSubmit(values: z.infer<typeof supportInputSchema>) {
     console.log(values);
   }
 
@@ -78,7 +78,7 @@ export default function DonateForm() {
     }
   };
 
-  const handleDonate = async () => {
+  const handleSupport = async () => {
     const externalId = 'donation-' + Date.now();
     const amount = totalUnit * totalPrice;
     const payerEmail = user?.email!;
@@ -100,7 +100,7 @@ export default function DonateForm() {
     <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[586px] sm:h-[569px] justify-between">
       <div className="flex flex-col space-y-1.5 text-center sm:text-left">
         <h3 className="text-lg font-semibold leading-none tracking-tight">
-          Donate
+          Support
         </h3>
         <p className="text-sm text-muted-foreground">Step {step} of 3</p>
       </div>
@@ -278,7 +278,7 @@ export default function DonateForm() {
         {step === 3 && (
           <Button
             size="sm"
-            onClick={handleDonate}
+            onClick={handleSupport}
           >
             Donate <ArrowRightIcon className="ml-2 w-4 h-4" />
           </Button>
