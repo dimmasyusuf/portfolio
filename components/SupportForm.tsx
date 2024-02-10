@@ -263,6 +263,7 @@ export default function SupportForm() {
             Back
           </Button>
         )}
+
         {step < 3 &&
           (user ? (
             <Button
@@ -275,10 +276,11 @@ export default function SupportForm() {
           ) : (
             <AuthDialog />
           ))}
+
         {step === 3 && (
           <Button
             size="sm"
-            onClick={handleSupport}
+            onClick={form.handleSubmit(onSubmit)}
           >
             Donate <ArrowRightIcon className="ml-2 w-4 h-4" />
           </Button>
