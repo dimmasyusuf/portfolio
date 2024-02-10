@@ -1,5 +1,6 @@
 import React from 'react';
 import SupportForm from './SupportForm';
+import SupportList from './SupportList';
 
 export default function Support() {
   return (
@@ -7,6 +8,7 @@ export default function Support() {
       <h2 className="text-2xl font-bold">Support</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <SupportForm />
+        <SupportList />
       </div>
     </section>
   );
