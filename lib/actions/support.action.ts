@@ -1,0 +1,47 @@
+'use server';
+
+import { getServerSession } from 'next-auth';
+import prisma from '../prismadb';
+import { handleError } from '../utils';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+
+export async function createSupport({
+  name,
+  message,
+  totalUnit,
+  amount,
+}: {
+  name: string;
+  message: string;
+  totalUnit: number;
+  amount: number;
+}) {
+  const session = await getServerSession(authOptions);
+  const email = session?.user?.email;
+
+  try {
+    if (email) {
+      const user = await prisma.user.findUnique({
+        where: { email },
+        select: { id: true },
+      });
+
+      const support = await prisma.support.create({
+        data: {
+          name,
+          message,
+          totalUnit,
+          amount,
+          status: 'PENDING',
+          userId: user?.id!,
+        },
+      });
+
+      return support;
+    } else {
+      throw new Error('You must be logged in to give a support');
+    }
+  } catch (error) {
+    handleError(error);
+  }
+}
