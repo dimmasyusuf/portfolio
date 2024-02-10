@@ -45,3 +45,27 @@ export async function createSupport({
     handleError(error);
   }
 }
+
+export async function getAllSupports() {
+  try {
+    const supports = await prisma.support.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return supports;
+  } catch (error) {
+    handleError(error);
+  }
+}
