@@ -21,7 +21,7 @@ export default function AuthDialog({
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      {pathName === '/donate' && (
+      {pathName === '/support' && (
         <DialogTrigger className="ml-auto bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors">
           Next <ArrowRightIcon className="ml-2 w-4 h-4" />
         </DialogTrigger>

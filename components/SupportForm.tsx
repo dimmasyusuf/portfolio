@@ -38,6 +38,8 @@ export default function SupportForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  console.log('status', status);
+
   const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
@@ -148,6 +150,7 @@ export default function SupportForm() {
                 height={256}
               />
             </div>
+            {/* <span className="text-9xl">🍔</span> */}
             <div className="flex flex-col justify-center items-center">
               <span className="text-lg">Coffee</span>
               <span className="text-sm text-muted-foreground">
