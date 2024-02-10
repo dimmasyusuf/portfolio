@@ -49,6 +49,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   messages      Message[]
+  supports      Support[]
 }
 
 model VerificationToken {
@@ -67,4 +68,17 @@ model Message {
   updatedAt DateTime @updatedAt
   authorId  String   @db.ObjectId
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Support {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  message   String
+  item      String
+  amount    Float
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
