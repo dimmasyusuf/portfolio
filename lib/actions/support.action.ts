@@ -8,12 +8,12 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 export async function createSupport({
   name,
   message,
-  totalUnit,
+  totalBurger,
   amount,
 }: {
   name: string;
   message: string;
-  totalUnit: number;
+  totalBurger: number;
   amount: number;
 }) {
   const session = await getServerSession(authOptions);
@@ -30,7 +30,7 @@ export async function createSupport({
         data: {
           name,
           message,
-          totalUnit,
+          totalBurger,
           amount,
           status: 'PENDING',
           userId: user?.id!,

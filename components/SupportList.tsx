@@ -19,7 +19,7 @@ export default function SupportList() {
           Array.from({ length: 4 })?.map((_, index: number) => (
             <div
               key={index}
-              className="flex flex-col gap-2 p-4 rounded-md border"
+              className="flex flex-col gap-2 p-4 rounded-md border bg-background"
             >
               <div className="flex gap-2 w-full">
                 <Skeleton className="w-10 h-10 rounded-md aspect-square" />

@@ -4,7 +4,7 @@ import { formatDate } from '@/lib/utils';
 import { Support } from '@/types';
 
 export default function SupportItem({ support }: { support: Support }) {
-  const { name, message, totalUnit, createdAt, user } = support;
+  const { name, message, totalBurger, createdAt, user } = support;
   const { theme } = useTheme();
   const avatar =
     theme === 'light'
@@ -29,13 +29,8 @@ export default function SupportItem({ support }: { support: Support }) {
             </span>
             <span className="text-sm whitespace-nowrap">supports</span>
             <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
-              <Image
-                src="/images/icon_coffee.png"
-                alt="Coffee"
-                width={16}
-                height={16}
-              />
-              {totalUnit} {totalUnit > 1 ? 'Cups' : 'Cup'}
+              <span className="text-sm mb-0.5">🍔</span>
+              {totalBurger} {totalBurger > 1 ? 'Burgers' : 'Burger'}
             </span>
           </div>
 

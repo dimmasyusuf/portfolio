@@ -33,7 +33,7 @@ import { createSupport } from '@/lib/actions/support.action';
 export default function SupportForm() {
   const { status } = useSession();
   const [step, setStep] = useState(1);
-  const [totalUnit, setTotalUnit] = useState(1);
+  const [totalBurger, setTotalBurger] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -76,12 +76,12 @@ export default function SupportForm() {
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
-    const amount = totalUnit * totalPrice;
+    const amount = totalBurger * totalPrice;
 
     await createSupportMutation({
       name,
       message,
-      totalUnit,
+      totalBurger,
       amount,
     });
 
@@ -94,27 +94,27 @@ export default function SupportForm() {
     }, 5000);
   }
 
-  const handleUnitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     const unit = parseInt(value);
 
-    if (unit < 1) setTotalUnit(1);
-    else if (unit > 9999) setTotalUnit(9999);
-    else setTotalUnit(unit);
+    if (unit < 1) setTotalBurger(1);
+    else if (unit > 9999) setTotalBurger(9999);
+    else setTotalBurger(unit);
   };
 
-  const handleUnitBlur = () => {
-    if (isNaN(totalUnit)) {
-      setTotalUnit(1);
+  const handleInputBlur = () => {
+    if (isNaN(totalBurger)) {
+      setTotalBurger(1);
       setTotalPrice(5000);
     }
   };
 
   const handleSupport = async () => {
     const externalId = 'donation-' + Date.now();
-    const amount = totalUnit * totalPrice;
+    const amount = totalBurger * totalPrice;
     const payerEmail = user?.email!;
-    const description = `Donation for ${totalUnit} coffee`;
+    const description = `Donation for ${totalBurger} burgers`;
 
     const response = await createInvoiceMutation({
       externalId,
@@ -129,7 +129,7 @@ export default function SupportForm() {
   };
 
   return (
-    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[586px] sm:h-[569px] justify-between">
+    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[546px] sm:h-[569px] justify-between">
       {step <= 3 && (
         <div className="flex flex-col space-y-1.5 text-center sm:text-left">
           <h3 className="text-lg font-semibold leading-none tracking-tight">
@@ -142,19 +142,11 @@ export default function SupportForm() {
       {step === 1 && (
         <div className="flex flex-col items-center justify-center gap-8">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
-            <div className="h-32 w-32">
-              <Image
-                src="/images/icon_coffee.png"
-                alt="Coffee"
-                width={256}
-                height={256}
-              />
-            </div>
-            {/* <span className="text-9xl">🍔</span> */}
+            <span className="text-9xl">🍔</span>
             <div className="flex flex-col justify-center items-center">
-              <span className="text-lg">Coffee</span>
+              <span className="text-lg">Burger</span>
               <span className="text-sm text-muted-foreground">
-                Rp 5.000 / Unit
+                Rp 5.000 / Burger
               </span>
             </div>
           </div>
@@ -162,66 +154,58 @@ export default function SupportForm() {
           <div className="flex flex-col gap-6 items-center justify-center w-full">
             <span className="text-lg font-bold">
               Rp{' '}
-              {isNaN(totalUnit)
+              {isNaN(totalBurger)
                 ? totalPrice.toLocaleString('id-ID')
-                : (totalUnit * totalPrice).toLocaleString('id-ID')}
+                : (totalBurger * totalPrice).toLocaleString('id-ID')}
             </span>
 
             <div className="flex gap-3 items-center">
               <Button
                 size="icon"
-                onClick={() => setTotalUnit(totalUnit - 1)}
-                disabled={totalUnit <= 1}
+                onClick={() => setTotalBurger(totalBurger - 1)}
+                disabled={totalBurger <= 1}
               >
                 <MinusIcon className="w-4 h-4" />
               </Button>
               <Input
-                value={isNaN(totalUnit) ? '' : totalUnit}
-                onChange={handleUnitChange}
-                onBlur={handleUnitBlur}
+                value={isNaN(totalBurger) ? '' : totalBurger}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
                 className="w-16 h-10 shadow-none text-center dark:border-neutral-50"
               />
               <Button
                 size="icon"
-                onClick={() => setTotalUnit(totalUnit + 1)}
-                disabled={totalUnit >= 9999}
+                onClick={() => setTotalBurger(totalBurger + 1)}
+                disabled={totalBurger >= 9999}
               >
                 <PlusIcon className="w-4 h-4" />
               </Button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
+            <div className="grid grid-cols-3 gap-2 w-full">
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalUnit(5)}
+                onClick={() => setTotalBurger(5)}
               >
-                5 Units
+                5 Burgers
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalUnit(10)}
+                onClick={() => setTotalBurger(10)}
               >
-                10 Units
+                10 Burgers
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalUnit(25)}
+                onClick={() => setTotalBurger(20)}
               >
-                25 Units
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalUnit(100)}
-              >
-                100 Units
+                20 Burgers
               </Button>
             </div>
           </div>
@@ -278,9 +262,9 @@ export default function SupportForm() {
             <span className="text-sm font-semibold">Total</span>
             <span className="text-sm font-semibold">
               Rp{' '}
-              {isNaN(totalUnit)
+              {isNaN(totalBurger)
                 ? totalPrice.toLocaleString('id-ID')
-                : (totalUnit * totalPrice).toLocaleString('id-ID')}
+                : (totalBurger * totalPrice).toLocaleString('id-ID')}
             </span>
           </div>
         </div>
