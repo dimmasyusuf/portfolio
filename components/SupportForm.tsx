@@ -12,12 +12,22 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+
 import { Input } from '@/components/ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  ChevronDownIcon,
   MinusIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
@@ -25,19 +35,20 @@ import { supportInputSchema } from '@/lib/validator';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import AuthDialog from './AuthDialog';
 import { createPaymentEWALLET } from '@/lib/actions/xendit.action';
 import { createSupport } from '@/lib/actions/support.action';
+import { toast } from 'sonner';
 
 export default function SupportForm() {
   const { status, data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('');
   const [step, setStep] = useState(1);
   const [totalCoffee, setTotalCoffee] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const { data: user } = useQuery({
     queryKey: ['user'],
@@ -71,26 +82,35 @@ export default function SupportForm() {
     if (form.formState.errors.name || form.formState.errors.message) {
       setStep(2);
     }
-  }, [form.formState.errors]);
+  }, [form.formState.errors, paymentMethod]);
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
     const amount = totalCoffee * totalPrice;
 
-    await createSupportMutation({
-      name,
-      message,
-      totalCoffee,
-      amount,
-    });
+    if (paymentMethod === '') {
+      toast.error('Please choose your payment method.', {
+        position: 'top-right',
+      });
+    } else {
+      handlePaymentEWALLET(paymentMethod);
 
-    form.reset();
+      await createSupportMutation({
+        name,
+        message,
+        totalCoffee,
+        amount,
+      });
 
-    setStep(4);
+      form.reset();
+      setPaymentMethod('');
 
-    setTimeout(() => {
-      setStep(1);
-    }, 5000);
+      setStep(4);
+
+      setTimeout(() => {
+        setStep(1);
+      }, 5000);
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,11 +129,7 @@ export default function SupportForm() {
     }
   };
 
-  const handlePaymentEWALLET = async ({
-    paymentMethod,
-  }: {
-    paymentMethod: string;
-  }) => {
+  const handlePaymentEWALLET = async (paymentMethod: string) => {
     const amount = totalCoffee * totalPrice;
     const referenceId = 'support-' + Date.now();
     const itemName = 'Coffee';
@@ -126,7 +142,7 @@ export default function SupportForm() {
     const customerName = user?.name!;
     const customerEmail = user?.email!;
 
-    const response = await createPaymentEWALLET({
+    const response = await createPaymentEWALLETMutation({
       customerId,
       customerName,
       customerEmail,
@@ -141,6 +157,11 @@ export default function SupportForm() {
     });
 
     console.log('response', response);
+  };
+
+  const handleChoosePaymentMethod = (method: string) => {
+    setPaymentMethod(method);
+    setIsOpen(false);
   };
 
   const handleAuth = () => {
@@ -295,6 +316,240 @@ export default function SupportForm() {
 
       {step === 3 && (
         <div className="flex flex-col gap-4 h-full">
+          <Dialog
+            open={isOpen}
+            onOpenChange={setIsOpen}
+          >
+            <DialogTrigger className="flex items-center rounded-md border dark:border-neutral-50 p-4 h-16">
+              {paymentMethod === '' && (
+                <span className="text-sm font-semibold">
+                  Choose Payment Method
+                </span>
+              )}
+
+              {paymentMethod === 'DANA' && (
+                <Image
+                  src="/images/logo_dana.svg"
+                  width={80}
+                  height={80}
+                  alt="Pay with DANA"
+                />
+              )}
+
+              {paymentMethod === 'LINKAJA' && (
+                <Image
+                  src="/images/logo_linkaja.svg"
+                  width={48}
+                  height={48}
+                  alt="Pay with LinkAja"
+                />
+              )}
+
+              {paymentMethod === 'OVO' && (
+                <Image
+                  src="/images/logo_ovo.svg"
+                  width={64}
+                  height={64}
+                  alt="Pay with OVO"
+                />
+              )}
+
+              {paymentMethod === 'SHOPEEPAY' && (
+                <Image
+                  src="/images/logo_spay.svg"
+                  width={64}
+                  height={64}
+                  alt="Pay with ShopeePay"
+                />
+              )}
+
+              {paymentMethod === 'QRIS' && (
+                <Image
+                  src="/images/logo_qris.svg"
+                  width={64}
+                  height={64}
+                  alt="Pay with QRIS"
+                />
+              )}
+
+              {paymentMethod === 'BCA' && (
+                <Image
+                  src="/images/logo_bca.svg"
+                  width={64}
+                  height={64}
+                  alt="Pay with BCA"
+                />
+              )}
+
+              {paymentMethod === 'BNI' && (
+                <Image
+                  src="/images/logo_bni.svg"
+                  width={64}
+                  height={64}
+                  alt="Pay with BNI"
+                />
+              )}
+
+              {paymentMethod === 'BRI' && (
+                <Image
+                  src="/images/logo_bri.svg"
+                  width={80}
+                  height={80}
+                  alt="Pay with BRI"
+                />
+              )}
+
+              {paymentMethod === 'MANDIRI' && (
+                <Image
+                  src="/images/logo_mandiri.svg"
+                  width={80}
+                  height={80}
+                  alt="Pay with MANDIRI"
+                />
+              )}
+
+              {isOpen ? (
+                <ChevronDownIcon className="w-4 h-4 ml-auto transition-transform duration-200 rotate-180" />
+              ) : (
+                <ChevronDownIcon className="w-4 h-4 ml-auto" />
+              )}
+            </DialogTrigger>
+            <DialogContent className="flex flex-col gap-8 rounded-md dark:bg-accent dark:shadow-background">
+              <DialogHeader>
+                <DialogTitle>Payment Method</DialogTitle>
+                <DialogDescription>
+                  Choose your preferred payment method.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="flex flex-col gap-4">
+                <span className="font-medium">E-Wallet</span>
+                <div className="grid grid-cols-4 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('DANA')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_dana.svg"
+                      width={80}
+                      height={80}
+                      alt="Pay with DANA"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('LINKAJA')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_linkaja.svg"
+                      width={48}
+                      height={48}
+                      alt="Pay with LinkAja"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('OVO')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_ovo.svg"
+                      width={64}
+                      height={64}
+                      alt="Pay with OVO"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('SHOPEEPAY')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_spay.svg"
+                      width={64}
+                      height={64}
+                      alt="Pay with ShopeePay"
+                    />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <span className="font-medium">QRIS</span>
+                <div className="grid grid-cols-4 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('QRIS')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_qris.svg"
+                      width={64}
+                      height={64}
+                      alt="Pay with QRIS"
+                    />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <span className="font-medium">Virtual Account</span>
+                <div className="grid grid-cols-4 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('BCA')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_bca.svg"
+                      width={64}
+                      height={64}
+                      alt="Pay with BCA"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('BNI')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_bni.svg"
+                      width={64}
+                      height={64}
+                      alt="Pay with BNI"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('BRI')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_bri.svg"
+                      width={80}
+                      height={80}
+                      alt="Pay with BRI"
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleChoosePaymentMethod('MANDIRI')}
+                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
+                  >
+                    <Image
+                      src="/images/logo_mandiri.svg"
+                      width={80}
+                      height={80}
+                      alt="Pay with MANDIRI"
+                    />
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <div className="flex gap-2 justify-between items-center rounded-md px-4 py-2 border dark:border-neutral-50 mt-auto">
             <span className="text-sm font-semibold">Total</span>
             <span className="text-sm font-semibold">
