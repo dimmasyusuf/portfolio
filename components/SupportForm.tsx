@@ -31,14 +31,13 @@ import { createInvoice } from '@/lib/actions/xendit.action';
 import { createSupport } from '@/lib/actions/support.action';
 
 export default function SupportForm() {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const [step, setStep] = useState(1);
   const [totalCoffee, setTotalCoffee] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
-
-  console.log('status', status);
 
   const { data: user } = useQuery({
     queryKey: ['user'],
@@ -127,6 +126,14 @@ export default function SupportForm() {
     const invoiceUrl = response.invoiceUrl;
 
     router.push(invoiceUrl);
+  };
+
+  const handleAuth = () => {
+    if (!session) {
+      setShowAuthDialog(true);
+    } else {
+      setStep(step + 1);
+    }
   };
 
   return (
@@ -302,6 +309,13 @@ export default function SupportForm() {
         </div>
       )}
 
+      {showAuthDialog && (
+        <AuthDialog
+          showAuth={showAuthDialog}
+          setShowAuth={setShowAuthDialog}
+        />
+      )}
+
       <div className="flex justify-between items-center w-full">
         {step > 1 && (
           <Button
@@ -315,18 +329,15 @@ export default function SupportForm() {
           </Button>
         )}
 
-        {step < 3 &&
-          (user ? (
-            <Button
-              size="sm"
-              onClick={() => setStep(step + 1)}
-              className="ml-auto"
-            >
-              Next <ArrowRightIcon className="ml-2 w-4 h-4" />
-            </Button>
-          ) : (
-            <AuthDialog />
-          ))}
+        {step < 3 && (
+          <Button
+            size="sm"
+            onClick={handleAuth}
+            className="ml-auto"
+          >
+            Next <ArrowRightIcon className="ml-2 w-4 h-4" />
+          </Button>
+        )}
 
         {step === 3 && (
           <Button
