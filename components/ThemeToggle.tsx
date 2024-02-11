@@ -15,9 +15,10 @@ export default function ThemeToggle() {
         theme === 'light' ? () => setTheme('dark') : () => setTheme('light')
       }
       aria-label="Change theme"
+      className="h-10 w-10 hover:bg-background dark:hover:bg-accent"
     >
-      <SunIcon className="w-5 h-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <MoonIcon className="absolute w-5 h-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <SunIcon className="w-6 h-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <MoonIcon className="absolute w-6 h-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </Button>
   );
 }

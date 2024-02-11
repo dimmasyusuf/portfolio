@@ -51,10 +51,14 @@ export default function ProjectList() {
   };
 
   return (
-    <section className="flex flex-col gap-6">
-      <div className="flex justify-between items-center">
-        <h2 className="font-bold text-2xl">Projects</h2>
-        {pathName === '/' ? (
+    <section
+      className={`${
+        pathName === '/projects' && 'm-4 mt-8 sm:mt-4'
+      } flex flex-col gap-6`}
+    >
+      {pathName === '/' && (
+        <div className="flex justify-between items-center w-full">
+          <h2 className="font-bold text-2xl">Projects</h2>
           <Button
             size="sm"
             asChild
@@ -64,22 +68,9 @@ export default function ProjectList() {
               <ArrowRightIcon className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-        ) : (
-          <Button
-            size="sm"
-            asChild
-          >
-            <Link
-              href="https://github.com/dimmasyusuf/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-              <ArrowRightIcon className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
-      </div>
+        </div>
+      )}
+
       <div className={`${pathName === '/projects' && 'min-h-[602px]'}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit">
           {pathName === '/'
@@ -97,6 +88,7 @@ export default function ProjectList() {
               ))}
         </div>
       </div>
+
       {pathName === '/projects' && (
         <nav
           role="navigation"

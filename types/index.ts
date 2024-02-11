@@ -71,6 +71,23 @@ interface Message {
   };
 }
 
+interface Support {
+  id: string;
+  name: string;
+  message: string;
+  totalCoffee: number;
+  amount: number;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  user: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+}
+
 export type {
   Routes,
   Projects,
@@ -80,4 +97,5 @@ export type {
   Experiences,
   User,
   Message,
+  Support,
 };

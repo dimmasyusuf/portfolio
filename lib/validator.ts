@@ -46,3 +46,22 @@ export const guestInputSchema = z.object({
       message: 'Message must be less than 280 characters long.',
     }),
 });
+
+export const supportInputSchema = z.object({
+  name: z
+    .string()
+    .min(4, {
+      message: 'Name must be between 4 and 64 characters long.',
+    })
+    .max(64, {
+      message: 'Name must be between 4 and 64 characters long.',
+    }),
+  message: z
+    .string()
+    .min(1, {
+      message: 'Message must be at least 1 character long.',
+    })
+    .max(280, {
+      message: 'Message must be less than 280 characters long.',
+    }),
+});

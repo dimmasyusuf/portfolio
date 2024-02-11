@@ -22,6 +22,11 @@ const data = (() => {
       name: 'Guestbook',
       path: '/guestbook',
     },
+    {
+      id: 5,
+      name: 'Support',
+      path: '/support',
+    },
   ];
 
   const projects: Projects[] = [

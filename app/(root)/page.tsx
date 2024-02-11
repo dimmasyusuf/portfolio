@@ -4,7 +4,7 @@ import Skills from '@/components/Skills';
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-16 p-4 max-w-screen-md mx-auto">
+    <main className="flex flex-col gap-16 p-4 pt-8 sm:pt-4 max-w-screen-md mx-auto">
       <Hero />
       <ProjectList />
       <Skills />

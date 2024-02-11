@@ -12,14 +12,26 @@ import { Button } from './ui/button';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import data from '@/lib/data';
-import ThemeToggle from './ThemeToggle';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import AuthDialog from './AuthDialog';
+import { useQuery } from '@tanstack/react-query';
+import { getUserProfile } from '@/lib/actions/user.action';
+import { useSession } from 'next-auth/react';
+import { Skeleton } from './ui/skeleton';
+import AuthProfile from './AuthProfile';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const routes = data.routes;
   const pathName = usePathname();
+  const { status } = useSession();
+
+  const { data: user, isLoading: userLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserProfile(),
+    enabled: status === 'authenticated',
+  });
 
   return (
     <nav className="flex justify-between items-center">
@@ -78,25 +90,29 @@ export default function Navbar() {
         </SheetContent>
       </Sheet>
       <div className="sm:flex hidden items-center">
-        <ul className="flex gap-2">
+        <ul className="flex gap-8">
           {routes.map((route, index) => (
             <li key={index}>
-              <Button
-                variant="ghost"
+              <Link
+                href={route.path}
                 className={`${
                   pathName === route.path
                     ? 'font-bold'
                     : 'text-muted-foreground'
-                }`}
-                asChild
+                } text-sm hover:font-bold hover:text-primary transition-all ease-in-out duration-3000`}
               >
-                <Link href={route.path}>{route.name}</Link>
-              </Button>
+                {route.name}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
-      <ThemeToggle />
+
+      {userLoading ? (
+        <Skeleton className="w-9 h-9 aspect-square rounded-md" />
+      ) : (
+        <>{user ? <AuthProfile user={user} /> : <AuthDialog />}</>
+      )}
     </nav>
   );
 }
