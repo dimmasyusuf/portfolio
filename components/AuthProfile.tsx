@@ -10,7 +10,7 @@ import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { User } from '@/types';
 
-export default function GuestProfile({ user }: { user?: User | null }) {
+export default function Authrofile({ user }: { user?: User | null }) {
   const { theme } = useTheme();
   const avatar =
     theme === 'light'
@@ -19,15 +19,14 @@ export default function GuestProfile({ user }: { user?: User | null }) {
 
   return (
     <Popover>
-      <PopoverTrigger className="flex items-center justify-center gap-1">
+      <PopoverTrigger className="flex items-center justify-center">
         <Image
           src={user?.image || avatar}
           alt={user?.name || 'Guest'}
-          width={40}
-          height={40}
-          className="rounded-md aspect-square object-cover"
+          width={36}
+          height={36}
+          className="rounded-md object-cover"
         />
-        <ChevronDownIcon className="w-4 h-4" />
       </PopoverTrigger>
       <PopoverContent
         align="end"
