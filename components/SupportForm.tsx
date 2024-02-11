@@ -137,7 +137,7 @@ export default function SupportForm() {
   };
 
   return (
-    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[625px] justify-between">
+    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[641px] justify-between">
       {step <= 3 && (
         <div className="flex flex-col space-y-1.5 text-center sm:text-left">
           <h3 className="text-lg font-semibold leading-none tracking-tight">
@@ -196,7 +196,7 @@ export default function SupportForm() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 w-full">
+            <div className="grid grid-cols-2 gap-2 w-full">
               <Button
                 size="sm"
                 variant="outline"
