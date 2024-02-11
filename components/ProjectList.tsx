@@ -51,9 +51,13 @@ export default function ProjectList() {
   };
 
   return (
-    <section className="flex flex-col gap-6 m-4 mt-8 sm:mt-4 ">
+    <section
+      className={`${
+        pathName === '/projects' && 'm-4 mt-8 sm:mt-4'
+      } flex flex-col gap-6`}
+    >
       {pathName === '/' && (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center w-full">
           <h2 className="font-bold text-2xl">Projects</h2>
           <Button
             size="sm"
