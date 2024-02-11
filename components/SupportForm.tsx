@@ -27,7 +27,7 @@ import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import AuthDialog from './AuthDialog';
-import { createInvoice } from '@/lib/actions/xendit.action';
+import { createPaymentEWALLET } from '@/lib/actions/xendit.action';
 import { createSupport } from '@/lib/actions/support.action';
 
 export default function SupportForm() {
@@ -52,8 +52,8 @@ export default function SupportForm() {
     },
   });
 
-  const { mutateAsync: createInvoiceMutation } = useMutation({
-    mutationFn: createInvoice,
+  const { mutateAsync: createPaymentEWALLETMutation } = useMutation({
+    mutationFn: createPaymentEWALLET,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support'] });
     },
@@ -109,23 +109,38 @@ export default function SupportForm() {
     }
   };
 
-  const handleSupport = async () => {
-    const externalId = 'support-' + Date.now();
+  const handlePaymentEWALLET = async ({
+    paymentMethod,
+  }: {
+    paymentMethod: string;
+  }) => {
     const amount = totalCoffee * totalPrice;
-    const payerEmail = user?.email!;
+    const referenceId = 'support-' + Date.now();
+    const itemName = 'Coffee';
+    const itemCategory = 'Support';
+    const itemQuantity = totalCoffee;
+    const itemPrice = totalPrice;
     const description =
       totalCoffee > 1 ? `${totalCoffee} cups of coffee` : '1 cup of coffee';
+    const customerId = user?.id!;
+    const customerName = user?.name!;
+    const customerEmail = user?.email!;
 
-    const response = await createInvoiceMutation({
-      externalId,
+    const response = await createPaymentEWALLET({
+      customerId,
+      customerName,
+      customerEmail,
+      itemName,
+      itemCategory,
+      itemQuantity,
+      itemPrice,
       amount,
-      payerEmail,
+      referenceId,
       description,
+      paymentMethod,
     });
 
-    const invoiceUrl = response.invoiceUrl;
-
-    router.push(invoiceUrl);
+    console.log('response', response);
   };
 
   const handleAuth = () => {

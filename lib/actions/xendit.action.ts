@@ -1,44 +1,80 @@
 'use server';
 
+import { Xendit, PaymentRequest as PaymentRequestClient } from 'xendit-node';
 import {
-  Xendit,
-  Invoice as InvoiceClient,
-} from 'xendit-node';
-import { CreateInvoiceRequest } from 'xendit-node/invoice/models';
+  EWalletChannelCode,
+  PaymentMethodReusability,
+  PaymentMethodType,
+  PaymentRequestBasketItem,
+  PaymentRequestCurrency,
+} from 'xendit-node/payment_request/models';
 
 const xenditClient = new Xendit({
   secretKey: process.env.XENDIT_SECRET_KEY as string,
 });
 
-const { Invoice } = xenditClient;
+const { PaymentRequest } = xenditClient;
 
-const xenditInvoiceClient = new InvoiceClient({
+const xenditPaymentRequestClient = new PaymentRequestClient({
   secretKey: process.env.XENDIT_SECRET_KEY as string,
 });
 
-export async function createInvoice({
-  externalId,
+export async function createPaymentEWALLET({
+  customerId,
+  customerName,
+  customerEmail,
+  itemName,
+  itemCategory,
+  itemQuantity,
+  itemPrice,
   amount,
-  payerEmail,
+  referenceId,
   description,
+  paymentMethod,
 }: {
-  externalId: string;
+  customerId: string;
+  customerName: string;
+  customerEmail: string;
+  itemName: string;
+  itemCategory: string;
+  itemQuantity: number;
+  itemPrice: number;
   amount: number;
-  payerEmail: string;
+  referenceId: string;
   description: string;
+  paymentMethod: string;
 }) {
-  const data: CreateInvoiceRequest = {
-    externalId,
+  const data = {
     amount,
-    payerEmail,
+    currency: 'IDR' as PaymentRequestCurrency,
+    referenceId,
+    paymentMethod: {
+      type: 'EWALLET' as PaymentMethodType,
+      reusability: 'ONE_TIME_USE' as PaymentMethodReusability,
+      ewallet: {
+        channelCode: paymentMethod as EWalletChannelCode,
+      },
+    },
+    items: [
+      {
+        name: itemName,
+        category: itemCategory,
+        currency: 'IDR' as PaymentRequestCurrency,
+        quantity: itemQuantity,
+        price: itemPrice,
+      },
+    ] as PaymentRequestBasketItem[],
     description,
+    customerId,
+    customer: {
+      name: customerName,
+      email: customerEmail,
+    },
   };
 
-  const response = await xenditInvoiceClient.createInvoice({
+  const response = await xenditPaymentRequestClient.createPaymentRequest({
     data,
   });
-
-  console.log('invoice' + response);
 
   return response;
 }
