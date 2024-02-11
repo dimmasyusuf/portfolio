@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateMessage } from '@/lib/actions/message.action';
 
@@ -19,24 +20,17 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { Message } from '@/types';
-import Image from 'next/image';
-import { useTheme } from 'next-themes';
-import moment from 'moment';
+import { formatDate, getInitials } from '@/lib/utils';
 
 export default function GuestEditDialog({ message }: { message: Message }) {
   const queryClient = useQueryClient();
-  const { theme } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const avatar =
-    theme === 'light' ? '/images/avatar_light.png' : '/images/avatar_dark.png';
-  const formattedCreatedAt = moment(message?.createdAt).fromNow();
 
   const { mutateAsync: updateMessageMutation } = useMutation({
     mutationFn: updateMessage,
@@ -48,7 +42,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
   const form = useForm<z.infer<typeof guestInputSchema>>({
     resolver: zodResolver(guestInputSchema),
     defaultValues: {
-      message: message?.text,
+      message: message.text,
     },
   });
 
@@ -83,30 +77,34 @@ export default function GuestEditDialog({ message }: { message: Message }) {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="flex flex-col max-w-xs sm:max-w-md rounded-md"
+        className="flex flex-col max-w-xs sm:max-w-md rounded-md dark:bg-accent dark:shadow-background"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <div className="flex gap-2">
-          <div className="flex items-center justify-center w-10 h-10 aspect-square">
-            <Image
-              src={message?.author?.image || avatar}
-              alt={message?.author?.name || 'Guest'}
+          <Avatar className="rounded-md w-10 h-10 aspect-square">
+            <AvatarImage
+              src={message?.author?.image!}
               width={40}
               height={40}
-              className="rounded-md"
+              alt={message?.author?.name!}
             />
-          </div>
+            <AvatarFallback className="rounded-md w-10 h-10 aspect-square bg-primary text-primary-foreground">
+              {getInitials(message?.author?.name!)}
+            </AvatarFallback>
+          </Avatar>
+
           <div className="flex flex-col gap-1 w-full overflow-hidden">
             <p className="font-bold text-sm truncate">
               {message?.author?.name}
             </p>
-            <p className="text-xs truncate">{formattedCreatedAt}</p>
+            <p className="text-xs truncate">{formatDate(message?.createdAt)}</p>
           </div>
         </div>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-2"
+            className="space-y-4"
           >
             <FormField
               control={form.control}
@@ -116,8 +114,9 @@ export default function GuestEditDialog({ message }: { message: Message }) {
                   <FormControl>
                     <Input
                       placeholder="Leave a message"
-                      className="flex w-full shadow-none"
+                      className="flex w-full shadow-none h-10 dark:border-neutral-50"
                       {...field}
+                      onKeyDown={(e) => e.stopPropagation()}
                     />
                   </FormControl>
                   <FormMessage />
@@ -129,7 +128,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
                 <Button
                   type="button"
                   variant="secondary"
-                  className="w-full"
+                  className="w-full dark:bg-background dark:text-secondary-foreground dark:hover:bg-background/80"
                 >
                   Cancel
                 </Button>
