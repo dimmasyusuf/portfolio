@@ -99,7 +99,7 @@ export default function Navbar() {
                   pathName === route.path
                     ? 'font-bold'
                     : 'text-muted-foreground'
-                } text-sm hover:text-primary`}
+                } text-sm hover:font-bold hover:text-primary transition-all ease-in-out duration-3000`}
               >
                 {route.name}
               </Link>
