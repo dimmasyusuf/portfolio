@@ -14,3 +14,14 @@ export const handleError = (error: unknown) => {
 export const formatDate = (date: Date) => {
   return moment(date).fromNow();
 };
+
+export const getInitials = (name: string) => {
+  const parts = name.split(' ');
+  let initials = '';
+
+  for (let i = 0; i < Math.min(2, parts.length); i++) {
+    initials += parts[i].charAt(0).toUpperCase();
+  }
+
+  return initials;
+};
