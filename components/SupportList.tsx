@@ -5,6 +5,7 @@ import { getAllSupports } from '@/lib/actions/support.action';
 import SupportItem from './SupportItem';
 import { ScrollArea } from './ui/scroll-area';
 import { Skeleton } from './ui/skeleton';
+import Image from 'next/image';
 
 export default function SupportList() {
   const { data: supports, isLoading: supportLoading } = useQuery({
@@ -35,7 +36,13 @@ export default function SupportList() {
 
         {supports?.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 h-[552px] sm:h-[535px]">
-            <span className="text-9xl">🥺</span>
+            <Image
+              src="/images/icon_supportnotfound.webp"
+              width={128}
+              height={128}
+              alt="Sleepy Icon"
+              className="w-32 h-32"
+            />
             <span className="text-lg">No supports found.</span>
           </div>
         ) : (

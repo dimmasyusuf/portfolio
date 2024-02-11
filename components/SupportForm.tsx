@@ -33,7 +33,7 @@ import { createSupport } from '@/lib/actions/support.action';
 export default function SupportForm() {
   const { status } = useSession();
   const [step, setStep] = useState(1);
-  const [totalBurger, setTotalBurger] = useState(1);
+  const [totalCoffee, setTotalCoffee] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -76,12 +76,12 @@ export default function SupportForm() {
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
-    const amount = totalBurger * totalPrice;
+    const amount = totalCoffee * totalPrice;
 
     await createSupportMutation({
       name,
       message,
-      totalBurger,
+      totalCoffee,
       amount,
     });
 
@@ -96,25 +96,26 @@ export default function SupportForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    const unit = parseInt(value);
+    const coffee = parseInt(value);
 
-    if (unit < 1) setTotalBurger(1);
-    else if (unit > 9999) setTotalBurger(9999);
-    else setTotalBurger(unit);
+    if (coffee < 1) setTotalCoffee(1);
+    else if (coffee > 9999) setTotalCoffee(9999);
+    else setTotalCoffee(coffee);
   };
 
   const handleInputBlur = () => {
-    if (isNaN(totalBurger)) {
-      setTotalBurger(1);
+    if (isNaN(totalCoffee)) {
+      setTotalCoffee(1);
       setTotalPrice(5000);
     }
   };
 
   const handleSupport = async () => {
-    const externalId = 'donation-' + Date.now();
-    const amount = totalBurger * totalPrice;
+    const externalId = 'support-' + Date.now();
+    const amount = totalCoffee * totalPrice;
     const payerEmail = user?.email!;
-    const description = `Donation for ${totalBurger} burgers`;
+    const description =
+      totalCoffee > 1 ? `${totalCoffee} cups of coffee` : '1 cup of coffee';
 
     const response = await createInvoiceMutation({
       externalId,
@@ -142,11 +143,17 @@ export default function SupportForm() {
       {step === 1 && (
         <div className="flex flex-col items-center justify-center gap-8">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
-            <span className="text-9xl">🍔</span>
+            <Image
+              src="/images/icon_supportitem.webp"
+              width={128}
+              height={128}
+              alt="Coffee Icon"
+              className="w-32 h-32"
+            />
             <div className="flex flex-col justify-center items-center">
-              <span className="text-lg">Burger</span>
+              <span className="text-lg">Coffee</span>
               <span className="text-sm text-muted-foreground">
-                Rp 5.000 / Burger
+                Rp 5.000 / Cup
               </span>
             </div>
           </div>
@@ -154,58 +161,66 @@ export default function SupportForm() {
           <div className="flex flex-col gap-6 items-center justify-center w-full">
             <span className="text-lg font-bold">
               Rp{' '}
-              {isNaN(totalBurger)
+              {isNaN(totalCoffee)
                 ? totalPrice.toLocaleString('id-ID')
-                : (totalBurger * totalPrice).toLocaleString('id-ID')}
+                : (totalCoffee * totalPrice).toLocaleString('id-ID')}
             </span>
 
             <div className="flex gap-3 items-center">
               <Button
                 size="icon"
-                onClick={() => setTotalBurger(totalBurger - 1)}
-                disabled={totalBurger <= 1}
+                onClick={() => setTotalCoffee(totalCoffee - 1)}
+                disabled={totalCoffee <= 1}
               >
                 <MinusIcon className="w-4 h-4" />
               </Button>
               <Input
-                value={isNaN(totalBurger) ? '' : totalBurger}
+                value={isNaN(totalCoffee) ? '' : totalCoffee}
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
                 className="w-16 h-10 shadow-none text-center dark:border-neutral-50"
               />
               <Button
                 size="icon"
-                onClick={() => setTotalBurger(totalBurger + 1)}
-                disabled={totalBurger >= 9999}
+                onClick={() => setTotalCoffee(totalCoffee + 1)}
+                disabled={totalCoffee >= 9999}
               >
                 <PlusIcon className="w-4 h-4" />
               </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 w-full">
+            <div className="grid grid-cols-4 gap-2 w-full">
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalBurger(5)}
+                onClick={() => setTotalCoffee(5)}
               >
-                5 Burgers
+                5 Cups
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalBurger(10)}
+                onClick={() => setTotalCoffee(10)}
               >
-                10 Burgers
+                10 Cups
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-                onClick={() => setTotalBurger(20)}
+                onClick={() => setTotalCoffee(25)}
               >
-                20 Burgers
+                25 Cups
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+                onClick={() => setTotalCoffee(50)}
+              >
+                50 Cups
               </Button>
             </div>
           </div>
@@ -262,9 +277,9 @@ export default function SupportForm() {
             <span className="text-sm font-semibold">Total</span>
             <span className="text-sm font-semibold">
               Rp{' '}
-              {isNaN(totalBurger)
+              {isNaN(totalCoffee)
                 ? totalPrice.toLocaleString('id-ID')
-                : (totalBurger * totalPrice).toLocaleString('id-ID')}
+                : (totalCoffee * totalPrice).toLocaleString('id-ID')}
             </span>
           </div>
         </div>
@@ -272,7 +287,13 @@ export default function SupportForm() {
 
       {step === 4 && (
         <div className="flex flex-col my-auto">
-          <span className="text-9xl w-full">🎉</span>
+          <Image
+            src="/images/icon_supportsuccess.webp"
+            width={128}
+            height={128}
+            alt="Party Hat Icon"
+            className="w-32 h-32"
+          />
           <span className="font-semibold mt-16">THANK YOU</span>
           <p className="text-sm text-muted-foreground">
             Your support will help me to keep coding and sharing knowledge with

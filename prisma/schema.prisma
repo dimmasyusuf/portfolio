@@ -74,7 +74,7 @@ model Support {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   message     String
-  totalBurger Int
+  totalCoffee Int
   amount      Int
   status      String
   createdAt   DateTime @default(now())

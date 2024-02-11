@@ -75,7 +75,7 @@ interface Support {
   id: string;
   name: string;
   message: string;
-  totalBurger: number;
+  totalCoffee: number;
   amount: number;
   createdAt: Date;
   updatedAt: Date;
