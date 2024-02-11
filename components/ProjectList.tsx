@@ -67,7 +67,7 @@ export default function ProjectList() {
         </div>
       )}
 
-      <div className={`${pathName === '/projects' && 'min-h-[581px]'}`}>
+      <div className={`${pathName === '/projects' && 'min-h-[602px]'}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit">
           {pathName === '/'
             ? featuredProjects.map((project) => (
