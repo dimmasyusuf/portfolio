@@ -14,7 +14,7 @@ export default function SupportList() {
   });
 
   return (
-    <ScrollArea className="h-[586px] sm:h-[569px] w-full border p-4 rounded-md bg-card dark:bg-accent">
+    <ScrollArea className="h-[625px] w-full border p-4 rounded-md bg-card dark:bg-accent">
       <div className="flex flex-col gap-4">
         {supportLoading &&
           Array.from({ length: 4 })?.map((_, index: number) => (
@@ -35,7 +35,7 @@ export default function SupportList() {
           ))}
 
         {supports?.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-2 h-[552px] sm:h-[535px]">
+          <div className="flex flex-col items-center justify-center gap-2 h-[591px]">
             <Image
               src="/images/icon_supportnotfound.webp"
               width={128}

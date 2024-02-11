@@ -137,7 +137,7 @@ export default function SupportForm() {
   };
 
   return (
-    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[546px] sm:h-[569px] justify-between">
+    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[625px] justify-between">
       {step <= 3 && (
         <div className="flex flex-col space-y-1.5 text-center sm:text-left">
           <h3 className="text-lg font-semibold leading-none tracking-tight">
