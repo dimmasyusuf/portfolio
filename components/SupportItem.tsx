@@ -1,26 +1,25 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
-import { formatDate } from '@/lib/utils';
+import { formatDate, getInitials } from '@/lib/utils';
 import { Support } from '@/types';
 
 export default function SupportItem({ support }: { support: Support }) {
   const { name, message, totalCoffee, createdAt, user } = support;
-  const { theme } = useTheme();
-  const avatar =
-    theme === 'light'
-      ? '/images/avatar_light.webp'
-      : '/images/avatar_dark.webp';
 
   return (
     <div className="flex flex-col gap-2 rounded-md p-4 border bg-background">
       <div className="flex gap-2 w-full">
-        <Image
-          src={user.image || avatar}
-          alt={user.name || 'Guest'}
-          width={40}
-          height={40}
-          className="rounded-md w-10 h-10 aspect-square"
-        />
+        <Avatar className="rounded-md w-10 h-10 aspect-square">
+          <AvatarImage
+            src={user?.image!}
+            width={40}
+            height={40}
+            alt={user?.name!}
+          />
+          <AvatarFallback className="rounded-md w-10 h-10 aspect-square bg-primary text-primary-foreground">
+            {getInitials(user?.name!)}
+          </AvatarFallback>
+        </Avatar>
 
         <div className="flex flex-col w-full">
           <div className="flex gap-x-1 gap-y-0 items-center flex-wrap">
