@@ -90,20 +90,19 @@ export default function Navbar() {
         </SheetContent>
       </Sheet>
       <div className="sm:flex hidden items-center">
-        <ul className="flex gap-2">
+        <ul className="flex gap-8">
           {routes.map((route, index) => (
             <li key={index}>
-              <Button
-                variant="ghost"
+              <Link
+                href={route.path}
                 className={`${
                   pathName === route.path
                     ? 'font-bold'
                     : 'text-muted-foreground'
-                }`}
-                asChild
+                } text-sm hover:text-primary`}
               >
-                <Link href={route.path}>{route.name}</Link>
-              </Button>
+                {route.name}
+              </Link>
             </li>
           ))}
         </ul>
