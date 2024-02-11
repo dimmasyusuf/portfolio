@@ -6,6 +6,7 @@ import {
   InstagramLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
+import ThemeToggle from './ThemeToggle';
 
 export default function SocialMedia() {
   return (
@@ -70,6 +71,8 @@ export default function SocialMedia() {
           <DiscordLogoIcon className="h-6 w-6" />
         </Link>
       </Button>
+
+      <ThemeToggle />
     </div>
   );
 }

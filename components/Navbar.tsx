@@ -15,6 +15,7 @@ import data from '@/lib/data';
 import ThemeToggle from './ThemeToggle';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import AuthDialog from './AuthDialog';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +97,8 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <ThemeToggle />
+
+      <AuthDialog />
     </nav>
   );
 }
