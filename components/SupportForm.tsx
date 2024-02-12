@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { set, z } from 'zod';
 import {
   Form,
   FormControl,
@@ -41,12 +41,13 @@ export default function SupportForm() {
   const [totalCoffee, setTotalCoffee] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
-  const [token, setToken] = useState(false);
+  const [token, setToken] = useState('');
+  const [snapShown, setSnapShown] = useState(false);
   const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
   const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
   const queryClient = useQueryClient();
 
-  const { data: user, isLoading: userLoading } = useQuery({
+  const { data: user } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
     enabled: status === 'authenticated',
@@ -75,30 +76,49 @@ export default function SupportForm() {
   });
 
   useEffect(() => {
-    if (form.formState.errors.name || form.formState.errors.message) {
-      setStep(2);
-    }
-
     const script = document.createElement('script');
     script.src = snapScript;
     script.setAttribute('data-client-key', clientKey);
     script.async = true;
     document.body.appendChild(script);
 
+    handleFormErrors();
+
     const stepParam = params.get('step');
-    if (stepParam && !isNaN(parseInt(stepParam))) {
-      const newPage = parseInt(stepParam);
-      if (status === 'authenticated') {
-        setStep(newPage);
-      } else if (status === 'unauthenticated') {
-        setShowAuthDialog(true);
-      }
-    }
+    handleStepParam(stepParam!);
 
     return () => {
       document.body.removeChild(script);
     };
   }, [form.formState.errors, params, status]);
+
+  const handleFormErrors = () => {
+    if (form.formState.errors.name || form.formState.errors.message) {
+      setStep(2);
+    }
+  };
+
+  const handleStepParam = (stepParam: string) => {
+    if (stepParam && !isNaN(parseInt(stepParam))) {
+      const newPage = parseInt(stepParam);
+      if (status === 'authenticated' && newPage !== 4 && newPage !== 3) {
+        setStep(newPage);
+      } else if (status === 'unauthenticated') {
+        setShowAuthDialog(true);
+      } else if (newPage === 4) {
+        handleStepFour(newPage);
+      } else if (newPage === 3 && token === '') {
+        setStep(1);
+      }
+    }
+  };
+
+  const handleStepFour = (newPage: number) => {
+    setStep(newPage);
+    setTimeout(() => {
+      setStep(1);
+    }, 5000);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -159,9 +179,13 @@ export default function SupportForm() {
 
     handleStepChange(step + 1);
 
-    window.snap.embed(paymentToken, {
-      embedId: 'snap-container',
-    });
+    if (!snapShown) {
+      window.snap.embed(paymentToken, {
+        embedId: 'snap-container',
+      });
+
+      setSnapShown(true);
+    }
   };
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
@@ -176,19 +200,13 @@ export default function SupportForm() {
     });
 
     form.reset();
-
-    setStep(4);
-
-    setTimeout(() => {
-      setStep(1);
-    }, 5000);
   }
 
   return (
     <div
       className={`${
         step === 3
-          ? 'p-0 rounded-md bg-background dark:bg-accent border h-[641px]'
+          ? 'flex flex-col justify-between p-0 gap-6 rounded-md bg-background dark:bg-accent border h-[641px]'
           : 'flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[641px] justify-between'
       } `}
     >
@@ -334,7 +352,7 @@ export default function SupportForm() {
 
       <div
         id="snap-container"
-        className={step === 3 ? 'h-full w-full rounded-md' : 'hidden'}
+        className={`${step === 3 ? 'h-full w-full rounded-t-md' : 'hidden'}`}
       ></div>
 
       {step === 4 && (
@@ -363,8 +381,8 @@ export default function SupportForm() {
 
       <div
         className={`${
-          step >= 3 ? 'hidden' : 'flex justify-between items-center w-full'
-        } `}
+          step === 3 && 'mx-6 mb-6'
+        } flex justify-between items-center`}
       >
         {step > 1 && step <= 3 && (
           <Button
