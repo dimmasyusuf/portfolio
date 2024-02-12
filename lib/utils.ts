@@ -25,3 +25,11 @@ export const getInitials = (name: string) => {
 
   return initials;
 };
+
+export const splitFullName = (fullName: string) => {
+  const space = fullName.indexOf(' ');
+  const first_name = space === -1 ? fullName : fullName.slice(0, space);
+  const last_name = space === -1 ? '' : fullName.slice(space + 1);
+
+  return { first_name, last_name };
+};
