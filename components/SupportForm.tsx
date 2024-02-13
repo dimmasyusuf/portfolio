@@ -31,9 +31,12 @@ import { createSupport } from '@/lib/actions/support.action';
 import {
   createPayment,
   createPaymentToken,
+  getCurrentPayment,
 } from '@/lib/actions/midtrans.action';
 import { splitFullName } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
 
 export default function SupportForm() {
   const pathName = usePathname();
@@ -46,7 +49,10 @@ export default function SupportForm() {
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [token, setToken] = useState('');
   const [snapShown, setSnapShown] = useState(false);
-  const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [orderId, setOrderId] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('PENDING');
   const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
   const queryClient = useQueryClient();
 
@@ -97,10 +103,47 @@ export default function SupportForm() {
     const stepParam = params.get('step');
     handleStepParam(stepParam!);
 
+    if (status === 'authenticated' && step === 3) {
+      handlePaymentStatus();
+    }
+
+    if (paymentStatus === 'SUCCESS') {
+      handleSupport(name, message, totalCoffee);
+    }
+
     return () => {
       document.body.removeChild(script);
     };
-  }, [form.formState.errors, params, status]);
+  }, [form.formState.errors, params, status, paymentStatus]);
+
+  const handlePaymentStatus = async () => {
+    const payment = await getCurrentPayment(orderId);
+    const status = payment?.status;
+
+    if (status === 'SUCCESS') {
+      setPaymentStatus(status);
+    } else {
+      setTimeout(() => {
+        handlePaymentStatus();
+      }, 3000);
+    }
+  };
+
+  const handleSupport = async (
+    name: string,
+    message: string,
+    amount: number
+  ) => {
+    await createSupportMutation({
+      name,
+      message,
+      order_id: orderId,
+      totalCoffee,
+      amount,
+    });
+
+    setStep(4);
+  };
 
   const handleFormErrors = () => {
     if (form.formState.errors.name || form.formState.errors.message) {
@@ -167,13 +210,12 @@ export default function SupportForm() {
   };
 
   const handlePaymentToken = async () => {
+    const id = 'coffee-' + Date.now();
     const order_id = 'support-' + Date.now();
     const gross_amount = totalCoffee * totalPrice;
-    const id = 'coffee-' + Date.now();
     const quantity = totalCoffee;
-    const email = user?.email!;
-
     const { first_name, last_name } = splitFullName(user?.name!);
+    const email = user?.email!;
 
     const paymentToken = await createPaymentTokenMutation({
       order_id,
@@ -186,6 +228,7 @@ export default function SupportForm() {
     });
 
     setToken(paymentToken);
+    setOrderId(order_id);
 
     handleStepChange(step + 1);
 
@@ -205,16 +248,11 @@ export default function SupportForm() {
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
-    const amount = totalCoffee * totalPrice;
+
+    setName(name);
+    setMessage(message);
 
     handlePaymentToken();
-
-    // await createSupportMutation({
-    //   name,
-    //   message,
-    //   totalCoffee,
-    //   amount,
-    // });
 
     form.reset();
   }
