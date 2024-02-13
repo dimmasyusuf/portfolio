@@ -21,6 +21,7 @@ import {
   ArrowRightIcon,
   MinusIcon,
   PlusIcon,
+  ReloadIcon,
 } from '@radix-ui/react-icons';
 import { supportInputSchema } from '@/lib/validator';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -47,6 +48,7 @@ export default function SupportForm() {
   const [totalCoffee, setTotalCoffee] = useState(1);
   const [totalPrice, setTotalPrice] = useState(5000);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState('');
   const [snapShown, setSnapShown] = useState(false);
   const [name, setName] = useState('');
@@ -108,7 +110,7 @@ export default function SupportForm() {
     }
 
     if (paymentStatus === 'SUCCESS') {
-      handleSupport(name, message, totalCoffee);
+      handleSupport(name, message);
     }
 
     return () => {
@@ -129,20 +131,14 @@ export default function SupportForm() {
     }
   };
 
-  const handleSupport = async (
-    name: string,
-    message: string,
-    amount: number
-  ) => {
+  const handleSupport = async (name: string, message: string) => {
     await createSupportMutation({
       name,
       message,
       order_id: orderId,
       totalCoffee,
-      amount,
+      amount: totalCoffee * totalPrice,
     });
-
-    setStep(4);
   };
 
   const handleFormErrors = () => {
@@ -248,11 +244,15 @@ export default function SupportForm() {
 
   async function onSubmit(values: z.infer<typeof supportInputSchema>) {
     const { name, message } = values;
+    setIsSubmitting(true);
 
     setName(name);
     setMessage(message);
 
-    handlePaymentToken();
+    setTimeout(() => {
+      handlePaymentToken();
+      setIsSubmitting(false);
+    }, 1000);
 
     form.reset();
   }
@@ -407,7 +407,7 @@ export default function SupportForm() {
 
       <div
         id="snap-container"
-        className={`${step === 3 ? 'h-full w-full rounded-t-md' : 'hidden'}`}
+        className={`${step === 3 ? 'h-full w-full rounded-md' : 'hidden'}`}
       ></div>
 
       {step === 4 && (
@@ -436,7 +436,7 @@ export default function SupportForm() {
 
       <div
         className={`${
-          step === 3 && 'mx-6 mb-6'
+          step === 3 && 'hidden'
         } flex justify-between items-center`}
       >
         {step > 1 && step <= 3 && (
@@ -467,18 +467,15 @@ export default function SupportForm() {
             onClick={form.handleSubmit(onSubmit)}
             className="ml-auto"
           >
-            Support <ArrowRightIcon className="ml-2 w-4 h-4" />
+            {isSubmitting ? (
+              <ReloadIcon className="animate-spin w-4 h-4" />
+            ) : (
+              <>
+                Support <ArrowRightIcon className="ml-2 w-4 h-4" />
+              </>
+            )}
           </Button>
         )}
-
-        {/* {step === 4 && (
-          <Button
-            size="sm"
-            onClick={form.handleSubmit(onSubmit)}
-          >
-            Support <ArrowRightIcon className="ml-2 w-4 h-4" />
-          </Button>
-        )} */}
       </div>
     </div>
   );

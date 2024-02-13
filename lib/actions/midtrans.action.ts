@@ -49,6 +49,9 @@ export const createPaymentToken = async ({
       last_name,
       email,
     },
+    callbacks: {
+      finish: 'http://localhost:3000/support?step=4',
+    },
   };
 
   try {
