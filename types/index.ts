@@ -71,6 +71,17 @@ interface Message {
   };
 }
 
+interface Payment {
+  id: string;
+  orderId: string;
+  paymentType: string | null;
+  amount: number;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+}
+
 interface Support {
   id: string;
   name: string;
@@ -79,12 +90,15 @@ interface Support {
   amount: number;
   createdAt: Date;
   updatedAt: Date;
-  userId: string;
-  user: {
+  paymentId: string;
+  payment: {
     id: string;
-    name: string | null;
-    email: string | null;
-    image: string | null;
+    user: {
+      id: string;
+      name: string | null;
+      email: string | null;
+      image: string | null;
+    };
   };
 }
 
@@ -111,5 +125,6 @@ export type {
   Experiences,
   User,
   Message,
+  Payment,
   Support,
 };

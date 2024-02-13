@@ -28,7 +28,10 @@ import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
 import AuthDialog from './AuthDialog';
 import { createSupport } from '@/lib/actions/support.action';
-import { createPaymentToken } from '@/lib/actions/midtrans.action';
+import {
+  createPayment,
+  createPaymentToken,
+} from '@/lib/actions/midtrans.action';
 import { splitFullName } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -62,6 +65,13 @@ export default function SupportForm() {
 
   const { mutateAsync: createPaymentTokenMutation } = useMutation({
     mutationFn: createPaymentToken,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['support'] });
+    },
+  });
+
+  const { mutateAsync: createPaymentMutation } = useMutation({
+    mutationFn: createPayment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support'] });
     },
@@ -185,6 +195,11 @@ export default function SupportForm() {
       });
 
       setSnapShown(true);
+
+      await createPaymentMutation({
+        order_id,
+        gross_amount,
+      });
     }
   };
 
@@ -192,12 +207,14 @@ export default function SupportForm() {
     const { name, message } = values;
     const amount = totalCoffee * totalPrice;
 
-    await createSupportMutation({
-      name,
-      message,
-      totalCoffee,
-      amount,
-    });
+    handlePaymentToken();
+
+    // await createSupportMutation({
+    //   name,
+    //   message,
+    //   totalCoffee,
+    //   amount,
+    // });
 
     form.reset();
   }
@@ -409,7 +426,7 @@ export default function SupportForm() {
         {step === 2 && (
           <Button
             size="sm"
-            onClick={handlePaymentToken}
+            onClick={form.handleSubmit(onSubmit)}
             className="ml-auto"
           >
             Support <ArrowRightIcon className="ml-2 w-4 h-4" />

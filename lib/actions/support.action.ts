@@ -1,48 +1,42 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
 import prisma from '../prismadb';
-import { handleError } from '../utils';
-import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { getCurrentPayment } from './midtrans.action';
 
 export async function createSupport({
   name,
   message,
+  order_id,
   totalCoffee,
   amount,
 }: {
   name: string;
   message: string;
+  order_id: string;
   totalCoffee: number;
   amount: number;
 }) {
-  const session = await getServerSession(authOptions);
-  const email = session?.user?.email;
-
   try {
-    if (email) {
-      const user = await prisma.user.findUnique({
-        where: { email },
-        select: { id: true },
-      });
+    const payment = await getCurrentPayment(order_id);
 
+    if (payment) {
       const support = await prisma.support.create({
         data: {
           name,
           message,
           totalCoffee,
           amount,
-          status: 'PENDING',
-          userId: user?.id!,
+          paymentId: payment.id,
         },
       });
 
       return support;
     } else {
-      throw new Error('You must be logged in to give a support');
+      throw new Error('Payment not found');
     }
   } catch (error) {
-    handleError(error);
+    console.error('Error creating support:', error);
+    throw error;
   }
 }
 
@@ -50,12 +44,16 @@ export async function getAllSupports() {
   try {
     const supports = await prisma.support.findMany({
       include: {
-        user: {
+        payment: {
           select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+              },
+            },
           },
         },
       },
@@ -66,6 +64,7 @@ export async function getAllSupports() {
 
     return supports;
   } catch (error) {
-    handleError(error);
+    console.error('Error getting supports:', error);
+    throw error;
   }
 }
