@@ -92,7 +92,6 @@ interface Support {
   updatedAt: Date;
   paymentId: string;
   payment: {
-    id: string;
     user: {
       id: string;
       name: string | null;

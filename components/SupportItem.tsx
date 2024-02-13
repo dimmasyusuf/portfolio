@@ -4,7 +4,13 @@ import { formatDate, getInitials } from '@/lib/utils';
 import { Support } from '@/types';
 
 export default function SupportItem({ support }: { support: Support }) {
-  const { name, message, totalCoffee, createdAt, user } = support;
+  const {
+    name,
+    message,
+    totalCoffee,
+    createdAt,
+    payment: { user },
+  } = support;
 
   return (
     <div className="flex flex-col gap-2 rounded-md p-4 border bg-background dark:bg-accent">
