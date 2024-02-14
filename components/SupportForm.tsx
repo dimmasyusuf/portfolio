@@ -32,7 +32,6 @@ import { createSupport } from '@/lib/actions/support.action';
 import {
   createPayment,
   createPaymentToken,
-  getCurrentPayment,
 } from '@/lib/actions/midtrans.action';
 import { splitFullName } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -51,10 +50,6 @@ export default function SupportForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState('');
   const [snapShown, setSnapShown] = useState(false);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
-  const [orderId, setOrderId] = useState('');
-  const [paymentStatus, setPaymentStatus] = useState('PENDING');
   const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
   const queryClient = useQueryClient();
 
@@ -105,41 +100,10 @@ export default function SupportForm() {
     const stepParam = params.get('step');
     handleStepParam(stepParam!);
 
-    if (status === 'authenticated' && step === 3) {
-      handlePaymentStatus();
-    }
-
-    if (paymentStatus === 'SUCCESS') {
-      handleSupport(name, message);
-    }
-
     return () => {
       document.body.removeChild(script);
     };
-  }, [form.formState.errors, params, status, paymentStatus]);
-
-  const handlePaymentStatus = async () => {
-    const payment = await getCurrentPayment(orderId);
-    const status = payment?.status;
-
-    if (status === 'SUCCESS') {
-      setPaymentStatus(status);
-    } else {
-      setTimeout(() => {
-        handlePaymentStatus();
-      }, 3000);
-    }
-  };
-
-  const handleSupport = async (name: string, message: string) => {
-    await createSupportMutation({
-      name,
-      message,
-      order_id: orderId,
-      totalCoffee,
-      amount: totalCoffee * totalPrice,
-    });
-  };
+  }, [form.formState.errors, params, status]);
 
   const handleFormErrors = () => {
     if (form.formState.errors.name || form.formState.errors.message) {
@@ -150,23 +114,14 @@ export default function SupportForm() {
   const handleStepParam = (stepParam: string) => {
     if (stepParam && !isNaN(parseInt(stepParam))) {
       const newPage = parseInt(stepParam);
-      if (status === 'authenticated' && newPage !== 4 && newPage !== 3) {
+      if (status === 'authenticated' && newPage !== 3) {
         setStep(newPage);
       } else if (status === 'unauthenticated') {
         setShowAuthDialog(true);
-      } else if (newPage === 4) {
-        handleStepFour(newPage);
       } else if (newPage === 3 && token === '') {
         setStep(1);
       }
     }
-  };
-
-  const handleStepFour = (newPage: number) => {
-    setStep(newPage);
-    setTimeout(() => {
-      setStep(1);
-    }, 5000);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -205,7 +160,7 @@ export default function SupportForm() {
     setStep(newStep);
   };
 
-  const handlePaymentToken = async () => {
+  const handlePayment = async (name: string, message: string) => {
     const id = 'coffee-' + Date.now();
     const order_id = 'support-' + Date.now();
     const gross_amount = totalCoffee * totalPrice;
@@ -224,8 +179,6 @@ export default function SupportForm() {
     });
 
     setToken(paymentToken);
-    setOrderId(order_id);
-
     handleStepChange(step + 1);
 
     if (!snapShown) {
@@ -239,6 +192,14 @@ export default function SupportForm() {
         order_id,
         gross_amount,
       });
+
+      await createSupportMutation({
+        name,
+        message,
+        order_id,
+        totalCoffee,
+        amount: totalCoffee * totalPrice,
+      });
     }
   };
 
@@ -246,11 +207,9 @@ export default function SupportForm() {
     const { name, message } = values;
     setIsSubmitting(true);
 
-    setName(name);
-    setMessage(message);
-
     setTimeout(() => {
-      handlePaymentToken();
+      handlePayment(name, message);
+
       setIsSubmitting(false);
     }, 1000);
 
@@ -410,22 +369,52 @@ export default function SupportForm() {
         className={`${step === 3 ? 'h-full w-full rounded-md' : 'hidden'}`}
       ></div>
 
-      {step === 4 && (
+      {/* {step === 4 && (
         <div className="flex flex-col my-auto">
-          <Image
-            src="/images/icon_supportsuccess.webp"
-            width={128}
-            height={128}
-            alt="Party Hat Icon"
-            className="w-32 h-32"
-          />
-          <span className="font-semibold mt-16">THANK YOU</span>
-          <p className="text-sm text-muted-foreground">
-            Your support will help me to keep coding and sharing knowledge with
-            the community 👋🏻
-          </p>
+          {currentPayment?.status === 'PENDING' && (
+            <div className="flex flex-col items-center justify-center">
+              <ReloadIcon className="animate-spin w-10 h-10" />
+              <span className="text-lg font-semibold mt-4">Loading...</span>
+              <p className="text-sm text-muted-foreground">
+                Please wait while we process your payment
+              </p>
+            </div>
+          )}
+
+          {currentPayment?.status === 'SUCCESS' && (
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                src="/images/icon_supportsuccess.webp"
+                width={128}
+                height={128}
+                alt="Party Hat Icon"
+                className="w-32 h-32"
+              />
+              <span className="font-semibold mt-16">THANK YOU</span>
+              <p className="text-sm text-muted-foreground">
+                Your support will help me to keep coding and sharing knowledge
+                with the community 👋🏻
+              </p>
+            </div>
+          )}
+
+          {currentPayment?.status === 'FAILED' && (
+            <div className="flex flex-col items-center justify-center">
+              <Image
+                src="/images/icon_supportfailed.webp"
+                width={128}
+                height={128}
+                alt="Party Hat Icon"
+                className="w-32 h-32"
+              />
+              <span className="font-semibold mt-16">FAILED</span>
+              <p className="text-sm text-muted-foreground">
+                Your payment has failed, please try again
+              </p>
+            </div>
+          )}
         </div>
-      )}
+      )} */}
 
       {showAuthDialog && (
         <AuthDialog
@@ -439,7 +428,7 @@ export default function SupportForm() {
           step === 3 && 'hidden'
         } flex justify-between items-center`}
       >
-        {step > 1 && step <= 3 && (
+        {step > 1 && step <= 4 && (
           <Button
             size="sm"
             variant="outline"

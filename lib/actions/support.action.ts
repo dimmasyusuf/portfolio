@@ -43,23 +43,23 @@ export async function createSupport({
 export async function getAllSupports() {
   try {
     const supports = await prisma.support.findMany({
+      where: {
+        NOT: {
+          payment: {
+            status: 'PENDING',
+          },
+        },
+      },
       include: {
         payment: {
           select: {
             user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                image: true,
-              },
+              select: { id: true, name: true, email: true, image: true },
             },
           },
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: { createdAt: 'desc' },
     });
 
     return supports;

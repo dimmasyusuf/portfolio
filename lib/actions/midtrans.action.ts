@@ -100,10 +100,10 @@ export const createPayment = async ({
   }
 };
 
-export const getCurrentPayment = async (orderId: string) => {
+export const getCurrentPayment = async (order_id: string) => {
   try {
-    const payment = await prisma.payment.findUnique({
-      where: { orderId },
+    const payment = await prisma.payment.findFirst({
+      where: { orderId: order_id },
     });
 
     return payment;
