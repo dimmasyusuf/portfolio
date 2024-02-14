@@ -19,8 +19,13 @@ export default function AuthDialog({
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <DialogTrigger className="ml-auto flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground">
-        <EnterIcon className="w-5 h-5" />
+      <DialogTrigger
+        className={`${
+          showAuth && 'hidden'
+        } flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground`}
+        aria-label="Open Auth Dialog"
+      >
+        <EnterIcon className="w-6 h-6 sm:w-5 sm:h-5" />
       </DialogTrigger>
       <DialogContent className="flex items-center justify-center h-[100dvh] sm:h-fit w-full sm:w-fit p-0 overflow-auto">
         <AuthForm openAuth={setIsOpen} />

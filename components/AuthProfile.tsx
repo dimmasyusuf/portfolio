@@ -22,7 +22,10 @@ export default function Authrofile({ user }: { user?: User | null }) {
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <PopoverTrigger className="flex items-center justify-center">
+      <PopoverTrigger
+        className="flex items-center justify-center"
+        aria-label="Open User Profile"
+      >
         <Avatar className="rounded-md w-9 h-9">
           <AvatarImage
             src={user?.image!}
@@ -35,9 +38,9 @@ export default function Authrofile({ user }: { user?: User | null }) {
           </AvatarFallback>
         </Avatar>
         {isOpen ? (
-          <ChevronDownIcon className="w-4 h-4 ml-0.5 transition-transform duration-200 rotate-180" />
+          <ChevronDownIcon className="hidden sm:flex w-4 h-4 ml-0.5 transition-transform duration-200 rotate-180" />
         ) : (
-          <ChevronDownIcon className="w-4 h-4 ml-0.5" />
+          <ChevronDownIcon className="hidden sm:flex w-4 h-4 ml-0.5" />
         )}
       </PopoverTrigger>
       <PopoverContent

@@ -101,6 +101,10 @@ interface Support {
   };
 }
 
+interface RouteIcon {
+  [key: string]: React.ReactElement;
+}
+
 declare global {
   interface Window {
     snap: {
@@ -117,6 +121,7 @@ declare global {
 
 export type {
   Routes,
+  RouteIcon,
   Projects,
   Skills,
   Songs,
