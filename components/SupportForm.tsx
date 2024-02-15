@@ -31,9 +31,11 @@ import AuthDialog from './AuthDialog';
 import {
   createSupport,
   createSupportToken,
+  getAllSupports,
 } from '@/lib/actions/support.action';
 import { splitFullName } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Skeleton } from './ui/skeleton';
 
 const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
 
@@ -56,6 +58,11 @@ export default function SupportForm() {
     queryKey: ['user'],
     queryFn: () => getUserProfile(),
     enabled: status === 'authenticated',
+  });
+
+  const { isLoading: supportLoading } = useQuery({
+    queryKey: ['support'],
+    queryFn: () => getAllSupports(),
   });
 
   const { mutateAsync: createSupportTokenMutation } = useMutation({
@@ -201,6 +208,10 @@ export default function SupportForm() {
     }, 1000);
 
     form.reset();
+  }
+
+  if (supportLoading) {
+    return <Skeleton className="h-[641px] w-full rounded-md" />;
   }
 
   return (
