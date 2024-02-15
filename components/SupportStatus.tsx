@@ -239,21 +239,37 @@ export default function SupportStatus() {
         )}
 
         {status === 'FAILED' && (
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold text-primary-foreground">
-              Payment Failed
-            </h1>
-            <p className="text-lg text-center text-secondary-foreground">
-              Your payment has failed. Please try again.
-            </p>
-            <Button
-              size="lg"
-              onClick={handlePayNow}
-              className="mt-4"
-            >
-              Retry Payment
-            </Button>
-          </div>
+          <section className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+            <div className="flex flex-col max-w-sm items-center gap-4">
+              <Image
+                src="/images/icon_supportfailed.svg"
+                alt="Support Failed Icon"
+                width={128}
+                height={128}
+              />
+
+              <div className="flex flex-col">
+                <span className="text-xl text-center font-bold dark:text-secondary-foreground">
+                  Support Failed
+                </span>
+                <span className="text-center dark:text-secondary-foreground">
+                  Your support has failed to process.
+                </span>
+              </div>
+
+              <Button
+                size="sm"
+                onClick={handlePayNow}
+                className="w-full"
+              >
+                {isSubmitting ? (
+                  <ReloadIcon className="animate-spin w-4 h-4" />
+                ) : (
+                  <>Try Again</>
+                )}
+              </Button>
+            </div>
+          </section>
         )}
 
         <div
