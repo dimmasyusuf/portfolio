@@ -5,9 +5,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { formatDate, getInitials, obfuscateEmail } from '@/lib/utils';
 import { Button } from './ui/button';
-import { getCurrentSupport } from '@/lib/actions/support.action';
-import { useQuery } from '@tanstack/react-query';
-import { redirect, useSearchParams } from 'next/navigation';
+import { deleteSupport, getCurrentSupport } from '@/lib/actions/support.action';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { Skeleton } from './ui/skeleton';
 import { useEffect, useState } from 'react';
 import { ReloadIcon } from '@radix-ui/react-icons';
@@ -20,15 +20,25 @@ export default function SupportStatus() {
   const params = useSearchParams();
   const order_id = params.get('order_id');
   const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const { status: authStatus } = useSession();
   const [step, setStep] = useState(1);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+  const [isCanceling, setIsCanceling] = useState(false);
 
   const { data: currentSupport, isLoading: supportLoading } = useQuery({
     queryKey: ['payment'],
     queryFn: () => getCurrentSupport(order_id!),
     enabled: order_id !== null,
+  });
+
+  const { mutateAsync: deleteSupportMutation } = useMutation({
+    mutationFn: deleteSupport,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['support'] });
+    },
   });
 
   const handleAuthDialog = () => {
@@ -76,8 +86,8 @@ export default function SupportStatus() {
       user,
     } = currentSupport;
 
-    const handlePayNow = () => {
-      setIsSubmitting(true);
+    const handleSupportNow = () => {
+      setIsPaying(true);
 
       setTimeout(() => {
         if (token) {
@@ -87,7 +97,17 @@ export default function SupportStatus() {
         }
 
         setStep(2);
-        setIsSubmitting(false);
+        setIsPaying(false);
+      }, 1000);
+    };
+
+    const handleDeleteSupport = () => {
+      setIsCanceling(true);
+
+      setTimeout(async () => {
+        await deleteSupportMutation(orderId);
+        setIsCanceling(false);
+        router.push('/support');
       }, 1000);
     };
 
@@ -220,15 +240,19 @@ export default function SupportStatus() {
 
             <div className="grid grid-cols-2 gap-4">
               <Button
-                onClick={handlePayNow}
+                onClick={handleDeleteSupport}
                 variant="outline"
                 className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:text-secondary-foreground dark:hover:text-primary-foreground"
               >
-                Cancel
+                {isCanceling ? (
+                  <ReloadIcon className="animate-spin w-4 h-4" />
+                ) : (
+                  <>Cancel</>
+                )}
               </Button>
 
-              <Button onClick={handlePayNow}>
-                {isSubmitting ? (
+              <Button onClick={handleSupportNow}>
+                {isPaying ? (
                   <ReloadIcon className="animate-spin w-4 h-4" />
                 ) : (
                   <>Support Now</>
@@ -259,10 +283,10 @@ export default function SupportStatus() {
 
               <Button
                 size="sm"
-                onClick={handlePayNow}
+                onClick={handleDeleteSupport}
                 className="w-full"
               >
-                {isSubmitting ? (
+                {isCanceling ? (
                   <ReloadIcon className="animate-spin w-4 h-4" />
                 ) : (
                   <>Try Again</>
