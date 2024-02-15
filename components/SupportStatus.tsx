@@ -329,7 +329,7 @@ export default function SupportStatus() {
         <div
           id="snap-status"
           className={`${
-            step === 1
+            status === 'SUCCESS' || status === 'FAILED' || step === 1
               ? 'hidden'
               : 'w-full h-full bg-background dark:bg-accent rounded-md border'
           }`}
