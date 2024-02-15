@@ -71,33 +71,26 @@ interface Message {
   };
 }
 
-interface Payment {
-  id: string;
-  orderId: string;
-  paymentType: string | null;
-  amount: number;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: string;
-}
-
 interface Support {
   id: string;
   name: string;
   message: string;
+  orderId: string;
+  price: number;
   totalCoffee: number;
   amount: number;
+  paymentType: string | null;
+  status: string;
+  expiryTime: Date | null;
+  token: string | null;
   createdAt: Date;
   updatedAt: Date;
-  paymentId: string;
-  payment: {
-    user: {
-      id: string;
-      name: string | null;
-      email: string | null;
-      image: string | null;
-    };
+  userId: string;
+  user: {
+    id: string | null;
+    name: string | null;
+    email: string | null;
+    image: string | null;
   };
 }
 
@@ -114,7 +107,6 @@ declare global {
           embedId: string;
         }
       ) => void;
-      pay: (token: string) => void;
     };
   }
 }
@@ -129,6 +121,5 @@ export type {
   Experiences,
   User,
   Message,
-  Payment,
   Support,
 };

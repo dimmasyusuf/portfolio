@@ -9,7 +9,7 @@ export default function SupportItem({ support }: { support: Support }) {
     message,
     totalCoffee,
     createdAt,
-    payment: { user },
+    user,
   } = support;
 
   return (

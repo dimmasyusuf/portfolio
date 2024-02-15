@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { set, z } from 'zod';
+import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -28,11 +28,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
 import AuthDialog from './AuthDialog';
-import { createSupport } from '@/lib/actions/support.action';
 import {
-  createPayment,
-  createPaymentToken,
-} from '@/lib/actions/midtrans.action';
+  createSupport,
+  createSupportToken,
+} from '@/lib/actions/support.action';
 import { splitFullName } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -42,10 +41,10 @@ export default function SupportForm() {
   const pathName = usePathname();
   const params = useSearchParams();
   const router = useRouter();
+  const price = 5000;
   const { status, data: session } = useSession();
   const [step, setStep] = useState(1);
   const [totalCoffee, setTotalCoffee] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(5000);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState('');
@@ -59,22 +58,15 @@ export default function SupportForm() {
     enabled: status === 'authenticated',
   });
 
+  const { mutateAsync: createSupportTokenMutation } = useMutation({
+    mutationFn: createSupportToken,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['support'] });
+    },
+  });
+
   const { mutateAsync: createSupportMutation } = useMutation({
     mutationFn: createSupport,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['support'] });
-    },
-  });
-
-  const { mutateAsync: createPaymentTokenMutation } = useMutation({
-    mutationFn: createPaymentToken,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['support'] });
-    },
-  });
-
-  const { mutateAsync: createPaymentMutation } = useMutation({
-    mutationFn: createPayment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support'] });
     },
@@ -136,7 +128,6 @@ export default function SupportForm() {
   const handleInputBlur = () => {
     if (isNaN(totalCoffee)) {
       setTotalCoffee(1);
-      setTotalPrice(5000);
     }
   };
 
@@ -160,15 +151,15 @@ export default function SupportForm() {
     setStep(newStep);
   };
 
-  const handlePayment = async (name: string, message: string) => {
+  const handleSupport = async (name: string, message: string) => {
     const id = 'coffee-' + Date.now();
     const order_id = 'support-' + Date.now();
-    const gross_amount = totalCoffee * totalPrice;
+    const gross_amount = totalCoffee * price;
     const quantity = totalCoffee;
     const { first_name, last_name } = splitFullName(user?.name!);
     const email = user?.email!;
 
-    const paymentToken = await createPaymentTokenMutation({
+    const supportToken = await createSupportTokenMutation({
       order_id,
       gross_amount,
       id,
@@ -178,27 +169,23 @@ export default function SupportForm() {
       email,
     });
 
-    setToken(paymentToken);
+    setToken(supportToken);
     handleStepChange(step + 1);
 
     if (!snapShown) {
-      window.snap.embed(paymentToken, {
+      window.snap.embed(supportToken, {
         embedId: 'snap-container',
       });
 
       setSnapShown(true);
 
-      await createPaymentMutation({
-        order_id,
-        gross_amount,
-      });
-
       await createSupportMutation({
         name,
         message,
         order_id,
+        price,
         totalCoffee,
-        amount: totalCoffee * totalPrice,
+        token: supportToken,
       });
     }
   };
@@ -208,7 +195,7 @@ export default function SupportForm() {
     setIsSubmitting(true);
 
     setTimeout(() => {
-      handlePayment(name, message);
+      handleSupport(name, message);
 
       setIsSubmitting(false);
     }, 1000);
@@ -255,8 +242,8 @@ export default function SupportForm() {
             <span className="text-lg font-bold">
               Rp{' '}
               {isNaN(totalCoffee)
-                ? totalPrice.toLocaleString('id-ID')
-                : (totalCoffee * totalPrice).toLocaleString('id-ID')}
+                ? price.toLocaleString('id-ID')
+                : (totalCoffee * price).toLocaleString('id-ID')}
             </span>
 
             <div className="flex gap-3 items-center">
@@ -369,53 +356,6 @@ export default function SupportForm() {
         className={`${step === 3 ? 'h-full w-full rounded-md' : 'hidden'}`}
       ></div>
 
-      {/* {step === 4 && (
-        <div className="flex flex-col my-auto">
-          {currentPayment?.status === 'PENDING' && (
-            <div className="flex flex-col items-center justify-center">
-              <ReloadIcon className="animate-spin w-10 h-10" />
-              <span className="text-lg font-semibold mt-4">Loading...</span>
-              <p className="text-sm text-muted-foreground">
-                Please wait while we process your payment
-              </p>
-            </div>
-          )}
-
-          {currentPayment?.status === 'SUCCESS' && (
-            <div className="flex flex-col items-center justify-center">
-              <Image
-                src="/images/icon_supportsuccess.webp"
-                width={128}
-                height={128}
-                alt="Party Hat Icon"
-                className="w-32 h-32"
-              />
-              <span className="font-semibold mt-16">THANK YOU</span>
-              <p className="text-sm text-muted-foreground">
-                Your support will help me to keep coding and sharing knowledge
-                with the community 👋🏻
-              </p>
-            </div>
-          )}
-
-          {currentPayment?.status === 'FAILED' && (
-            <div className="flex flex-col items-center justify-center">
-              <Image
-                src="/images/icon_supportfailed.webp"
-                width={128}
-                height={128}
-                alt="Party Hat Icon"
-                className="w-32 h-32"
-              />
-              <span className="font-semibold mt-16">FAILED</span>
-              <p className="text-sm text-muted-foreground">
-                Your payment has failed, please try again
-              </p>
-            </div>
-          )}
-        </div>
-      )} */}
-
       {showAuthDialog && (
         <AuthDialog
           showAuth={showAuthDialog}
@@ -428,7 +368,7 @@ export default function SupportForm() {
           step === 3 && 'hidden'
         } flex justify-between items-center`}
       >
-        {step > 1 && step <= 4 && (
+        {step > 1 && step <= 3 && (
           <Button
             size="sm"
             variant="outline"

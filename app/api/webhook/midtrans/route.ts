@@ -9,27 +9,31 @@ let apiClient = new midtransClient.Snap({
   clientKey: process.env.MIDTRANS_CLIENT_KEY,
 });
 
-async function updatePaymentStatus(
-  paymentId: string,
+async function updateSupportStatus(
+  orderId: string,
+  paymentType: string,
   status: string,
-  paymentType: string
+  expiryTime: string
 ) {
-  if (paymentId) {
-    await prisma.payment.update({
-      where: { id: paymentId },
+  if (orderId) {
+    await prisma.support.update({
+      where: {
+        orderId,
+      },
       data: {
-        status,
         paymentType,
+        status,
+        expiryTime,
       },
     });
 
     return NextResponse.json({
-      message: 'Payment updated',
+      message: 'Support updated',
       status: 200,
     });
   } else {
     return NextResponse.json({
-      message: 'Payment not found',
+      message: 'Support not found',
       status: 404,
     });
   }
@@ -38,6 +42,9 @@ async function updatePaymentStatus(
 export async function POST(req: Request) {
   const body = await req.json();
   const transaction = await apiClient.transaction.notification(body);
+
+  console.log('transaction:', transaction);
+
   const {
     transaction_status,
     fraud_status,
@@ -46,6 +53,7 @@ export async function POST(req: Request) {
     gross_amount,
     payment_type,
     signature_key,
+    expiry_time,
   } = transaction;
   const serverKey = process.env.MIDTRANS_SERVER_KEY as string;
 
@@ -61,15 +69,15 @@ export async function POST(req: Request) {
     });
   }
 
-  const payment = await prisma.payment.findUnique({
+  const support = await prisma.support.findUnique({
     where: {
       orderId: order_id,
     },
   });
 
-  if (!payment) {
+  if (!support) {
     return NextResponse.json({
-      message: 'Payment not found',
+      message: 'Support not found',
       status: 404,
     });
   }
@@ -77,22 +85,42 @@ export async function POST(req: Request) {
   switch (transaction_status) {
     case 'capture':
       if (fraud_status === 'challenge') {
-        return updatePaymentStatus(payment.id, 'PENDING', payment_type);
+        return updateSupportStatus(
+          order_id,
+          payment_type,
+          'PENDING',
+          expiry_time
+        );
       } else if (fraud_status === 'accept') {
-        return updatePaymentStatus(payment.id, 'SUCCESS', payment_type);
+        return updateSupportStatus(
+          order_id,
+          payment_type,
+          'SUCCESS',
+          expiry_time
+        );
       }
       break;
 
     case 'settlement':
-      return updatePaymentStatus(payment.id, 'SUCCESS', payment_type);
+      return updateSupportStatus(
+        order_id,
+        payment_type,
+        'SUCCESS',
+        expiry_time
+      );
 
     case 'deny':
     case 'cancel':
     case 'expire':
-      return updatePaymentStatus(payment.id, 'FAILED', payment_type);
+      return updateSupportStatus(order_id, payment_type, 'FAILED', expiry_time);
 
     case 'pending':
-      return updatePaymentStatus(payment.id, 'PENDING', payment_type);
+      return updateSupportStatus(
+        order_id,
+        payment_type,
+        'PENDING',
+        expiry_time
+      );
 
     default:
       return NextResponse.json({
