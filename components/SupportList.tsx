@@ -37,7 +37,7 @@ export default function SupportList() {
         {supports?.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 h-[607px]">
             <Image
-              src="/images/icon_supportnotfound.webp"
+              src="/images/icon_supportnotfound.svg"
               width={128}
               height={128}
               alt="Sleepy Icon"

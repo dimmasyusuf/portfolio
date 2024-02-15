@@ -4,7 +4,13 @@ import { formatDate, getInitials } from '@/lib/utils';
 import { Support } from '@/types';
 
 export default function SupportItem({ support }: { support: Support }) {
-  const { name, message, totalCoffee, createdAt, user } = support;
+  const {
+    name,
+    message,
+    totalCoffee,
+    createdAt,
+    user,
+  } = support;
 
   return (
     <div className="flex flex-col gap-2 rounded-md p-4 border bg-background dark:bg-accent">
@@ -29,7 +35,7 @@ export default function SupportItem({ support }: { support: Support }) {
             <span className="text-sm whitespace-nowrap">supports</span>
             <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
               <Image
-                src="/images/icon_supportitem.webp"
+                src="/images/icon_supportcoffee.png"
                 alt="Coffee Icon"
                 width={16}
                 height={16}

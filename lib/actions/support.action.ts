@@ -1,21 +1,84 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
+const midtransClient = require('midtrans-client');
 import prisma from '../prismadb';
-import { handleError } from '../utils';
+import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 
-export async function createSupport({
+let snap = new midtransClient.Snap({
+  isProduction: false,
+  serverKey: process.env.MIDTRANS_SERVER_KEY,
+  clientKey: process.env.MIDTRANS_CLIENT_KEY,
+});
+
+export const createSupportToken = async ({
+  order_id,
+  gross_amount,
+  id,
+  quantity,
+  first_name,
+  last_name,
+  email,
+}: {
+  order_id: string;
+  gross_amount: number;
+  id: string;
+  quantity: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+}) => {
+  const parameter = {
+    transaction_details: {
+      order_id,
+      gross_amount,
+    },
+    item_details: [
+      {
+        id,
+        price: 5000,
+        quantity,
+        name: 'Coffee',
+        category: 'Support',
+        merchant_name: 'dimmasyusuf',
+        url: 'https://dimmasyusuf.me/support',
+      },
+    ],
+    customer_details: {
+      first_name,
+      last_name,
+      email,
+    },
+    callbacks: {
+      finish: 'https://dimmasyusuf.me/support/status',
+    },
+  };
+
+  try {
+    const token = await snap.createTransactionToken(parameter);
+
+    return token;
+  } catch (error) {
+    console.error('Error creating transaction:', error);
+    throw error;
+  }
+};
+
+export const createSupport = async ({
   name,
   message,
+  order_id,
+  price,
   totalCoffee,
-  amount,
+  token,
 }: {
   name: string;
   message: string;
+  order_id: string;
+  price: number;
   totalCoffee: number;
-  amount: number;
-}) {
+  token: string;
+}) => {
   const session = await getServerSession(authOptions);
   const email = session?.user?.email;
 
@@ -30,25 +93,30 @@ export async function createSupport({
         data: {
           name,
           message,
+          orderId: order_id,
+          price,
           totalCoffee,
-          amount,
+          amount: price * totalCoffee,
           status: 'PENDING',
+          token,
           userId: user?.id!,
         },
       });
 
       return support;
     } else {
-      throw new Error('You must be logged in to give a support');
+      throw new Error('You must be logged in to create a support');
     }
   } catch (error) {
-    handleError(error);
+    console.error('Error creating support:', error);
+    throw error;
   }
-}
+};
 
-export async function getAllSupports() {
+export const getCurrentSupport = async (order_id: string) => {
   try {
-    const supports = await prisma.support.findMany({
+    const support = await prisma.support.findFirst({
+      where: { orderId: order_id },
       include: {
         user: {
           select: {
@@ -59,13 +127,52 @@ export async function getAllSupports() {
           },
         },
       },
+    });
+
+    return support;
+  } catch (error) {
+    console.error('Error getting support:', error);
+    throw error;
+  }
+};
+
+export async function getAllSupports() {
+  try {
+    const supports = await prisma.support.findMany({
+      where: {
+        NOT: {
+          status: 'PENDING',
+        },
+      },
       orderBy: {
         createdAt: 'desc',
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+          },
+        },
       },
     });
 
     return supports;
   } catch (error) {
-    handleError(error);
+    console.error('Error getting supports:', error);
+    throw error;
+  }
+}
+
+export async function deleteSupport(order_id: string) {
+  try {
+    await prisma.support.delete({
+      where: { orderId: order_id },
+    });
+  } catch (error) {
+    console.error('Error deleting support:', error);
+    throw error;
   }
 }

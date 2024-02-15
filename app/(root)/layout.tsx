@@ -8,11 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <header className="bg-background sticky sm:static top-0 w-full shadow-sm sm:shadow-none p-4 z-10 max-w-screen-md mx-auto">
+      <header className="bg-background fixed overflow-hidden border-t sm:border-none sm:static bottom-0 w-full shadow-sm sm:shadow-none p-4 z-10 max-w-screen-md mx-auto">
         <Navbar />
       </header>
       {children}
-      <footer className="p-4 max-w-screen-md mx-auto">
+      <footer className="p-4 mb-[68px] sm:mb-0 max-w-screen-md mx-auto">
         <Footer />
       </footer>
     </>

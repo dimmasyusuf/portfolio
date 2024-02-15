@@ -12,14 +12,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
 import { Input } from '@/components/ui/input';
 import { Textarea } from './ui/textarea';
@@ -27,27 +19,39 @@ import { Button } from './ui/button';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  ChevronDownIcon,
   MinusIcon,
   PlusIcon,
+  ReloadIcon,
 } from '@radix-ui/react-icons';
 import { supportInputSchema } from '@/lib/validator';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
 import { useSession } from 'next-auth/react';
 import AuthDialog from './AuthDialog';
-import { createPaymentEWALLET } from '@/lib/actions/xendit.action';
-import { createSupport } from '@/lib/actions/support.action';
-import { toast } from 'sonner';
+import {
+  createSupport,
+  createSupportToken,
+  getAllSupports,
+} from '@/lib/actions/support.action';
+import { splitFullName } from '@/lib/utils';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Skeleton } from './ui/skeleton';
+
+const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js';
 
 export default function SupportForm() {
+  const pathName = usePathname();
+  const params = useSearchParams();
+  const router = useRouter();
+  const price = 5000;
   const { status, data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
   const [step, setStep] = useState(1);
   const [totalCoffee, setTotalCoffee] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(5000);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [token, setToken] = useState('');
+  const [snapShown, setSnapShown] = useState(false);
+  const clientKey = process.env.MIDTRANS_CLIENT_KEY as string;
   const queryClient = useQueryClient();
 
   const { data: user } = useQuery({
@@ -56,15 +60,20 @@ export default function SupportForm() {
     enabled: status === 'authenticated',
   });
 
-  const { mutateAsync: createSupportMutation } = useMutation({
-    mutationFn: createSupport,
+  const { isLoading: supportLoading } = useQuery({
+    queryKey: ['support'],
+    queryFn: () => getAllSupports(),
+  });
+
+  const { mutateAsync: createSupportTokenMutation } = useMutation({
+    mutationFn: createSupportToken,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support'] });
     },
   });
 
-  const { mutateAsync: createPaymentEWALLETMutation } = useMutation({
-    mutationFn: createPaymentEWALLET,
+  const { mutateAsync: createSupportMutation } = useMutation({
+    mutationFn: createSupport,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support'] });
     },
@@ -79,39 +88,40 @@ export default function SupportForm() {
   });
 
   useEffect(() => {
+    const script = document.createElement('script');
+    script.src = snapScript;
+    script.setAttribute('data-client-key', clientKey);
+    script.async = true;
+    document.body.appendChild(script);
+
+    handleFormErrors();
+
+    const stepParam = params.get('step');
+    handleStepParam(stepParam!);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [form.formState.errors, params, status]);
+
+  const handleFormErrors = () => {
     if (form.formState.errors.name || form.formState.errors.message) {
       setStep(2);
     }
-  }, [form.formState.errors, paymentMethod]);
+  };
 
-  async function onSubmit(values: z.infer<typeof supportInputSchema>) {
-    const { name, message } = values;
-    const amount = totalCoffee * totalPrice;
-
-    if (paymentMethod === '') {
-      toast.error('Please choose your payment method.', {
-        position: 'top-right',
-      });
-    } else {
-      handlePaymentEWALLET(paymentMethod);
-
-      await createSupportMutation({
-        name,
-        message,
-        totalCoffee,
-        amount,
-      });
-
-      form.reset();
-      setPaymentMethod('');
-
-      setStep(4);
-
-      setTimeout(() => {
+  const handleStepParam = (stepParam: string) => {
+    if (stepParam && !isNaN(parseInt(stepParam))) {
+      const newPage = parseInt(stepParam);
+      if (status === 'authenticated' && newPage !== 3) {
+        setStep(newPage);
+      } else if (status === 'unauthenticated') {
+        setShowAuthDialog(true);
+      } else if (newPage === 3 && token === '') {
         setStep(1);
-      }, 5000);
+      }
     }
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -125,56 +135,94 @@ export default function SupportForm() {
   const handleInputBlur = () => {
     if (isNaN(totalCoffee)) {
       setTotalCoffee(1);
-      setTotalPrice(5000);
     }
-  };
-
-  const handlePaymentEWALLET = async (paymentMethod: string) => {
-    const amount = totalCoffee * totalPrice;
-    const referenceId = 'support-' + Date.now();
-    const itemName = 'Coffee';
-    const itemCategory = 'Support';
-    const itemQuantity = totalCoffee;
-    const itemPrice = totalPrice;
-    const description =
-      totalCoffee > 1 ? `${totalCoffee} cups of coffee` : '1 cup of coffee';
-    const customerId = user?.id!;
-    const customerName = user?.name!;
-    const customerEmail = user?.email!;
-
-    const response = await createPaymentEWALLETMutation({
-      customerId,
-      customerName,
-      customerEmail,
-      itemName,
-      itemCategory,
-      itemQuantity,
-      itemPrice,
-      amount,
-      referenceId,
-      description,
-      paymentMethod,
-    });
-
-    console.log('response', response);
-  };
-
-  const handleChoosePaymentMethod = (method: string) => {
-    setPaymentMethod(method);
-    setIsOpen(false);
   };
 
   const handleAuth = () => {
     if (!session) {
       setShowAuthDialog(true);
     } else {
-      setStep(step + 1);
+      handleStepChange(step + 1);
     }
   };
 
+  const handleStepChange = (newStep: number) => {
+    const newParams = new URLSearchParams(params.toString());
+    newParams.set('step', newStep.toString());
+
+    const queryString = newParams.toString();
+    const url = queryString ? `${pathName}?${queryString}` : pathName;
+
+    router.push(url);
+
+    setStep(newStep);
+  };
+
+  const handleSupport = async (name: string, message: string) => {
+    const id = 'coffee-' + Date.now();
+    const order_id = 'support-' + Date.now();
+    const gross_amount = totalCoffee * price;
+    const quantity = totalCoffee;
+    const { first_name, last_name } = splitFullName(user?.name!);
+    const email = user?.email!;
+
+    const supportToken = await createSupportTokenMutation({
+      order_id,
+      gross_amount,
+      id,
+      quantity,
+      first_name,
+      last_name,
+      email,
+    });
+
+    setToken(supportToken);
+    handleStepChange(step + 1);
+
+    if (!snapShown) {
+      window.snap.embed(supportToken, {
+        embedId: 'snap-container',
+      });
+
+      setSnapShown(true);
+
+      await createSupportMutation({
+        name,
+        message,
+        order_id,
+        price,
+        totalCoffee,
+        token: supportToken,
+      });
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof supportInputSchema>) {
+    const { name, message } = values;
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      handleSupport(name, message);
+
+      setIsSubmitting(false);
+    }, 1000);
+
+    form.reset();
+  }
+
+  if (supportLoading) {
+    return <Skeleton className="h-[641px] w-full rounded-md" />;
+  }
+
   return (
-    <div className="flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[641px] justify-between">
-      {step <= 3 && (
+    <div
+      className={`${
+        step === 3
+          ? 'flex flex-col justify-between p-0 gap-6 rounded-md bg-background dark:bg-accent border h-[641px]'
+          : 'flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[641px] justify-between'
+      } `}
+    >
+      {step <= 2 && (
         <div className="flex flex-col space-y-1.5 text-center sm:text-left">
           <h3 className="text-lg font-semibold leading-none tracking-tight">
             Support
@@ -187,7 +235,7 @@ export default function SupportForm() {
         <div className="flex flex-col items-center justify-center gap-8">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
             <Image
-              src="/images/icon_supportitem.webp"
+              src="/images/icon_supportcoffee.png"
               width={128}
               height={128}
               alt="Coffee Icon"
@@ -205,8 +253,8 @@ export default function SupportForm() {
             <span className="text-lg font-bold">
               Rp{' '}
               {isNaN(totalCoffee)
-                ? totalPrice.toLocaleString('id-ID')
-                : (totalCoffee * totalPrice).toLocaleString('id-ID')}
+                ? price.toLocaleString('id-ID')
+                : (totalCoffee * price).toLocaleString('id-ID')}
             </span>
 
             <div className="flex gap-3 items-center">
@@ -314,270 +362,10 @@ export default function SupportForm() {
         </Form>
       )}
 
-      {step === 3 && (
-        <div className="flex flex-col gap-4 h-full">
-          <Dialog
-            open={isOpen}
-            onOpenChange={setIsOpen}
-          >
-            <DialogTrigger className="flex items-center rounded-md border dark:border-neutral-50 p-4 h-16">
-              {paymentMethod === '' && (
-                <span className="text-sm font-semibold">
-                  Choose Payment Method
-                </span>
-              )}
-
-              {paymentMethod === 'DANA' && (
-                <Image
-                  src="/images/logo_dana.svg"
-                  width={80}
-                  height={80}
-                  alt="Pay with DANA"
-                />
-              )}
-
-              {paymentMethod === 'LINKAJA' && (
-                <Image
-                  src="/images/logo_linkaja.svg"
-                  width={48}
-                  height={48}
-                  alt="Pay with LinkAja"
-                />
-              )}
-
-              {paymentMethod === 'OVO' && (
-                <Image
-                  src="/images/logo_ovo.svg"
-                  width={64}
-                  height={64}
-                  alt="Pay with OVO"
-                />
-              )}
-
-              {paymentMethod === 'SHOPEEPAY' && (
-                <Image
-                  src="/images/logo_spay.svg"
-                  width={64}
-                  height={64}
-                  alt="Pay with ShopeePay"
-                />
-              )}
-
-              {paymentMethod === 'QRIS' && (
-                <Image
-                  src="/images/logo_qris.svg"
-                  width={64}
-                  height={64}
-                  alt="Pay with QRIS"
-                />
-              )}
-
-              {paymentMethod === 'BCA' && (
-                <Image
-                  src="/images/logo_bca.svg"
-                  width={64}
-                  height={64}
-                  alt="Pay with BCA"
-                />
-              )}
-
-              {paymentMethod === 'BNI' && (
-                <Image
-                  src="/images/logo_bni.svg"
-                  width={64}
-                  height={64}
-                  alt="Pay with BNI"
-                />
-              )}
-
-              {paymentMethod === 'BRI' && (
-                <Image
-                  src="/images/logo_bri.svg"
-                  width={80}
-                  height={80}
-                  alt="Pay with BRI"
-                />
-              )}
-
-              {paymentMethod === 'MANDIRI' && (
-                <Image
-                  src="/images/logo_mandiri.svg"
-                  width={80}
-                  height={80}
-                  alt="Pay with MANDIRI"
-                />
-              )}
-
-              {isOpen ? (
-                <ChevronDownIcon className="w-4 h-4 ml-auto transition-transform duration-200 rotate-180" />
-              ) : (
-                <ChevronDownIcon className="w-4 h-4 ml-auto" />
-              )}
-            </DialogTrigger>
-            <DialogContent className="flex flex-col gap-8 rounded-md dark:bg-accent dark:shadow-background">
-              <DialogHeader>
-                <DialogTitle>Payment Method</DialogTitle>
-                <DialogDescription>
-                  Choose your preferred payment method.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="flex flex-col gap-4">
-                <span className="font-medium">E-Wallet</span>
-                <div className="grid grid-cols-4 gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('DANA')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_dana.svg"
-                      width={80}
-                      height={80}
-                      alt="Pay with DANA"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('LINKAJA')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_linkaja.svg"
-                      width={48}
-                      height={48}
-                      alt="Pay with LinkAja"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('OVO')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_ovo.svg"
-                      width={64}
-                      height={64}
-                      alt="Pay with OVO"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('SHOPEEPAY')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_spay.svg"
-                      width={64}
-                      height={64}
-                      alt="Pay with ShopeePay"
-                    />
-                  </Button>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <span className="font-medium">QRIS</span>
-                <div className="grid grid-cols-4 gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('QRIS')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_qris.svg"
-                      width={64}
-                      height={64}
-                      alt="Pay with QRIS"
-                    />
-                  </Button>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <span className="font-medium">Virtual Account</span>
-                <div className="grid grid-cols-4 gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('BCA')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_bca.svg"
-                      width={64}
-                      height={64}
-                      alt="Pay with BCA"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('BNI')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_bni.svg"
-                      width={64}
-                      height={64}
-                      alt="Pay with BNI"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('BRI')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_bri.svg"
-                      width={80}
-                      height={80}
-                      alt="Pay with BRI"
-                    />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleChoosePaymentMethod('MANDIRI')}
-                    className="h-16 shadow-none dark:border-background dark:hover:bg-primary dark:hover:text-primary-foreground"
-                  >
-                    <Image
-                      src="/images/logo_mandiri.svg"
-                      width={80}
-                      height={80}
-                      alt="Pay with MANDIRI"
-                    />
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          <div className="flex gap-2 justify-between items-center rounded-md px-4 py-2 border dark:border-neutral-50 mt-auto">
-            <span className="text-sm font-semibold">Total</span>
-            <span className="text-sm font-semibold">
-              Rp{' '}
-              {isNaN(totalCoffee)
-                ? totalPrice.toLocaleString('id-ID')
-                : (totalCoffee * totalPrice).toLocaleString('id-ID')}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {step === 4 && (
-        <div className="flex flex-col my-auto">
-          <Image
-            src="/images/icon_supportsuccess.webp"
-            width={128}
-            height={128}
-            alt="Party Hat Icon"
-            className="w-32 h-32"
-          />
-          <span className="font-semibold mt-16">THANK YOU</span>
-          <p className="text-sm text-muted-foreground">
-            Your support will help me to keep coding and sharing knowledge with
-            the community 👋🏻
-          </p>
-        </div>
-      )}
+      <div
+        id="snap-container"
+        className={`${step === 3 ? 'h-full w-full rounded-md' : 'hidden'}`}
+      ></div>
 
       {showAuthDialog && (
         <AuthDialog
@@ -586,20 +374,24 @@ export default function SupportForm() {
         />
       )}
 
-      <div className="flex justify-between items-center w-full">
-        {step > 1 && (
+      <div
+        className={`${
+          step === 3 && 'hidden'
+        } flex justify-between items-center`}
+      >
+        {step > 1 && step <= 3 && (
           <Button
             size="sm"
             variant="outline"
             className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
-            onClick={() => setStep(step - 1)}
+            onClick={() => handleStepChange(step - 1)}
           >
             <ArrowLeftIcon className="mr-2 w-4 h-4" />
             Back
           </Button>
         )}
 
-        {step < 3 && (
+        {step === 1 && (
           <Button
             size="sm"
             onClick={handleAuth}
@@ -609,12 +401,19 @@ export default function SupportForm() {
           </Button>
         )}
 
-        {step === 3 && (
+        {step === 2 && (
           <Button
             size="sm"
             onClick={form.handleSubmit(onSubmit)}
+            className="ml-auto"
           >
-            Support <ArrowRightIcon className="ml-2 w-4 h-4" />
+            {isSubmitting ? (
+              <ReloadIcon className="animate-spin w-4 h-4" />
+            ) : (
+              <>
+                Support <ArrowRightIcon className="ml-2 w-4 h-4" />
+              </>
+            )}
           </Button>
         )}
       </div>

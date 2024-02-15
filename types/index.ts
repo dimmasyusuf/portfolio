@@ -75,21 +75,45 @@ interface Support {
   id: string;
   name: string;
   message: string;
+  orderId: string;
+  price: number;
   totalCoffee: number;
   amount: number;
+  paymentType: string | null;
+  status: string;
+  expiryTime: string | null;
+  token: string | null;
   createdAt: Date;
   updatedAt: Date;
   userId: string;
   user: {
-    id: string;
+    id: string | null;
     name: string | null;
     email: string | null;
     image: string | null;
   };
 }
 
+interface RouteIcon {
+  [key: string]: React.ReactElement;
+}
+
+declare global {
+  interface Window {
+    snap: {
+      embed: (
+        token: string,
+        options: {
+          embedId: string;
+        }
+      ) => void;
+    };
+  }
+}
+
 export type {
   Routes,
+  RouteIcon,
   Projects,
   Skills,
   Songs,
