@@ -165,3 +165,14 @@ export async function getAllSupports() {
     throw error;
   }
 }
+
+export async function deleteSupport(order_id: string) {
+  try {
+    await prisma.support.delete({
+      where: { orderId: order_id },
+    });
+  } catch (error) {
+    console.error('Error deleting support:', error);
+    throw error;
+  }
+}
