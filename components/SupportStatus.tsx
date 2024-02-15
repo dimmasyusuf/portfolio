@@ -27,6 +27,7 @@ export default function SupportStatus() {
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
+  const [isBack, setIsBack] = useState(false);
 
   const { data: currentSupport, isLoading: supportLoading } = useQuery({
     queryKey: ['payment'],
@@ -111,16 +112,44 @@ export default function SupportStatus() {
       }, 1000);
     };
 
+    const handleBackToSupport = () => {
+      setIsBack(true);
+      router.push('/support');
+    };
+
     return (
       <section className="flex flex-col gap-6 w-full m-4 mt-8 sm:mt-4 h-[641px]">
         {status === 'SUCCESS' && (
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold text-primary-foreground">
-              Thank you for your support!
-            </h1>
-            <p className="text-lg text-center text-secondary-foreground">
-              Your support has been successfully processed.
-            </p>
+          <div className="flex flex-col items-center justify-center h-full p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+            <div className="flex flex-col max-w-sm">
+              <Image
+                src="/images/icon_supportsuccess.webp"
+                alt="Support Success Icon"
+                width={128}
+                height={128}
+                className="w-32 h-32 aspect-square animate-bounce"
+              />
+
+              <span className="text-xl font-bold dark:text-secondary-foreground mt-8">
+                THANK YOU
+              </span>
+              <span className="text-secondary-foreground">
+                Your support will help me to keep coding and sharing knowledge
+                to the community 👋🏻
+              </span>
+
+              <Button
+                size="sm"
+                onClick={handleBackToSupport}
+                className="mt-4"
+              >
+                {isBack ? (
+                  <ReloadIcon className="animate-spin w-4 h-4" />
+                ) : (
+                  <>Back to Support</>
+                )}
+              </Button>
+            </div>
           </div>
         )}
 
@@ -263,13 +292,14 @@ export default function SupportStatus() {
         )}
 
         {status === 'FAILED' && (
-          <section className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+          <div className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
             <div className="flex flex-col max-w-sm items-center gap-4">
               <Image
                 src="/images/icon_supportfailed.svg"
                 alt="Support Failed Icon"
                 width={128}
                 height={128}
+                className="w-32 h-32 aspect-square"
               />
 
               <div className="flex flex-col">
@@ -293,7 +323,7 @@ export default function SupportStatus() {
                 )}
               </Button>
             </div>
-          </section>
+          </div>
         )}
 
         <div
