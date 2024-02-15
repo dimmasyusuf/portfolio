@@ -81,7 +81,7 @@ interface Support {
   amount: number;
   paymentType: string | null;
   status: string;
-  expiryTime: Date | null;
+  expiryTime: string | null;
   token: string | null;
   createdAt: Date;
   updatedAt: Date;
