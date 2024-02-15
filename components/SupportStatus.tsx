@@ -123,7 +123,7 @@ export default function SupportStatus() {
           <div className="flex flex-col items-center justify-center h-full p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
             <div className="flex flex-col max-w-sm">
               <Image
-                src="/images/icon_supportsuccess.png"
+                src="/images/icon_supportsuccess.svg"
                 alt="Support Success Icon"
                 width={128}
                 height={128}
