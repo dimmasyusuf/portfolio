@@ -224,7 +224,7 @@ export default function SupportForm() {
         <div className="flex flex-col items-center justify-center gap-8">
           <div className="flex flex-col gap-4 items-center justify-center w-full">
             <Image
-              src="/images/icon_supportitem.webp"
+              src="/images/icon_supportcoffee.png"
               width={128}
               height={128}
               alt="Coffee Icon"

@@ -35,7 +35,7 @@ export default function SupportItem({ support }: { support: Support }) {
             <span className="text-sm whitespace-nowrap">supports</span>
             <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
               <Image
-                src="/images/icon_supportitem.webp"
+                src="/images/icon_supportcoffee.png"
                 alt="Coffee Icon"
                 width={16}
                 height={16}

@@ -123,7 +123,7 @@ export default function SupportStatus() {
           <div className="flex flex-col items-center justify-center h-full p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
             <div className="flex flex-col max-w-sm">
               <Image
-                src="/images/icon_supportsuccess.webp"
+                src="/images/icon_supportsuccess.png"
                 alt="Support Success Icon"
                 width={128}
                 height={128}
@@ -180,7 +180,7 @@ export default function SupportStatus() {
                       </span>
                       <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
                         <Image
-                          src="/images/icon_supportitem.webp"
+                          src="/images/icon_supportcoffee.png"
                           alt="Coffee Icon"
                           width={16}
                           height={16}
@@ -202,7 +202,7 @@ export default function SupportStatus() {
                 <div className="flex flex-col w-full">
                   <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
                     <Image
-                      src="/images/icon_supportitem.webp"
+                      src="/images/icon_supportcoffee.png"
                       alt="Coffee Icon"
                       width={16}
                       height={16}
