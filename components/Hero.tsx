@@ -88,15 +88,15 @@ export default function Hero() {
           />
 
           <Link
-            href="https://github.com/dimmasyusuf/"
-            aria-label="GitHub Profile"
+            href="https://www.linkedin.com/in/dimmasyusuf/"
+            aria-label="Follow me on LinkedIn"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2"
           >
-            <RiEyeLine className="w-4 h-4" />
-            <span className="text-xs hover:underline hover:text-bold">
-              1923 Visitors
+            <MdAlternateEmail className="w-4 h-4" />
+            <span className="text-xs hover:font-bold hover:text-primary transition-all ease-in-out duration-3000">
+              dimmasyusuf
             </span>
           </Link>
         </div>
