@@ -19,9 +19,10 @@ export default function Hero() {
   const [supportHover, setSupportHover] = useState(false);
 
   return (
-    <section className="grid grid-cols-1 border rounded-md">
-      <div className="hero-bg flex flex-col gap-4 h-32 sm:h-48 w-full rounded-t-md"></div>
-      <div className="flex flex-col gap-4 bg-background rounded-b-md p-6">
+    <section className="grid grid-cols-1 border-b sm:border sm:rounded-md">
+      <div className="hero-bg flex flex-col gap-4 h-32 sm:h-48 w-full rounded-t-md" />
+
+      <div className="flex flex-col gap-4 bg-background sm:rounded-b-md p-6">
         <div className="flex justify-between items-start">
           <div className="flex items-center justify-center mt-[-80px] sm:mt-[-96px]">
             <Image
