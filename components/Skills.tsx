@@ -3,14 +3,16 @@
 import { CookieIcon, RocketIcon } from '@radix-ui/react-icons';
 import { Button } from './ui/button';
 import data from '@/lib/data';
+import { usePathname } from 'next/navigation';
 
 export default function Skills() {
   const frontends = data.frontends;
   const backends = data.backends;
+  const pathName = usePathname();
 
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-2xl font-bold">Skills</h2>
+    <section className="flex flex-col gap-6 mx-4 sm:mx-0">
+      {pathName === '/about' && <h2 className="text-2xl font-bold">Skills</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col p-6 gap-4 border rounded-md bg-card dark:bg-accent">
           <div className="flex items-center justify-between">
@@ -59,6 +61,6 @@ export default function Skills() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
