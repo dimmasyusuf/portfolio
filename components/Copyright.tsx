@@ -22,13 +22,13 @@ export default function Copyright() {
         <HoverCard>
           <HoverCardTrigger
             href="https://www.linkedin.com/in/dimmasyusuf/"
-            className="hover:text-primary hover:font-bold hover:underline cursor-pointer"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-primary hover:font-bold cursor-pointer transition-all ease-in-out duration-3000"
           >
             dimmasyusuf
           </HoverCardTrigger>
-          <HoverCardContent className="dark:bg-accent">
+          <HoverCardContent>
             <div className="flex gap-2">
               <div className="relative flex items-center justify-center aspect-square h-10 w-10">
                 <Image
@@ -39,13 +39,15 @@ export default function Copyright() {
                   className="rounded-md"
                 />
               </div>
+
               <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-col overflow-hidden w-full">
-                  <h2 className="font-bold truncate text-sm">
+                  <span className="font-bold truncate text-sm">
                     Dimas Yusuf Qurohman
-                  </h2>
-                  <p className="truncate">Full Stack Developer</p>
+                  </span>
+                  <span className="truncate">Software Engineer</span>
                 </div>
+
                 <div className="flex gap-2 items-center">
                   <Link
                     href="https://github.com/dimmasyusuf/"
