@@ -45,7 +45,7 @@ export default function Authrofile({ user }: { user?: User | null }) {
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="flex flex-col gap-4 dark:bg-accent dark:shadow-background"
+        className="flex flex-col gap-4"
       >
         <div className="flex flex-row gap-2 items-center">
           <Avatar className="rounded-md w-9 h-9">
@@ -67,7 +67,7 @@ export default function Authrofile({ user }: { user?: User | null }) {
           </div>
         </div>
 
-        <Separator className="dark:bg-neutral-50" />
+        <Separator />
 
         <Button
           size="sm"

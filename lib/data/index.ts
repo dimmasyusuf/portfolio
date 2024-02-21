@@ -32,22 +32,30 @@ const data = (() => {
   const projects: Projects[] = [
     {
       id: 1,
+      name: 'ACCESS-ES',
+      description: 'ACCESS English School',
+      year: 2024,
+      demoUrl: 'https://access-es.vercel.app/',
+      repoUrl: 'https://github.com/dimmasyusuf/access-es',
+    },
+    {
+      id: 2,
       name: 'Acara',
-      description: 'Event management app.',
+      description: 'An Event Management App',
       year: 2024,
       demoUrl: 'https://acaramu.vercel.app/',
       repoUrl: 'https://github.com/dimmasyusuf/acara',
     },
     {
-      id: 2,
+      id: 3,
       name: 'Talktiv',
-      description: 'A social media app for developers.',
+      description: 'A Social Media App',
       year: 2023,
       demoUrl: 'https://talktiv.vercel.app/',
       repoUrl: 'https://github.com/dimmasyusuf/talktiv',
     },
     {
-      id: 3,
+      id: 4,
       name: 'Dicatat',
       description: 'A note-taking app.',
       year: 2022,
@@ -55,7 +63,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/dicatat',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Food House',
       description: 'Explore best restaurants near you.',
       year: 2022,
@@ -63,7 +71,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/food-house',
     },
     {
-      id: 5,
+      id: 6,
       name: 'Noteable',
       description: 'A note-taking app.',
       year: 2022,
@@ -71,7 +79,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/noteable',
     },
     {
-      id: 6,
+      id: 7,
       name: 'repo-finder',
       description: 'A GitHub repository finder.',
       year: 2022,
@@ -79,7 +87,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/repo-finder',
     },
     {
-      id: 7,
+      id: 8,
       name: 'Reading Room',
       description: 'Book tracking app.',
       year: 2022,
@@ -87,7 +95,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/bookshelf-apps',
     },
     {
-      id: 8,
+      id: 9,
       name: 'NFTopia',
       description: 'A marketplace for NFTs.',
       year: 2022,
@@ -96,7 +104,7 @@ const data = (() => {
     },
   ];
 
-  const frontends: Skills[] = [
+  const skills: Skills[] = [
     {
       id: 1,
       name: 'HTML',
@@ -119,7 +127,7 @@ const data = (() => {
     },
     {
       id: 5,
-      name: 'React',
+      name: 'React.js',
       url: 'https://react.dev/',
     },
     {
@@ -149,64 +157,71 @@ const data = (() => {
     },
     {
       id: 11,
+      name: 'Zustand',
+      url: 'https://zustand-demo.pmnd.rs/',
+    },
+    {
+      id: 12,
       name: 'React Query',
       url: 'https://react-query.tanstack.com/',
     },
     {
-      id: 12,
+      id: 13,
       name: 'Storybook',
       url: 'https://storybook.js.org/',
     },
     {
-      id: 13,
+      id: 14,
       name: 'Jest',
       url: 'https://jestjs.io/',
     },
     {
-      id: 14,
+      id: 15,
       name: 'Cypress',
       url: 'https://www.cypress.io/',
     },
-  ];
-
-  const backends: Skills[] = [
     {
-      id: 1,
+      id: 16,
       name: 'Node.js',
       url: 'https://nodejs.org/en/',
     },
     {
-      id: 2,
-      name: 'Express',
+      id: 17,
+      name: 'Express.js',
       url: 'https://expressjs.com/',
     },
     {
-      id: 3,
+      id: 18,
       name: 'MongoDB',
       url: 'https://www.mongodb.com/',
     },
     {
-      id: 4,
+      id: 19,
       name: 'Prisma',
       url: 'https://www.prisma.io/',
     },
     {
-      id: 5,
+      id: 20,
       name: 'MySQL',
       url: 'https://www.mysql.com/',
     },
     {
-      id: 6,
+      id: 21,
+      name: 'PostgreSQL',
+      url: 'https://www.postgresql.org/',
+    },
+    {
+      id: 22,
       name: 'Sequelize',
       url: 'https://sequelize.org/',
     },
     {
-      id: 7,
+      id: 23,
       name: 'Firebase',
       url: 'https://firebase.google.com/',
     },
     {
-      id: 8,
+      id: 24,
       name: 'Supabase',
       url: 'https://supabase.io/',
     },
@@ -253,8 +268,7 @@ const data = (() => {
   return {
     routes,
     projects,
-    frontends,
-    backends,
+    skills,
     educations,
     experiences,
   };

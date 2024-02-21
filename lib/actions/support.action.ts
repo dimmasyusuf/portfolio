@@ -50,7 +50,7 @@ export const createSupportToken = async ({
       email,
     },
     callbacks: {
-      finish: 'https://dimmasyusuf.me/support/status',
+      finish: 'http://localhost:3000/support/status',
     },
   };
 

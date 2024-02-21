@@ -53,26 +53,33 @@ export default function ProjectList() {
   return (
     <section
       className={`${
-        pathName === '/projects' && 'm-4 mt-8 sm:mt-4'
-      } flex flex-col gap-6`}
+        pathName === '/projects'
+          ? 'm-2 mb-4 sm:m-4 gap-8'
+          : 'bg-background border rounded-md'
+      } flex flex-col`}
     >
       {pathName === '/' && (
-        <div className="flex justify-between items-center w-full">
-          <h2 className="font-bold text-2xl">Projects</h2>
+        <span className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-lg sm:text-xl font-bold text-primary">
+            Projects
+          </h2>
           <Button
             size="sm"
             asChild
           >
             <Link href="/projects">
-              View All
-              <ArrowRightIcon className="ml-2 h-4 w-4" />
+              View All <ArrowRightIcon className="w-4 h-4 ml-1" />
             </Link>
           </Button>
-        </div>
+        </span>
       )}
 
       <div className={`${pathName === '/projects' && 'min-h-[602px]'}`}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit">
+        <div
+          className={`${
+            pathName === '/' && 'p-4'
+          } grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit`}
+        >
           {pathName === '/'
             ? featuredProjects.map((project) => (
                 <ProjectItem

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 
@@ -66,13 +67,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          'min-h-screen bg-gradient-to-t from-neutral-50 dark:bg-none dark:bg-background font-sans antialiased',
-          fontSans.variable
-        )}
+        className={cn('min-h-screen font-sans antialiased', fontSans.variable)}
       >
         <Providers>{children}</Providers>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );

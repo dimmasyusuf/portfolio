@@ -218,8 +218,8 @@ export default function SupportForm() {
     <div
       className={`${
         step === 3
-          ? 'flex flex-col justify-between p-0 gap-6 rounded-md bg-background dark:bg-accent border h-[641px]'
-          : 'flex flex-col rounded-md p-6 gap-6 bg-background dark:bg-accent border h-[641px] justify-between'
+          ? 'flex flex-col justify-between p-0 gap-6 rounded-md bg-background border h-[641px]'
+          : 'flex flex-col rounded-md p-6 gap-6 bg-background border h-[641px] justify-between'
       } `}
     >
       {step <= 2 && (
@@ -269,7 +269,7 @@ export default function SupportForm() {
                 value={isNaN(totalCoffee) ? '' : totalCoffee}
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
-                className="w-16 h-10 shadow-none text-center dark:border-neutral-50"
+                className="w-16 h-10 shadow-none text-center"
               />
               <Button
                 size="icon"
@@ -284,7 +284,7 @@ export default function SupportForm() {
               <Button
                 size="sm"
                 variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+                className="shadow-none dark:hover:bg-primary dark:hover:text-primary-foreground"
                 onClick={() => setTotalCoffee(5)}
               >
                 5 Cups
@@ -292,7 +292,7 @@ export default function SupportForm() {
               <Button
                 size="sm"
                 variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+                className="shadow-none dark:hover:bg-primary dark:hover:text-primary-foreground"
                 onClick={() => setTotalCoffee(10)}
               >
                 10 Cups
@@ -300,7 +300,7 @@ export default function SupportForm() {
               <Button
                 size="sm"
                 variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+                className="shadow-none dark:hover:bg-primary dark:hover:text-primary-foreground"
                 onClick={() => setTotalCoffee(25)}
               >
                 25 Cups
@@ -308,7 +308,7 @@ export default function SupportForm() {
               <Button
                 size="sm"
                 variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+                className="shadow-none dark:hover:bg-primary dark:hover:text-primary-foreground"
                 onClick={() => setTotalCoffee(50)}
               >
                 50 Cups
@@ -333,7 +333,7 @@ export default function SupportForm() {
                     <Input
                       type="text"
                       placeholder="Name"
-                      className="shadow-none dark:border-neutral-50"
+                      className="shadow-none"
                       {...field}
                     />
                   </FormControl>
@@ -350,7 +350,7 @@ export default function SupportForm() {
                   <FormControl>
                     <Textarea
                       placeholder="Support Message"
-                      className="shadow-none dark:border-neutral-50 h-52"
+                      className="shadow-none h-52"
                       {...field}
                     />
                   </FormControl>
@@ -383,7 +383,7 @@ export default function SupportForm() {
           <Button
             size="sm"
             variant="outline"
-            className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:hover:text-primary-foreground"
+            className="shadow-none dark:hover:bg-primary dark:hover:text-primary-foreground"
             onClick={() => handleStepChange(step - 1)}
           >
             <ArrowLeftIcon className="mr-2 w-4 h-4" />
