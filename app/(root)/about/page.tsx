@@ -4,7 +4,7 @@ import Skills from '@/components/Skills';
 
 export default function AboutPage() {
   return (
-    <main className="flex flex-col p-4 pt-8 sm:pt-4 gap-16 max-w-screen-md mx-auto">
+    <main className="flex flex-col p-2 pb-4 sm:p-4 gap-4 max-w-screen-md mx-auto">
       <ExperienceList />
       <EducationList />
       <Skills />
