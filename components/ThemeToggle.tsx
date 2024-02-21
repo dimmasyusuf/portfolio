@@ -8,7 +8,9 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light');
+    setTimeout(() => {
+      theme === 'light' ? setTheme('dark') : setTheme('light');
+    }, 200);
   };
 
   return (
@@ -19,11 +21,8 @@ export default function ThemeToggle() {
       aria-label="Change theme"
       className="h-10 w-10"
     >
-      {theme === 'light' ? (
-        <SunIcon className="w-6 h-6" />
-      ) : (
-        <MoonIcon className="w-6 h-6" />
-      )}
+      <SunIcon className="w-6 h-6 scale-100 rotate-0 dark:scale-0 dark:rotate-180 transform transition-all duration-200" />
+      <MoonIcon className="absolute w-6 h-6 scale-0 rotate-180 dark:scale-100 dark:rotate-0 transform transition-all duration-200" />
     </Button>
   );
 }
