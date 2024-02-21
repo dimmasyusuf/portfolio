@@ -14,7 +14,7 @@ export default function Hero() {
     <section className="grid grid-cols-1 border-b sm:border sm:rounded-md">
       <div className="hero-bg flex flex-col gap-4 h-32 sm:h-48 w-full rounded-t-md" />
 
-      <div className="flex flex-col gap-4 bg-background sm:rounded-b-md p-6">
+      <div className="flex flex-col gap-4 bg-background sm:rounded-b-md p-4 sm:p-6">
         <div className="flex justify-between items-start">
           <div className="flex items-center justify-center mt-[-80px] sm:mt-[-96px]">
             <Image
@@ -76,7 +76,7 @@ export default function Hero() {
             Dimas Yusuf Qurohman
             <RiVerifiedBadgeFill className="w-4 h-4 text-sky-500" />
           </h1>
-          <p className="text-md sm:text-lg">Software Engineer</p>
+          <p className="sm:text-lg">Software Engineer</p>
         </div>
 
         <div className="flex items-center gap-4">
