@@ -50,7 +50,7 @@ export const createSupportToken = async ({
       email,
     },
     callbacks: {
-      finish: 'http://localhost:3000/support/status',
+      finish: 'https://dimmasyusuf.me/support/status',
     },
   };
 
@@ -140,8 +140,10 @@ export async function getAllSupports() {
   try {
     const supports = await prisma.support.findMany({
       where: {
-        NOT: {
-          status: 'PENDING',
+        status: {
+          not: {
+            in: ['PENDING', 'FAILED'],
+          },
         },
       },
       orderBy: {
