@@ -1,52 +1,77 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { getCurrentlyPlaying } from '@/lib/actions/spotify.action';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Songs } from '@/types';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { Skeleton } from './ui/skeleton';
+import { RiPauseCircleLine } from 'react-icons/ri';
+import { useTheme } from 'next-themes';
+
+const DEFAULT_URL = 'https://open.spotify.com/user/sv0jkjpgnjwlpcfgk47dcscvz';
 
 export default function Spotify() {
-  const [currentlyPlaying, setCurrentlyPlaying] = useState<Songs | null>(null);
+  const [playerStatus, setPlayerStatus] = useState('OFFLINE');
+  const [title, setTitle] = useState('dimmasyusuf');
+  const [artist, setArtist] = useState('is currently Offline');
+  const [albumImageUrl, setAlbumImageUrl] = useState('');
+  const [songUrl, setSongUrl] = useState(DEFAULT_URL);
+  const [artistUrl, setArtistUrl] = useState(DEFAULT_URL);
+  const { theme } = useTheme();
 
-  let title = '';
-  let artist = '';
-  let playerStatus = '';
-  let albumImageUrl = '';
-  let songUrl = 'https://open.spotify.com/user/sv0jkjpgnjwlpcfgk47dcscvz';
-  let artistUrl = 'https://open.spotify.com/user/sv0jkjpgnjwlpcfgk47dcscvz';
+  const {
+    data: currentlyPlaying,
+    isLoading: spotifyLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['spotify'],
+    queryFn: () => getCurrentlyPlaying(),
+  });
 
   useEffect(() => {
-    const fetchCurrentlyPlaying = async () => {
-      const data = await getCurrentlyPlaying();
-
-      if (data !== undefined) setCurrentlyPlaying(data);
-    };
-
-    const intervalId = setInterval(() => {
-      fetchCurrentlyPlaying();
+    const spotifyInterval = setInterval(() => {
+      refetch();
     }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(spotifyInterval);
+  }, [refetch]);
 
-  if (currentlyPlaying !== null && currentlyPlaying.title) {
-    currentlyPlaying?.isPlaying
-      ? (playerStatus = 'PLAY')
-      : (playerStatus = 'PAUSE');
+  useEffect(() => {
+    if (currentlyPlaying) {
+      const {
+        title,
+        isPlaying,
+        albumImageUrl,
+        artistName,
+        songUrl,
+        artistUrl,
+      } = currentlyPlaying;
 
-    title = currentlyPlaying?.title;
-    albumImageUrl = currentlyPlaying?.albumImageUrl;
-    artist = currentlyPlaying?.artistName;
-    songUrl = currentlyPlaying?.songUrl;
-    artistUrl = currentlyPlaying?.artistUrl;
-  } else if (currentlyPlaying === null) {
-    playerStatus = 'OFFLINE';
-    title = 'dimmasyusuf';
-    artist = 'is currently Offline';
-  } else {
-    title = 'Spotify';
-    artist = 'is currently Offline';
+      setTitle(title);
+      setAlbumImageUrl(albumImageUrl);
+      setArtist(artistName);
+      setSongUrl(songUrl || DEFAULT_URL);
+      setArtistUrl(artistUrl || DEFAULT_URL);
+
+      setPlayerStatus(isPlaying ? 'PLAY' : 'PAUSE');
+    } else {
+      setTitle('dimmasyusuf');
+      setArtist('is currently Offline');
+      setPlayerStatus('OFFLINE');
+    }
+  }, [currentlyPlaying]);
+
+  if (spotifyLoading) {
+    return (
+      <div className="flex gap-4 px-6 py-4 rounded-md items-center border border-input sm:border-none bg-card sm:bg-transparent dark:sm:bg-transparent">
+        <Skeleton className="w-10 h-10 aspect-square rounded-md" />
+        <div className="flex flex-col overflow-hidden">
+          <Skeleton className="w-40 h-4 mb-1" />
+          <Skeleton className="w-20 h-4" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -93,6 +118,27 @@ export default function Spotify() {
           {artist}
         </Link>
       </div>
+
+      {playerStatus !== 'OFFLINE' && (
+        <div className="flex items-center justify-center ml-auto w-10 h-10 aspect-square">
+          {playerStatus === 'PAUSE' && (
+            <RiPauseCircleLine className="w-6 h-6" />
+          )}
+          {playerStatus === 'PLAY' && (
+            <Image
+              src={`${
+                theme === 'dark'
+                  ? '/images/icon_darkbar.gif'
+                  : '/images/icon_lightbar.gif'
+              }`}
+              alt="Spotify Sound Bar"
+              width={40}
+              height={40}
+              className="w-10 h-10"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }
