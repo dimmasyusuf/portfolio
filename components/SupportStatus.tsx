@@ -67,9 +67,7 @@ export default function SupportStatus() {
   }
 
   if (supportLoading) {
-    return (
-      <Skeleton className="h-[641px] w-full rounded-md m-4 mt-8 sm:mt-4" />
-    );
+    return <Skeleton className="h-[641px] w-full rounded-md" />;
   }
 
   if (currentSupport) {
@@ -118,7 +116,7 @@ export default function SupportStatus() {
     };
 
     return (
-      <section className="flex flex-col gap-6 w-full m-4 mt-8 sm:mt-4 h-[641px]">
+      <section className="flex flex-col gap-6 w-full h-[641px]">
         {status === 'SUCCESS' && (
           <div className="flex flex-col items-center justify-center h-full p-4 border bg-background rounded-md">
             <div className="flex flex-col max-w-sm">
