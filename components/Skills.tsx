@@ -15,7 +15,7 @@ export default function Skills() {
         <RocketIcon className="w-4 h-4" />
       </span>
 
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 p-4">
+      <div className="flex items-center flex-wrap gap-2 p-4">
         {skills.map((skill) => (
           <Button
             key={skill.id}
