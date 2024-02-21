@@ -67,10 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          'min-h-screen bg-gradient-to-t from-neutral-50 dark:bg-none dark:bg-background font-sans antialiased',
-          fontSans.variable
-        )}
+        className={cn('min-h-screen font-sans antialiased', fontSans.variable)}
       >
         <Providers>{children}</Providers>
         <Toaster />
