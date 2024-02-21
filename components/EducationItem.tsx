@@ -9,7 +9,7 @@ export default function EducationItem({
   const { university, major, startDate, endDate, logoUrl } = education;
 
   return (
-    <div className="flex flex-col gap-2 w-full p-6 border rounded-md bg-card dark:bg-accent">
+    <div className="flex flex-col gap-2 w-full p-6 border rounded-md bg-card">
       <div className="relative flex justify-center items-center aspect-square rounded-md w-10 h-10 mt-1">
         <Image
           src={logoUrl}

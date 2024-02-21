@@ -77,7 +77,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="flex flex-col max-w-xs sm:max-w-md rounded-md dark:bg-accent dark:shadow-background"
+        className="flex flex-col max-w-xs sm:max-w-md rounded-md"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <div className="flex gap-2">
@@ -114,7 +114,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
                   <FormControl>
                     <Input
                       placeholder="Leave a message"
-                      className="flex w-full shadow-none h-10 dark:border-neutral-50"
+                      className="flex w-full shadow-none h-10 "
                       {...field}
                       onKeyDown={(e) => e.stopPropagation()}
                     />
@@ -128,7 +128,7 @@ export default function GuestEditDialog({ message }: { message: Message }) {
                 <Button
                   type="button"
                   variant="secondary"
-                  className="w-full dark:bg-background dark:text-secondary-foreground dark:hover:bg-background/80"
+                  className="w-full"
                 >
                   Cancel
                 </Button>

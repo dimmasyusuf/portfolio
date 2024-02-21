@@ -14,7 +14,7 @@ export default function Skills() {
     <section className="flex flex-col gap-6 mx-4 sm:mx-0">
       {pathName === '/about' && <h2 className="text-2xl font-bold">Skills</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex flex-col p-6 gap-4 border rounded-md bg-card dark:bg-accent">
+        <div className="flex flex-col p-6 gap-4 border rounded-md bg-card">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-xl">Frontend</h3>
             <CookieIcon className="w-5 h-5" />
@@ -37,7 +37,7 @@ export default function Skills() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col p-6 gap-4 border rounded-xl bg-card dark:bg-accent">
+        <div className="flex flex-col p-6 gap-4 border rounded-xl bg-card">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-xl">Backend</h3>
             <RocketIcon className="w-5 h-5" />

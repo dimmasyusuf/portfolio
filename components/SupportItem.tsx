@@ -4,16 +4,10 @@ import { formatDate, getInitials } from '@/lib/utils';
 import { Support } from '@/types';
 
 export default function SupportItem({ support }: { support: Support }) {
-  const {
-    name,
-    message,
-    totalCoffee,
-    createdAt,
-    user,
-  } = support;
+  const { name, message, totalCoffee, createdAt, user } = support;
 
   return (
-    <div className="flex flex-col gap-2 rounded-md p-4 border bg-background dark:bg-accent">
+    <div className="flex flex-col gap-2 rounded-md p-4 border bg-background">
       <div className="flex gap-2 w-full">
         <Avatar className="rounded-md w-10 h-10 aspect-square">
           <AvatarImage

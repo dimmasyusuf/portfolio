@@ -120,7 +120,7 @@ export default function SupportStatus() {
     return (
       <section className="flex flex-col gap-6 w-full m-4 mt-8 sm:mt-4 h-[641px]">
         {status === 'SUCCESS' && (
-          <div className="flex flex-col items-center justify-center h-full p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+          <div className="flex flex-col items-center justify-center h-full p-4 border bg-background rounded-md">
             <div className="flex flex-col max-w-sm">
               <Image
                 src="/images/icon_supportsuccess.svg"
@@ -154,9 +154,9 @@ export default function SupportStatus() {
         )}
 
         {status === 'PENDING' && step === 1 && (
-          <div className="flex flex-col justify-between p-4 h-full border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+          <div className="flex flex-col justify-between p-4 h-full border bg-background rounded-md">
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2 p-4 border bg-background dark:bg-accent dark:text-secondary-foreground dark:border-neutral-50 rounded-md">
+              <div className="flex flex-col gap-2 p-4 border bg-background rounded-md">
                 <div className="flex gap-2 w-full">
                   <Avatar className="rounded-md w-10 h-10 aspect-square">
                     <AvatarImage
@@ -198,7 +198,7 @@ export default function SupportStatus() {
                 <span className="text-sm text-balance">{message}</span>
               </div>
 
-              <div className="flex items-center gap-4 justify-between p-4 border bg-background dark:bg-accent dark:text-secondary-foreground dark:border-neutral-50 rounded-md">
+              <div className="flex items-center gap-4 justify-between p-4 border bg-background rounded-md">
                 <div className="flex flex-col w-full">
                   <span className="flex gap-0.5 items-center text-sm font-semibold whitespace-nowrap">
                     <Image
@@ -219,17 +219,17 @@ export default function SupportStatus() {
                 </span>
               </div>
 
-              <div className="flex flex-col gap-4 p-4 border bg-background dark:bg-accent dark:text-secondary-foreground dark:border-neutral-50 rounded-md">
+              <div className="flex flex-col gap-4 p-4 border bg-background rounded-md">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       Payment Status
                     </span>
                     <span className="text-sm">{status}</span>
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       Expire Time
                     </span>
                     <span className="text-sm">
@@ -240,14 +240,14 @@ export default function SupportStatus() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       Order ID
                     </span>
                     <span className="text-sm">{orderId}</span>
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs text-muted-foreground">
                       Order Date
                     </span>
                     <span className="text-sm">
@@ -257,7 +257,7 @@ export default function SupportStatus() {
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     Email Supporter
                   </span>
                   <span className="text-sm">
@@ -271,7 +271,7 @@ export default function SupportStatus() {
               <Button
                 onClick={handleDeleteSupport}
                 variant="outline"
-                className="shadow-none dark:border-neutral-50 dark:hover:bg-primary dark:text-secondary-foreground dark:hover:text-primary-foreground"
+                className="shadow-none dark:hover:bg-primary dark:text-secondary-foreground dark:hover:text-primary-foreground"
               >
                 {isCanceling ? (
                   <ReloadIcon className="animate-spin w-4 h-4" />
@@ -292,7 +292,7 @@ export default function SupportStatus() {
         )}
 
         {status === 'FAILED' && (
-          <div className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background dark:bg-accent dark:text-primary-foreground rounded-md">
+          <div className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background rounded-md">
             <div className="flex flex-col max-w-sm items-center gap-4">
               <Image
                 src="/images/icon_supportfailed.svg"
@@ -331,7 +331,7 @@ export default function SupportStatus() {
           className={`${
             status === 'SUCCESS' || status === 'FAILED' || step === 1
               ? 'hidden'
-              : 'w-full h-full bg-background dark:bg-accent rounded-md border'
+              : 'w-full h-full bg-background rounded-md border'
           }`}
         />
 

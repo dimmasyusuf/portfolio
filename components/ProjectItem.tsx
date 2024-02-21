@@ -14,7 +14,7 @@ export default function ProjectItem({ project }: { project: Projects }) {
   const { name, description, year, demoUrl, repoUrl } = project;
 
   return (
-    <Card className="shadow-none dark:bg-accent rounded-md h-fit">
+    <Card className="shadow-none rounded-md h-fit">
       <CardHeader>
         <p className="text-sm">{year}</p>
         <CardTitle className="text-lg">{name}</CardTitle>

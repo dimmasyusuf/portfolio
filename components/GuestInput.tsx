@@ -78,7 +78,7 @@ export default function GuestInput() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="sticky bg-card dark:bg-accent bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4 items-start"
+          className="sticky bg-card bottom-0 z-10 pl-0.5 pb-0.5 pt-4 flex w-full justify-between gap-4 items-start"
         >
           <FormField
             control={form.control}
@@ -88,7 +88,7 @@ export default function GuestInput() {
                 <FormControl>
                   <Input
                     placeholder="Leave a message"
-                    className="flex w-full shadow-none dark:border-neutral-50"
+                    className="flex w-full shadow-none"
                     {...field}
                     onFocus={handleInputFocus}
                   />

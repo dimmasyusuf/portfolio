@@ -29,7 +29,7 @@ export default function GuestDeleteDialog({ id }: { id: string }) {
         Delete
         <TrashIcon className="w-4 h-4 text-muted-foreground" />
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-xs sm:max-w-md rounded-md dark:bg-accent dark:shadow-background">
+      <AlertDialogContent className="max-w-xs sm:max-w-md rounded-md">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-left">
             Are you absolutely sure?
@@ -40,7 +40,7 @@ export default function GuestDeleteDialog({ id }: { id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-row items-center gap-2">
-          <AlertDialogCancel className="mt-0 border-none bg-secondary text-secondary-foreground hover:bg-secondary/80 dark:bg-background dark:hover:bg-background/80 w-full">
+          <AlertDialogCancel className="mt-0 border-none bg-secondary text-secondary-foreground hover:bg-secondary/80 w-full">
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
