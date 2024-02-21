@@ -53,33 +53,41 @@ export default function ProjectList() {
   return (
     <section
       className={`${
-        pathName === '/projects'
-          ? 'm-2 mb-4 sm:m-4 gap-8'
-          : 'bg-background border rounded-md'
-      } flex flex-col`}
+        pathName === '/projects' && 'gap-4 pb-8'
+      } flex flex-col bg-background border rounded-md`}
     >
-      {pathName === '/' && (
+      <div className={`${pathName === '/projects' && 'min-h-[699px]'}`}>
         <span className="flex justify-between items-center p-4 border-b">
           <h2 className="text-lg sm:text-xl font-bold text-primary">
             Projects
           </h2>
-          <Button
-            size="sm"
-            asChild
-          >
-            <Link href="/projects">
-              View All <ArrowRightIcon className="w-4 h-4 ml-1" />
-            </Link>
-          </Button>
-        </span>
-      )}
 
-      <div className={`${pathName === '/projects' && 'min-h-[602px]'}`}>
-        <div
-          className={`${
-            pathName === '/' && 'p-4'
-          } grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit`}
-        >
+          {pathName === '/' ? (
+            <Button
+              size="sm"
+              asChild
+            >
+              <Link href="/projects">
+                View All <ArrowRightIcon className="w-4 h-4 ml-1" />
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              asChild
+            >
+              <Link
+                href="https://github.com/dimmasyusuf/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub <ArrowRightIcon className="w-4 h-4 ml-1" />
+              </Link>
+            </Button>
+          )}
+        </span>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-fit p-4">
           {pathName === '/'
             ? featuredProjects.map((project) => (
                 <ProjectItem
