@@ -104,7 +104,7 @@ const data = (() => {
     },
   ];
 
-  const frontends: Skills[] = [
+  const skills: Skills[] = [
     {
       id: 1,
       name: 'HTML',
@@ -127,7 +127,7 @@ const data = (() => {
     },
     {
       id: 5,
-      name: 'React',
+      name: 'React.js',
       url: 'https://react.dev/',
     },
     {
@@ -175,46 +175,43 @@ const data = (() => {
       name: 'Cypress',
       url: 'https://www.cypress.io/',
     },
-  ];
-
-  const backends: Skills[] = [
     {
-      id: 1,
+      id: 15,
       name: 'Node.js',
       url: 'https://nodejs.org/en/',
     },
     {
-      id: 2,
-      name: 'Express',
+      id: 16,
+      name: 'Express.js',
       url: 'https://expressjs.com/',
     },
     {
-      id: 3,
+      id: 17,
       name: 'MongoDB',
       url: 'https://www.mongodb.com/',
     },
     {
-      id: 4,
+      id: 18,
       name: 'Prisma',
       url: 'https://www.prisma.io/',
     },
     {
-      id: 5,
+      id: 19,
       name: 'MySQL',
       url: 'https://www.mysql.com/',
     },
     {
-      id: 6,
+      id: 20,
       name: 'Sequelize',
       url: 'https://sequelize.org/',
     },
     {
-      id: 7,
+      id: 21,
       name: 'Firebase',
       url: 'https://firebase.google.com/',
     },
     {
-      id: 8,
+      id: 22,
       name: 'Supabase',
       url: 'https://supabase.io/',
     },
@@ -261,8 +258,7 @@ const data = (() => {
   return {
     routes,
     projects,
-    frontends,
-    backends,
+    skills,
     educations,
     experiences,
   };
