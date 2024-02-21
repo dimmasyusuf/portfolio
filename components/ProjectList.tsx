@@ -54,7 +54,7 @@ export default function ProjectList() {
     <section
       className={`${
         pathName === '/projects'
-          ? 'm-4 mt-8 sm:mt-4'
+          ? 'm-2 mb-4 sm:m-4 gap-8'
           : 'bg-background border rounded-md'
       } flex flex-col`}
     >
