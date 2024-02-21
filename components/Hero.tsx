@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
 import Link from 'next/link';
-import { MdAlternateEmail } from 'react-icons/md';
-import { RiEyeLine, RiMapPinLine, RiVerifiedBadgeFill } from 'react-icons/ri';
+import {
+  RiCheckboxBlankCircleFill,
+  RiMapPinLine,
+  RiVerifiedBadgeFill,
+} from 'react-icons/ri';
 import { Separator } from './ui/separator';
 import { EnvelopeClosedIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 
@@ -89,14 +92,17 @@ export default function Hero() {
 
           <Link
             href="https://www.linkedin.com/in/dimmasyusuf/"
-            aria-label="Follow me on LinkedIn"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2"
+            className="relative"
           >
-            <MdAlternateEmail className="w-4 h-4" />
-            <span className="text-xs hover:font-bold hover:text-primary transition-all ease-in-out duration-3000">
-              dimmasyusuf
+            <span className="absolute flex items-center justify-center top-[-3px] right-[-3px]">
+              <RiCheckboxBlankCircleFill className="w-3 h-3 text-green-500" />
+              <RiCheckboxBlankCircleFill className="absolute w-3 h-3 text-green-400 animate-ping opacity-75" />
+            </span>
+
+            <span className="flex items-center text-xs h-8 px-3 border rounded-md bg-transparent cursor-pointer hover:bg-accent hover:text-accent-foreground">
+              Available for work
             </span>
           </Link>
         </div>
