@@ -64,7 +64,7 @@ export default function Spotify() {
 
   if (spotifyLoading) {
     return (
-      <div className="flex gap-4 px-6 py-4 rounded-md items-center border border-input sm:border-none bg-card sm:bg-transparent dark:sm:bg-transparent">
+      <div className="flex gap-4 px-6 py-4 items-center border bg-background rounded-md">
         <Skeleton className="w-10 h-10 aspect-square rounded-md" />
         <div className="flex flex-col overflow-hidden">
           <Skeleton className="w-40 h-4 mb-1" />
@@ -75,7 +75,7 @@ export default function Spotify() {
   }
 
   return (
-    <div className="flex gap-4 px-6 py-4 rounded-md items-center border border-input sm:border-none bg-card sm:bg-transparent dark:sm:bg-transparent">
+    <div className="flex gap-4 px-6 py-4 items-center border bg-background rounded-md">
       <Link
         href={songUrl}
         className="relative flex items-center justify-center aspect-square h-10 w-10"
