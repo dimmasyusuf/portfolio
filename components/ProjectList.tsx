@@ -104,7 +104,7 @@ export default function ProjectList() {
         </div>
       </div>
 
-      {pathName === '/projects' && (
+      {pathName === '/projects' && projects.length >= 6 && (
         <nav
           role="navigation"
           aria-label="pagination"
