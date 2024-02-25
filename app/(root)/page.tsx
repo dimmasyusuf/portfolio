@@ -4,7 +4,7 @@ import ProjectList from '@/components/ProjectList';
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-4 p-2 pb-4 sm:p-4 max-w-screen-md mx-auto">
+    <main className="flex flex-col gap-4 pb-4 sm:p-4 max-w-screen-md mx-auto">
       <Hero />
       <Skills />
       <ProjectList />

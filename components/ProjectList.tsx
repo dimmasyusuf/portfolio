@@ -54,7 +54,7 @@ export default function ProjectList() {
     <section
       className={`${
         pathName === '/projects' && 'gap-4 pb-8'
-      } flex flex-col bg-background border rounded-md`}
+      } flex flex-col bg-background border-y sm:border rounded-none sm:rounded-md`}
     >
       <div className={`${pathName === '/projects' && 'min-h-[699px]'}`}>
         <span className="flex justify-between items-center p-4 border-b">

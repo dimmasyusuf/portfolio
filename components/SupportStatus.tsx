@@ -67,7 +67,7 @@ export default function SupportStatus() {
   }
 
   if (supportLoading) {
-    return <Skeleton className="h-[641px] w-full rounded-md" />;
+    return <Skeleton className="h-[641px] w-full rounded-none sm:rounded-md" />;
   }
 
   if (currentSupport) {
@@ -118,7 +118,7 @@ export default function SupportStatus() {
     return (
       <section className="flex flex-col gap-6 w-full h-[641px]">
         {status === 'SUCCESS' && (
-          <div className="flex flex-col items-center justify-center h-full p-4 border bg-background rounded-md">
+          <div className="flex flex-col items-center justify-center h-full p-4 border-y sm:border bg-background rounded-none sm:rounded-md">
             <div className="flex flex-col max-w-sm">
               <Image
                 src="/images/icon_supportsuccess.svg"
@@ -152,7 +152,7 @@ export default function SupportStatus() {
         )}
 
         {status === 'PENDING' && step === 1 && (
-          <div className="flex flex-col justify-between p-4 h-full border bg-background rounded-md">
+          <div className="flex flex-col justify-between p-4 h-full border-y sm:border bg-background rounded-none sm:rounded-md">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2 p-4 border bg-background rounded-md">
                 <div className="flex gap-2 w-full">
@@ -290,7 +290,7 @@ export default function SupportStatus() {
         )}
 
         {status === 'FAILED' && (
-          <div className="flex flex-col gap-4 h-full items-center justify-center p-4 border bg-background rounded-md">
+          <div className="flex flex-col gap-4 h-full items-center justify-center p-4 border-y sm:border bg-background rounded-none sm:rounded-md">
             <div className="flex flex-col max-w-sm items-center gap-4">
               <Image
                 src="/images/icon_supportfailed.svg"
@@ -329,7 +329,7 @@ export default function SupportStatus() {
           className={`${
             status === 'SUCCESS' || status === 'FAILED' || step === 1
               ? 'hidden'
-              : 'w-full h-full bg-background rounded-md border'
+              : 'w-full h-full bg-background rounded-none sm:rounded-md border-y sm:border'
           }`}
         />
 

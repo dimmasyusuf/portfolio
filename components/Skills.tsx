@@ -9,7 +9,7 @@ export default function Skills() {
   const skills = data.skills;
 
   return (
-    <section className="flex flex-col bg-background border rounded-md">
+    <section className="flex flex-col bg-background border-y sm:border rounded-none sm:rounded-md">
       <span className="flex justify-between items-center p-4 border-b">
         <h2 className="text-lg sm:text-xl font-bold text-primary">Skills</h2>
         <RocketIcon className="w-4 h-4" />

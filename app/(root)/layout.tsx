@@ -12,7 +12,7 @@ export default function RootLayout({
         <Navbar />
       </header>
       {children}
-      <footer className="px-2 py-4 sm:px-4 mb-[68px] sm:mb-0 max-w-screen-md mx-auto">
+      <footer className="py-4 sm:px-4 mb-[68px] sm:mb-0 max-w-screen-md mx-auto">
         <Footer />
       </footer>
     </>

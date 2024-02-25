@@ -11,10 +11,10 @@ import { EnvelopeClosedIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 
 export default function Hero() {
   return (
-    <section className="grid grid-cols-1 border rounded-md">
-      <div className="hero-bg flex flex-col gap-4 h-32 sm:h-48 w-full rounded-t-md" />
+    <section className="grid grid-cols-1 border-y sm:border rounded-none sm:rounded-md">
+      <div className="hero-bg flex flex-col gap-4 h-32 sm:h-48 w-full rounded-none sm:rounded-t-md" />
 
-      <div className="flex flex-col gap-4 bg-background rounded-md p-4 sm:p-6">
+      <div className="flex flex-col gap-4 bg-background rounded-none sm:rounded-md p-4 sm:p-6">
         <div className="flex justify-between items-start">
           <div className="flex items-center justify-center mt-[-80px] sm:mt-[-96px]">
             <Image
