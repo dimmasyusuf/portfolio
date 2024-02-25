@@ -211,15 +211,15 @@ export default function SupportForm() {
   }
 
   if (supportLoading) {
-    return <Skeleton className="h-[641px] w-full rounded-md" />;
+    return <Skeleton className="h-[641px] w-full rounded-none sm:rounded-md" />;
   }
 
   return (
     <div
       className={`${
         step === 3
-          ? 'flex flex-col justify-between p-0 gap-6 rounded-md bg-background border h-[641px]'
-          : 'flex flex-col rounded-md p-6 gap-6 bg-background border h-[641px] justify-between'
+          ? 'flex flex-col justify-between p-0 gap-6 rounded-none sm:rounded-md bg-background border-y sm:border h-[641px]'
+          : 'flex flex-col rounded-none sm:rounded-md p-6 gap-6 bg-background border-y sm:border h-[641px] justify-between'
       } `}
     >
       {step <= 2 && (

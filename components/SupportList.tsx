@@ -14,7 +14,7 @@ export default function SupportList() {
   });
 
   return (
-    <ScrollArea className="h-[641px] w-full border p-4 rounded-md bg-background">
+    <ScrollArea className="h-[641px] w-full border-y sm:border p-4 rounded-none sm:rounded-md bg-background">
       <div className="flex flex-col gap-4">
         {supportLoading &&
           Array.from({ length: 4 })?.map((_, index: number) => (

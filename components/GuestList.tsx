@@ -24,7 +24,7 @@ export default function GuestList() {
   });
 
   return (
-    <ScrollArea className="h-[641px] w-full border p-4 rounded-md bg-card">
+    <ScrollArea className="h-[641px] w-full p-4 bg-card border-y sm:border rounded-none sm:rounded-md">
       <div className="min-h-[607px] flex flex-col">
         <div className="min-h-[553px] flex flex-col gap-6">
           {messageLoading

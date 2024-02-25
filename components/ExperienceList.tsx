@@ -5,7 +5,7 @@ export default function ExperienceList() {
   const experiences = data.experiences;
 
   return (
-    <section className="flex flex-col bg-background border rounded-md">
+    <section className="flex flex-col bg-background border-y sm:border rounded-none sm:rounded-md">
       <span className="flex justify-between items-center p-4 border-b">
         <h2 className="text-lg sm:text-xl font-bold">Experience</h2>
       </span>
