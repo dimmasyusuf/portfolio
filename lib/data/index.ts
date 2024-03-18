@@ -244,7 +244,7 @@ const data = (() => {
   const experiences: Experiences[] = [
     {
       id: 1,
-      title: 'Software Engineer',
+      title: 'Full Stack Developer',
       company: 'Upwork',
       startDate: 'Jan 2024',
       endDate: 'Present',

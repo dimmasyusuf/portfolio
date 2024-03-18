@@ -45,7 +45,7 @@ export default function Copyright() {
                   <span className="font-bold truncate text-sm">
                     Dimas Yusuf Qurohman
                   </span>
-                  <span className="truncate">Software Engineer</span>
+                  <span className="truncate">Full Stack Developer</span>
                 </div>
 
                 <div className="flex gap-2 items-center">
