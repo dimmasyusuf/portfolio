@@ -59,7 +59,7 @@ export default function ProjectList() {
       <div className={`${pathName === '/projects' && 'min-h-[699px]'}`}>
         <span className="flex justify-between items-center p-4 border-b">
           <h2 className="text-lg sm:text-xl font-bold text-primary">
-            Projects
+            Side Projects
           </h2>
 
           {pathName === '/' ? (
