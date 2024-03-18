@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import data from '@/lib/data';
 import { usePathname } from 'next/navigation';
-import React, { useState } from 'react';
 import AuthDialog from './AuthDialog';
 import { useQuery } from '@tanstack/react-query';
 import { getUserProfile } from '@/lib/actions/user.action';
@@ -19,8 +18,6 @@ import {
   RiHeart3Line,
   RiHomeFill,
   RiHomeLine,
-  RiUser3Fill,
-  RiUser3Line,
 } from 'react-icons/ri';
 import { RouteIcon } from '@/types';
 
@@ -64,7 +61,7 @@ export default function Navbar() {
         </li>
       </ul>
 
-      <ul className="grid grid-cols-6 sm:hidden w-full">
+      <ul className="grid grid-cols-5 sm:hidden w-full">
         {routes.map((route, index) => {
           const isActiveRoute = pathName === route.path;
           const icon: RouteIcon = {
@@ -77,11 +74,6 @@ export default function Navbar() {
               <RiBox3Fill className="w-6 h-6" />
             ) : (
               <RiBox3Line className="w-6 h-6" />
-            ),
-            About: isActiveRoute ? (
-              <RiUser3Fill className="w-6 h-6" />
-            ) : (
-              <RiUser3Line className="w-6 h-6" />
             ),
             Guestbook: isActiveRoute ? (
               <RiChat3Fill className="w-6 h-6" />

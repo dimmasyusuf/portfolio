@@ -14,16 +14,11 @@ const data = (() => {
     },
     {
       id: 3,
-      name: 'About',
-      path: '/about',
-    },
-    {
-      id: 4,
       name: 'Guestbook',
       path: '/guestbook',
     },
     {
-      id: 5,
+      id: 4,
       name: 'Support',
       path: '/support',
     },
@@ -32,6 +27,14 @@ const data = (() => {
   const projects: Projects[] = [
     {
       id: 1,
+      name: 'Bakulan',
+      description: 'POS Cashier App',
+      year: 2024,
+      demoUrl: 'https://bakulans.vercel.app/',
+      repoUrl: 'https://github.com/dimmasyusuf/bakulan',
+    },
+    {
+      id: 2,
       name: 'ACCESS-ES',
       description: 'ACCESS English School',
       year: 2024,
@@ -39,7 +42,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/access-es',
     },
     {
-      id: 2,
+      id: 3,
       name: 'Acara',
       description: 'An Event Management App',
       year: 2024,
@@ -47,7 +50,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/acara',
     },
     {
-      id: 3,
+      id: 4,
       name: 'Talktiv',
       description: 'A Social Media App',
       year: 2023,
@@ -55,7 +58,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/talktiv',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Dicatat',
       description: 'A note-taking app.',
       year: 2022,
@@ -63,7 +66,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/dicatat',
     },
     {
-      id: 5,
+      id: 6,
       name: 'Food House',
       description: 'Explore best restaurants near you.',
       year: 2022,
@@ -71,7 +74,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/food-house',
     },
     {
-      id: 6,
+      id: 7,
       name: 'Noteable',
       description: 'A note-taking app.',
       year: 2022,
@@ -79,7 +82,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/noteable',
     },
     {
-      id: 7,
+      id: 8,
       name: 'repo-finder',
       description: 'A GitHub repository finder.',
       year: 2022,
@@ -87,7 +90,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/repo-finder',
     },
     {
-      id: 8,
+      id: 9,
       name: 'Reading Room',
       description: 'Book tracking app.',
       year: 2022,
@@ -95,7 +98,7 @@ const data = (() => {
       repoUrl: 'https://github.com/dimmasyusuf/bookshelf-apps',
     },
     {
-      id: 9,
+      id: 10,
       name: 'NFTopia',
       description: 'A marketplace for NFTs.',
       year: 2022,
