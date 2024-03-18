@@ -76,7 +76,7 @@ export default function Hero() {
             Dimas Yusuf Qurohman
             <RiVerifiedBadgeFill className="w-4 h-4 text-sky-500" />
           </h1>
-          <p className="sm:text-lg">Software Engineer</p>
+          <p className="sm:text-lg">Full Stack Developer</p>
         </div>
 
         <div className="flex items-center gap-4">
