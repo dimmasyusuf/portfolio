@@ -254,8 +254,8 @@ const data = (() => {
       id: 1,
       title: 'Full Stack Developer Student',
       company: 'Purwadhika Digital Technology School',
-      startDate: 'Jul 2023',
-      endDate: 'Dec 2023',
+      startDate: 'Aug 2023',
+      endDate: 'Jan 2024',
       logoUrl: '/images/logo_purwadhika.webp',
     },
     {
