@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio Website
 
-## Getting Started
+This is my personal portfolio website, built to showcase my projects and skills as a Full Stack Web Developer.
 
-First, run the development server:
+## Technologies Used
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Frontend:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  - [React.js](https://reactjs.org/)
+  - [Next.js](https://nextjs.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Tailwind CSS](https://tailwindcss.com/)
+  - [ShadCN UI](https://shadcn.dev/)
+  - [React Query](https://react-query.tanstack.com/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Backend:**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  - [Node.js](https://nodejs.org/)
+  - [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
+  - [Spotify API](https://developer.spotify.com/documentation/web-api/)
+  - [MongoDB](https://www.mongodb.com/)
+  - [Prisma](https://www.prisma.io/)
 
-## Learn More
+- **Payment Integration:**
+  - [Midtrans Payment](https://midtrans.com/)
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Personal Projects:** Showcasing a variety of my personal and collaborative projects.
+- **Spotify Integration:** Displaying currently playing trak from my Spotify account.
+- **Leave a Message:** Allowing visitors to leave a message for me.
+- **Responsive Design:** Ensuring optimal viewing experience across all devices.
+- **Support for Dark Mode:** Allowing users to switch between light and dark themes.
+- **Donation:** Providing an option for visitors to support my work through donations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Setup and Installation
 
-## Deploy on Vercel
+1. **Clone the repository:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/dimmasyusuf/portfolio.git
+   cd portfolio
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Install dependencies:**
+
+   ```bash
+    npm install
+   ```
+
+3. **Set up environment variables:**
+   create a `.env.local` file in the root directory and add the following environment variables:
+
+   ```bash
+   NEXT_PUBLIC_SPOTIFY_CLIENT_ID=your_spotify_client_id
+   NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+   NEXT_PUBLIC_SPOTIFY_REFRESH_TOKEN=your_spotify_refresh_token
+   NEXT_PUBLIC_SPOTIFY_CODE=your_spotify_code
+   DATABASE_URL=your_database_url
+   NEXTAUTH_URL=your_nextauth_url
+   NEXTAUTH_SECRET=your_nextauth_secret
+   NEXTAUTH_JWT_SECRET=your_nextauth_jwt_secret
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GITHUB_CLIENT_ID=your_github_client_id
+   GITHUB_CLIENT_SECRET=your_github_client_secret
+   MIDTRANS_CLIENT_KEY=your_midtrans_client_key
+   MIDTRANS_SERVER_KEY=your_midtrans_server_key
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Deployment
+
+To deploy this project, you can use Vercel. You can find the detailed instructions [here](https://nextjs.org/docs/deployment).
+
+## Contributing
+
+If you have any suggestions, improvements, or issues, feel free to contribute to this project by creating a pull request.
+
+## License
+
+This project is open-source and available under the [MIT License]
+
+## Contact
+
+- **Email:** dimasyusufqurohman@gmail.com
+- **LinkedIn:** [Dimas Yusuf Qurohman](https://www.linkedin.com/in/dimasyusufqurohman/)
+
+Thank you for visiting my portfolio website! 🚀

@@ -268,6 +268,14 @@ const data = (() => {
   const experiences: Experiences[] = [
     {
       id: 1,
+      title: 'Front End Developer Intern',
+      company: 'Connextion Indonesia',
+      startDate: 'Jun 2024',
+      endDate: 'Present',
+      logoUrl: '/images/logo_connextion.webp',
+    },
+    {
+      id: 2,
       title: 'Full Stack Developer',
       company: 'Upwork',
       startDate: 'Jan 2024',
@@ -275,7 +283,7 @@ const data = (() => {
       logoUrl: '/images/logo_upwork.webp',
     },
     {
-      id: 1,
+      id: 3,
       title: 'Full Stack Developer Student',
       company: 'Purwadhika Digital Technology School',
       startDate: 'Aug 2023',
@@ -283,8 +291,8 @@ const data = (() => {
       logoUrl: '/images/logo_purwadhika.webp',
     },
     {
-      id: 2,
-      title: 'Frontend Developer Student',
+      id: 4,
+      title: 'Front End Developer Student',
       company: 'Dicoding Indonesia',
       startDate: 'Aug 2022',
       endDate: 'Jan 2023',
